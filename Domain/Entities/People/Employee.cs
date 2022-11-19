@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-namespace Domain.Common.People;
+namespace Domain.Entities.People;
 public class Employee : User
 {
     public Qualifications Category { get => _category; }

@@ -4,7 +4,7 @@ using System.Xml;
 using System.Xml.Serialization;
 using System.IO;
 using Data.Exeptions;
-using Domain.Common.People;
+using Domain.Entities.People;
 
 namespace Data.Db.HumanDB;
 

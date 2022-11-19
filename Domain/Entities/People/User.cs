@@ -1,6 +1,6 @@
 
 using System.Xml.Serialization;
-namespace Domain.Common.People;
+namespace Domain.Entities.People;
 
 public class User : Human
 {

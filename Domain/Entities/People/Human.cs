@@ -1,4 +1,4 @@
-namespace Domain.Common.People;
+namespace Domain.Entities.People;
 public abstract class Human
 {
     protected string _name;

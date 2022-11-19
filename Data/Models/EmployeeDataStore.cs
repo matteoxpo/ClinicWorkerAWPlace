@@ -1,5 +1,5 @@
-using Domain.Common.People;
-using Domain.Common;
+using Domain.Entities.People;
+using Domain.Entities;
 using System.Collections.Generic;
 namespace Data.Models;
 

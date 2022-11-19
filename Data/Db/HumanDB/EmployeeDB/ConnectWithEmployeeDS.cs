@@ -1,6 +1,6 @@
 using Data.Models;
 using Data.Db.HumanDB;
-using Domain.Common.People;
+using Domain.Entities.People;
 
 namespace Data.Db.HumanDB.EmployeeDB;
 

@@ -1,6 +1,6 @@
 
-using Domain.Common.People;
-using Domain.Common;
+using Domain.Entities.People;
+using Domain.Entities;
 public interface IAdminRepository
 {
     void AddEmployee(Employee worker);

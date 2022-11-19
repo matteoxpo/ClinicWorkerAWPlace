@@ -1,6 +1,6 @@
 using Domain.Repositories;
-using Domain.Common;
-using Domain.Common.People;
+using Domain.Entities;
+using Domain.Entities.People;
 using Data.Models;
 using System.Text.RegularExpressions;
 namespace Data.Repositories;

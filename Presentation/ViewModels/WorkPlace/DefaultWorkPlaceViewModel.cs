@@ -2,7 +2,7 @@ using System;
 using System.Reactive;
 using ReactiveUI;
 using System.Collections.Generic;
-using Domain.Common.People;
+using Domain.Entities.People;
 
 namespace Presentation.ViewModels.WorkPlace
 {

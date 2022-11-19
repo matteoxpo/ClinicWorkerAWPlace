@@ -1,6 +1,6 @@
 using System;
 
-namespace Domain.Common;
+namespace Domain.Entities;
 
 public class RefForAnalysis
 {

@@ -1,7 +1,7 @@
 using System.Runtime;
 using System.Data;
 
-namespace Domain.Common.People;
+namespace Domain.Entities.People;
 
 public class Client : Human
 {
