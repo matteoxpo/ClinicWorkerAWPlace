@@ -1,0 +1,43 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vmwp="using:Presentation.ViewModels.WorkPlace"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:work="clr-namespace:Presentation.Views.WorkPlace"    
+             xmlns:AutomatedWorkPlace="clr-namespace:Presentation"
+             mc:Ignorable="d"
+             x:Class="Presentation.Views.WorkPlace.WorkPlaceView"
+             xmlns:rxui="clr-namespace:Avalonia.ReactiveUI;assembly=Avalonia.ReactiveUI"
+             d:DesignWidth="800"
+             d:DesignHeight="450">
+    <!-- x:Class="Presentation.Views.WorkView" -->
+    <Design.DataContext>
+        <vmwp:WorkPlaceViewModel />
+    </Design.DataContext>
+    <Grid>
+
+        <Menu VerticalAlignment="Top">
+            <MenuItem Header="Рабочая зона"
+                      Command="{Binding GoToDefault}" />
+            <MenuItem Header="Помощь"
+                      Command="{Binding GoToHelp}" />
+            <MenuItem Header="Профиль"
+                      Command="{Binding GoToProfile}" />
+            <MenuItem Header="Выйти из профиля"
+                      Command="{Binding LogOut}" />
+        </Menu>
+
+    <rxui:RoutedViewHost Grid.Row="0"
+                        PageTransition="{x:Null}"
+                        Router="{Binding Router}">
+        <rxui:RoutedViewHost.DefaultContent>
+            <work:DefaultWorkPlaceView DataContext = "{Binding DefaultWorkPlaceViewModel}"/>
+        </rxui:RoutedViewHost.DefaultContent>
+        <!--  -->
+        <rxui:RoutedViewHost.ViewLocator>
+            <AutomatedWorkPlace:AppViewLocator />
+        </rxui:RoutedViewHost.ViewLocator>
+    <!--  -->
+    </rxui:RoutedViewHost>
+    </Grid>
+</UserControl>

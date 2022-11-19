@@ -1,0 +1,38 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vmwp="using:Presentation.ViewModels.WorkPlace"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             x:Class="Presentation.Views.WorkPlace.WorkPlaceProfileView"
+             mc:Ignorable="d"
+             d:DesignWidth="800"
+             d:DesignHeight="450">
+    <!-- x:Class="AutomatedWorkPlace.Views.LoginView"
+        Icon="/Assets/doc-logo.ico"
+        Title="AutomatedWorkPlace" -->
+    <Design.DataContext>
+        <vmwp:WorkPlaceViewModel />
+    </Design.DataContext>
+    <Grid>
+        <!--  -->
+        <TextBlock FontSize="30"
+                   FontWeight="Bold"
+                   Text="Ваш профиль"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Top"
+                   Margin="50" />
+        <StackPanel HorizontalAlignment="Right"
+                    Margin="80">
+            <TextBlock FontSize="18"
+                       Text = "Binding Name"
+                       />
+
+            <TextBlock FontSize="18"
+                   Text = "Binding SurName"
+                   />
+        </StackPanel>
+        
+        
+        <!--  -->
+    </Grid>
+</UserControl>
