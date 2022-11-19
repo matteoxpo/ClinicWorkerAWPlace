@@ -1,5 +1,8 @@
+using System;
+using System.Collections.Generic;
 using System.Runtime;
 using System.Data;
+using System.Globalization;
 
 namespace Domain.Entities.People;
 
@@ -8,8 +11,13 @@ public class Client : Human
 
     public string Complaints;
     public DateTime MeetingTime;
+
+    public string StringMeetingTime
+    {
+        get => Convert.ToString(MeetingTime, CultureInfo.InvariantCulture);
+    }
     
-    public List<RefForAnalysis> Analyzes;
+    public  IEnumerable<RefForAnalysis> Analyzes;
 
 
 

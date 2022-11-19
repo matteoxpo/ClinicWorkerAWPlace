@@ -4,11 +4,11 @@ using Avalonia.Markup.Xaml;
 using Avalonia.ReactiveUI;
 using Presentation.ViewModels.WorkPlace;
 
-namespace Presentation.Views.WorkPlace
+namespace Presentation.Views.WorkPlace.Help
 {
-    public partial class DefaultWorkPlaceView : ReactiveUserControl<DefaultWorkPlaceViewModel>
+    public partial class WorkPlaceHelpView : ReactiveUserControl<WorkPlaceHelpViewModel>
     {
-        public DefaultWorkPlaceView()
+        public WorkPlaceHelpView()
         {
             InitializeComponent();
         }

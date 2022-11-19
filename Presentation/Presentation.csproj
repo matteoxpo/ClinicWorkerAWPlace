@@ -26,4 +26,23 @@
         <ProjectReference Include="../Domain/Domain.csproj" />
         <ProjectReference Include="../Data/Data.csproj" />
     </ItemGroup>
+    <ItemGroup>
+      <AdditionalFiles Include="Views\WorkPlace\Default\DefaultWorkPlaceView.axaml" />
+      <AdditionalFiles Include="Views\WorkPlace\Help\WorkPlaceHelpView.axaml" />
+      <AdditionalFiles Include="Views\WorkPlace\Profile\WorkPlaceProfileView.axaml" />
+    </ItemGroup>
+    <ItemGroup>
+      <Compile Update="Views\WorkPlace\Default\DefaultWorkPlaceView.axaml.cs">
+        <DependentUpon>DefaultWorkPlaceView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Views\WorkPlace\Help\WorkPlaceHelpView.axaml.cs">
+        <DependentUpon>WorkPlaceHelpView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Views\WorkPlace\Profile\WorkPlaceProfileView.axaml.cs">
+        <DependentUpon>WorkPlaceProfileView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+    </ItemGroup>
 </Project>

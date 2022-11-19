@@ -1,8 +1,4 @@
-using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Markup.Xaml;
-using Avalonia.ReactiveUI;
-using Presentation.ViewModels;
 
 namespace Presentation.Views
 {
@@ -12,9 +8,5 @@ namespace Presentation.Views
         {
             InitializeComponent();
         }
-
-
     }
-
-
 }

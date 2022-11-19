@@ -4,6 +4,9 @@ using Presentation.ViewModels.WorkPlace;
 using Presentation.ViewModels.Login;
 using Presentation.Views;
 using Presentation.Views.WorkPlace;
+using Presentation.Views.WorkPlace.Default;
+using Presentation.Views.WorkPlace.Help;
+using Presentation.Views.WorkPlace.Profile;
 using Presentation.Views.Login;
 
 

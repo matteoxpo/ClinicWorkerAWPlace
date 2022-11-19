@@ -1,0 +1,48 @@
+<UserControl
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d"
+    x:Class="Presentation.Views.WorkPlace.Default.DefaultWorkPlaceView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vmwp="using:Presentation.ViewModels.WorkPlace"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Design.DataContext>
+        <vmwp:DefaultWorkPlaceViewModel />
+    </Design.DataContext>
+    <Grid>
+        <TextBlock
+            FontSize="18"
+            FontWeight="Bold"
+            HorizontalAlignment="Center"
+            Margin="0,50,0,0"
+            Text="Рабочее пространство"
+            VerticalAlignment="Top" />
+
+        <StackPanel
+            HorizontalAlignment="Left"
+            Margin="30,80,0,0"
+            Width="500">
+            <TextBlock
+                Background="#abffda"
+                FontSize="14"
+                Text="Список пациентов" />
+            <ListBox Items="{Binding Timetable}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Name}" />
+                            <TextBlock Margin="5,0,0,0" Text="{Binding Surname}" />
+                            <TextBlock Margin="5,0,0,0" Text="{Binding StringMeetingTime}" />
+                        </StackPanel>
+
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </StackPanel>
+
+        <!--    -->
+
+    </Grid>
+</UserControl>
