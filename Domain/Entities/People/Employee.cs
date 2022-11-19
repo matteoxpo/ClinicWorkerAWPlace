@@ -2,30 +2,23 @@ using System.Collections.Generic;
 namespace Domain.Entities.People;
 public class Employee : User
 {
-    public Qualifications Category { get => _category; }
-    public List<string> Speciality { get => _speciality; }
+    public Qualifications Category { get; set; }
+    public IEnumerable<string> Speciality { get; set; }
+    public IEnumerable<Client> Patients { get; set; }
 
-    private List<string> _speciality { get; set; }
-
-	
-
-    public List<Client> Patients;
-    
-
-	protected Qualifications _category { get; set; }
 
 
     public Employee() : base("name", "surname", "password", "login")
     {
-        _category = Qualifications.FirstCategory;
-        _speciality = new List<string>();
+        Category = Qualifications.FirstCategory;
+        Speciality = new List<string>();
         Patients = new List<Client>();
     }
     public Employee(string name, string surname, string password, string login, Qualifications category, List<string> speciality)
     : base(name, surname, password, login)
     {
-        _category = category;
-        _speciality = new(speciality);
+        Category = category;
+        Speciality = new List<string>(speciality);
         Patients = new List<Client>();
     }
 }

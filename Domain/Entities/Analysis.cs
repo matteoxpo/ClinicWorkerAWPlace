@@ -4,10 +4,10 @@ namespace Domain.Entities;
 public class Analysis
 {
     public string Title;
-    public uint TimeForPrepearing;
+    public int TimeForPrepearing;
 
 
-    public Analysis(string title, uint timeForPrepearing)
+    public Analysis(string title, int timeForPrepearing)
     {
         Title = title;
         TimeForPrepearing = timeForPrepearing;
