@@ -8,6 +8,7 @@ namespace Presentation.ViewModels.WorkPlace
 {
     public class DefaultWorkPlaceViewModel : ViewModelBase, IRoutableViewModel
     {
+        // private DoctorEmployee self;
         public List<Client> Timetable { get; }
 
         public DefaultWorkPlaceViewModel(IScreen hostScreen)

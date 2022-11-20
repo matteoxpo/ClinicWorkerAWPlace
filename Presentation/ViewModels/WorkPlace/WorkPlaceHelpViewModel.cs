@@ -9,7 +9,14 @@ namespace Presentation.ViewModels.WorkPlace
     {
 
 
-
+        public void changePasswordButton()
+        {
+            /*
+             self.Pass = newPass
+             
+             */
+            
+        }
         public WorkPlaceHelpViewModel(IScreen hostScreen)
         {
             HostScreen = hostScreen;

@@ -6,5 +6,5 @@ public class Admin : User
 {
     public Admin(string name, string surname, string password, string login) : base(name, surname, password, login) { }
 
-    //public Employee AddEmployee(){}
+    //public DoctorEmployee AddEmployee(){}
 }

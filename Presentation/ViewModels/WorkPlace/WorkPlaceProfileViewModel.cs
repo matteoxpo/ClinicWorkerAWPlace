@@ -7,7 +7,13 @@ namespace Presentation.ViewModels.WorkPlace
 {
     public class WorkPlaceProfileViewModel : ViewModelBase, IRoutableViewModel
     {
-
+        public string Name
+        {
+            get
+            {
+                return "asdas";
+            }
+        }
 
 
         public WorkPlaceProfileViewModel(IScreen hostScreen)

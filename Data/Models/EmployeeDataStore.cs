@@ -14,9 +14,9 @@ public class EmployeeDataStore
     public List<string> Speciality;
     public uint Id;
 
-    public EmployeeDataStore(Employee p, uint id)
+    public EmployeeDataStore(DoctorEmployee p, uint id)
     {
-        //  Data from original Employee
+        //  Data from original DoctorEmployee
         Name = p.Name;
         Surname = p.Surname;
         Login = p.Login;
@@ -29,7 +29,7 @@ public class EmployeeDataStore
 
     // public EmployeeDataStore(string name, string surname, string login, string password, , uint id)
     // {
-    //     //  Data from original Employee
+    //     //  Data from original DoctorEmployee
     //     Name = p.Name;
     //     Surname = p.Surname;
     //     Login = p.Login;
@@ -50,9 +50,9 @@ public class EmployeeDataStore
         Id = 0;
     }
 
-    private Employee MapFromEmplyeeDS()
+    private DoctorEmployee MapFromEmplyeeDS()
     {
-        Employee mapped = new Employee(Name, Surname, Password, Login, Category, Speciality);
+        DoctorEmployee mapped = new DoctorEmployee(Name, Surname, Password, Login, Category, Speciality);
         return mapped;
     }
 

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 namespace Domain.Entities.People;
-public class Employee : User
+public class DoctorEmployee : User
 {
     public Qualifications Category { get; set; }
     public IEnumerable<string> Speciality { get; set; }
@@ -8,13 +8,13 @@ public class Employee : User
 
 
 
-    public Employee() : base("name", "surname", "password", "login")
+    public DoctorEmployee() : base("name", "surname", "password", "login")
     {
         Category = Qualifications.FirstCategory;
         Speciality = new List<string>();
         Patients = new List<Client>();
     }
-    public Employee(string name, string surname, string password, string login, Qualifications category, List<string> speciality)
+    public DoctorEmployee(string name, string surname, string password, string login, Qualifications category, List<string> speciality)
     : base(name, surname, password, login)
     {
         Category = category;
