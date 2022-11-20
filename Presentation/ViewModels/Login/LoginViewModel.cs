@@ -13,16 +13,9 @@ namespace Presentation.ViewModels.Login
 {
     public class LoginViewModel : ViewModelBase, IRoutableViewModel
     {
-        // BaseConnectionWithDB myDb;
         private string _UserLogin = "";
         private string _Password = "";
         public ReactiveCommand<Unit, Unit> GoToWorkPlace { get; }
-
-        // private ObservableAsPropertyHelper<bool> _isUserLoginValid { get; }
-        // private bool IsUserLoginValid => _isUserLoginValid.Value;
-
-        // private ObservableAsPropertyHelper<bool> _isUserPasswordValid { get; }
-        // private bool IsUserPasswordValid => _isUserPasswordValid.Value;
 
         private ObservableAsPropertyHelper<bool> _isDataValid { get; }
         private bool IsDataValid => _isDataValid.Value;
@@ -30,7 +23,6 @@ namespace Presentation.ViewModels.Login
         public LoginViewModel(IScreen hostScreen)
         {
             HostScreen = hostScreen;
-            // myDb = new BaseConnectionWithDB("C:\\Users\\s-hro\\source\\repos\\Presentation\\Data\\Db\\EmployeeDataStore.xml");
 
             var isUserLoginValid = this
                     .WhenAnyValue(v => v.UserLogin)

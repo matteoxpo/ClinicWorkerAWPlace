@@ -9,24 +9,26 @@ using System.Reactive.Subjects;
 using Data.Exeptions;
 using Domain.Entities.People;
 
-namespace Data.Db.HumanDB;
+namespace Data.Repositories;
 
 
 // abstracr soon
-public class BaseConnectionWithDB<T>
+abstract public class BaseRepository<T>
 {
-    protected XmlSerializer _serializer;
-    protected XmlWriter _writer;
-    protected XmlReader _reader;
-    protected FileStream _fs;
+    private XmlSerializer _serializer;
+    private XmlWriter _writer;
+    private XmlReader _reader;
+    private FileStream _fs;
+
+    abstract protected bool CompareEntities(T changedEntity, T entity);
     
     
-    public void Update(T changedEntity, Func<T, bool> predicate)
+    protected void Change(T changedEntity)
     {
         var newEntities = new List<T>(_subject.Value);
         foreach (var entity in _subject.Value)
         {
-            if (!predicate(entity)) continue;
+            if (!CompareEntities(changedEntity, entity)) continue;
             newEntities.Remove(entity);
             newEntities.Add(changedEntity);
             SerializationXml(newEntities);
@@ -34,21 +36,27 @@ public class BaseConnectionWithDB<T>
         }
     }
     
-    public void Delete(T delitingEmtity, Func<T, bool> predicate)
+    protected void Remove(T delitingEmtity)
     {
         var newEntities = new List<T>(_subject.Value);
         foreach (var entity in _subject.Value)
         {
-            if (!predicate(entity)) continue;
+            if (!CompareEntities(delitingEmtity,entity)) continue;
             newEntities.Remove(entity);
             SerializationXml(newEntities);
             break;
         }
     }
     
-    public IEnumerable<T> Read() => DeserializationXml();
+    // read
+    protected void SerializationXml(IEnumerable<T> entities)
+    {
+        _fs.Seek(0, SeekOrigin.Begin);
+        _subject.OnNext(entities);
+        _serializer.Serialize(_writer, entities);
+    }
     
-    public void Add(T entity)
+    protected void Append(T entity)
     {
         var newEntities = new List<T>(_subject.Value);
         newEntities.Add(entity);
@@ -56,7 +64,7 @@ public class BaseConnectionWithDB<T>
     }
     public IObservable<IEnumerable<T>> AsObservable { get; }
     private BehaviorSubject <IEnumerable<T>> _subject { get; }
-    public BaseConnectionWithDB(string path)
+    protected  BaseRepository(string path)
     {
         _fs = File.Open(path, FileMode.Open);
         _serializer = new(typeof(List<T>));
@@ -66,7 +74,7 @@ public class BaseConnectionWithDB<T>
         AsObservable = _subject.AsObservable();
     }
 
-    public IEnumerable<T> DeserializationXml()
+    protected  IEnumerable<T> DeserializationXml()
     {
         _fs.Seek(0, SeekOrigin.Begin);
         List<T> deserialized = new();
@@ -79,10 +87,5 @@ public class BaseConnectionWithDB<T>
         return deserialized;
     }
 
-    public void SerializationXml(IEnumerable<T> entities)
-    {
-        _fs.Seek(0, SeekOrigin.Begin);
-        _subject.OnNext(entities);
-        _serializer.Serialize(_writer, entities);
-    }
+ 
 }

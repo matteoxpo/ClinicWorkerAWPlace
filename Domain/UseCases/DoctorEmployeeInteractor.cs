@@ -11,6 +11,11 @@ public class DoctorEmployeeInteractor
     {
         _repository = repository;
     }
+    
+    // authorization etc here
+    
+    
+    
     // changeName here
 
     public void ChangePasswordUseCase(DoctorEmployee doctor, string newPassword)
@@ -18,7 +23,7 @@ public class DoctorEmployeeInteractor
         if (newPassword.Length > 5)
         {
             doctor.Password = newPassword;
-            _repository.UpdateDoctorEmployee(doctor);
+            _repository.Update(doctor);
         }
         else
         {
