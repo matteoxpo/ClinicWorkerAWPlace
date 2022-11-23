@@ -1,7 +1,7 @@
 using Domain.Repositories;
 using Domain.Entities;
 
-namespace Data.Repositorise;
+namespace Data.Repositories;
 
 public class AdminRepository
 {

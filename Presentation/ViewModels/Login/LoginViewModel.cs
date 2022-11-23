@@ -6,8 +6,11 @@ using ReactiveUI;
 using System.Threading.Tasks;
 using System.Diagnostics.Tracing;
 using System.Collections.Generic;
+using Data.Repositories;
+using Domain.Entities.People;
+using Domain.Repositories;
+using Domain.UseCases;
 using Presentation.ViewModels.WorkPlace;
-using Data.Db;
 
 namespace Presentation.ViewModels.Login
 {
@@ -15,11 +18,15 @@ namespace Presentation.ViewModels.Login
     {
         private string _UserLogin = "";
         private string _Password = "";
-        public ReactiveCommand<Unit, Unit> GoToWorkPlace { get; }
 
+        
+        
+        public ReactiveCommand<Unit, Unit> GoToWorkPlace { get; }
         private ObservableAsPropertyHelper<bool> _isDataValid { get; }
         private bool IsDataValid => _isDataValid.Value;
 
+        private DoctorEmployeeInteractor _interactor;
+        
         public LoginViewModel(IScreen hostScreen)
         {
             HostScreen = hostScreen;
@@ -37,23 +44,19 @@ namespace Presentation.ViewModels.Login
             var temp = isUserLoginValid.And(isUserPasswordValid).Then((b1, b2) => b1 && b2);
             _isDataValid = Observable.When(temp).ToProperty(this, h => h.IsDataValid);
 
-
-            // GoToWorkPlace = ReactiveCommand.CreateFromObservable(
-            //         () => HostScreen.Router.Navigate.Execute(new WorkPlaceViewModel(HostScreen)));
-
-
             GoToWorkPlace = ReactiveCommand.CreateFromTask(TestData);
 
-            // GoToWorkPlace = ReactiveCommand.CreateFromTask()
+            _interactor = new DoctorEmployeeInteractor(DoctorEmployeeRepository.GetInstance());
         }
         public string? UrlPathSegment { get; }
         public IScreen HostScreen { get; }
 
         private async Task TestData()
-        {
-            // if (myDb.IsFileOpened)
-            //     if (myDb.FindUserByLoginPassword(UserLogin, Password))
-            await HostScreen.Router.Navigate.Execute(new WorkPlaceViewModel(HostScreen));
+        { 
+            if (_interactor.AuthorizationUseCase(_UserLogin, _Password))
+            {
+                await HostScreen.Router.Navigate.Execute(new WorkPlaceViewModel(HostScreen));
+            }
 
         }
 

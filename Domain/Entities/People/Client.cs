@@ -11,7 +11,12 @@ public class Client : Human
     public string Complaints;
     public DateTime MeetingTime;
     public IEnumerable<DoctorEmployee> Doctors;
-    public  IEnumerable<RefForAnalysis> Analyzes;
+    public IEnumerable<RefForAnalysis> Analyzes;
+
+    public Client() : base("name", "surname")
+    {
+        Analyzes = new List<RefForAnalysis>();
+    }
     public Client(string name, string surname, DateTime meetingTime) : base(name, surname)
     {
         Complaints = new string("");

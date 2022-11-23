@@ -9,8 +9,8 @@ public abstract class Human
 
     public Human(string name, string surname)
     {
-        _name = name;
-        _surname = surname;
+        _name = new string(name);
+        _surname = new string(surname);
     }
 
 }

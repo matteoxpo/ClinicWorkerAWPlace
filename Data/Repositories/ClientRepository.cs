@@ -1,7 +1,4 @@
-using Domain.Repositories;
-using Domain.Entities;
-
-namespace Domain.Repositories;
+namespace Data.Repositories;
 
 public class ClientRepository
 {

@@ -19,10 +19,10 @@ abstract public class BaseRepository<T>
     private XmlWriter _writer;
     private XmlReader _reader;
     private FileStream _fs;
-
+    public IObservable<IEnumerable<T>> AsObservable { get; }
+    private BehaviorSubject <IEnumerable<T>> _subject { get; }
+    
     abstract protected bool CompareEntities(T changedEntity, T entity);
-    
-    
     protected void Change(T changedEntity)
     {
         var newEntities = new List<T>(_subject.Value);
@@ -62,8 +62,7 @@ abstract public class BaseRepository<T>
         newEntities.Add(entity);
         SerializationXml(newEntities);
     }
-    public IObservable<IEnumerable<T>> AsObservable { get; }
-    private BehaviorSubject <IEnumerable<T>> _subject { get; }
+
     protected  BaseRepository(string path)
     {
         _fs = File.Open(path, FileMode.Open);

@@ -13,6 +13,19 @@ public class DoctorEmployeeInteractor
     }
     
     // authorization etc here
+
+    public bool AuthorizationUseCase(string login, string password)
+    {
+        var empls = new List<DoctorEmployee>(_repository.Read());
+        foreach (var empl in empls)
+        {
+            if (string.Equals(empl.Login, login) && string.Equals(empl.Password, password))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
     
     
     

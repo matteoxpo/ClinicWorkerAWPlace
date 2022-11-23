@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfDoctorEmployee xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <DoctorEmployee>
+        <Name>Sereja</Name>
+        <Surname>Khromin</Surname>
+        <Login>KhrominS</Login>
+        <Password>1234</Password>
+        <Category>FirstCategory</Category>
+    </DoctorEmployee>
+    <DoctorEmployee>
+        <Name>Sophia</Name>
+        <Surname>Kuhalashvili</Surname>
+        <Login>KuhalashviliS</Login>
+        <Password>4321</Password>
+        <Category>FirstCategory</Category>
+    </DoctorEmployee>
+</ArrayOfDoctorEmployee>

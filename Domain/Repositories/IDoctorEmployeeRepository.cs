@@ -8,7 +8,7 @@ public interface IDoctorEmployeeRepository
     void Update(DoctorEmployee newDoctorEmployee);
     void Delete(DoctorEmployee newDoctorEmployee);
     void Add(DoctorEmployee newDoctorEmployee);
-    IEnumerable<DoctorEmployee> Read(DoctorEmployee newDoctorEmployee);
+    IEnumerable<DoctorEmployee> Read();
 
     IObservable<DoctorEmployee> ObserveByLogin(string login);
 }
