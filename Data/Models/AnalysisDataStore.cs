@@ -1,13 +1,12 @@
+using Domain.Entities;
 
-namespace Domain.Entities;
+namespace Data.Models;
 
 public class AnalysisDataStore
 {
     public string Title;
     public int TimeForPrepearing;
     public int Id;
-
-
     
     public AnalysisDataStore(Analysis analysis, int id)
     {
@@ -29,6 +28,11 @@ public class AnalysisDataStore
     {
         Title = new string("title");
         TimeForPrepearing = Id = 0;
+    }
+
+    public Analysis MapToAnalyzis()
+    {
+        return new Analysis(Title, TimeForPrepearing);
     }
 
 }

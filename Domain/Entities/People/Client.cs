@@ -13,22 +13,26 @@ public class Client : Human
     public IEnumerable<DoctorEmployee> Doctors;
     public IEnumerable<RefForAnalysis> Analyzes;
 
-    public Client() : base("name", "surname")
+    public Client(string name, string surname, string complaints,DateTime meetingTime, IEnumerable<RefForAnalysis> analyses,IEnumerable<DoctorEmployee> doctors) : base(name, surname)
     {
-        Analyzes = new List<RefForAnalysis>();
+        Complaints = new string(complaints);
+        Analyzes = new List<RefForAnalysis>(analyses);
+        MeetingTime = meetingTime;
+        Doctors = doctors;
     }
+    
     public Client(string name, string surname, DateTime meetingTime) : base(name, surname)
     {
         Complaints = new string("");
         Analyzes = new List<RefForAnalysis>();
         MeetingTime = meetingTime;
+        Doctors = new List<DoctorEmployee>();
     }
     
-    public Client(string name, string surname, DateTime meetingTime, IEnumerable<DoctorEmployee> doctors) : base(name, surname)
+    public Client() : base("name", "surname")
     {
-        Complaints = new string("");
         Analyzes = new List<RefForAnalysis>();
-        MeetingTime = meetingTime;
-        Doctors = doctors;
+        Complaints = new string("");
+        Doctors = new List<DoctorEmployee>();
     }
 }

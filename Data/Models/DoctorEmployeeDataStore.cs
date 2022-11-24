@@ -12,20 +12,18 @@ public class DoctorEmployeeDataStore
     public string Password;
     public Qualifications Category;
     public List<string> Speciality;
-    public List<Client> Patients;
+    public List<ClientDataStore> Patients;
     public int Id;
 
-    public DoctorEmployeeDataStore(DoctorEmployee p, int id)
+    public DoctorEmployeeDataStore(DoctorEmployee p, IEnumerable<ClientDataStore> patients, int id)
     {
-        //  Data from original DoctorEmployee
         Name = new string(p.Name);
         Surname = new string(p.Surname);
         Login = new string(p.Login);
         Password = new string(p.Password);
         Category = p.Category;
         Speciality = new List<string>(p.Speciality);
-        Patients = new List<Client>(p.Patients);
-        // Service data for DataBase
+        Patients = new List<ClientDataStore>(patients);
         Id = id;
     }
     
@@ -37,13 +35,19 @@ public class DoctorEmployeeDataStore
         Password = new string("password");
         Category = Qualifications.FirstCategory;
         Speciality = new List<string>();
-        Patients = new List<Client>();
+        Patients = new List<ClientDataStore>();
         Id = 0;
     }
 
     public DoctorEmployee MapToDoctorEmployee()
     {
-        return new DoctorEmployee( Name, Surname, Password, Login, Category, Speciality, Patients);
+        var patients = new List<Client>();
+        foreach (var pat in Patients)
+        {
+            patients.Add(pat.MapToClent());
+        }
+        
+        return new DoctorEmployee( Name, Surname, Password, Login, Category, Speciality, patients);
     }
 
 

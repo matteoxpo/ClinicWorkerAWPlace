@@ -1,6 +1,7 @@
-using System;
+﻿using System;
+using Domain.Entities;
 
-namespace Domain.Entities;
+namespace Data.Models;
 
 public class RefForAnalysisDataStore
 {
@@ -11,6 +12,12 @@ public class RefForAnalysisDataStore
     {
         AnalysisDataStore = analysisDataStore;
         AnalysisTime = analysisTime;
+    }
+
+
+    public RefForAnalysis MapToRefForAnalyzis()
+    {
+        return new RefForAnalysis(AnalysisDataStore.MapToAnalyzis(), AnalysisTime);
     }
 
 }
