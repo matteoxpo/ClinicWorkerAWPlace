@@ -6,20 +6,30 @@
     xmlns="https://github.com/avaloniaui"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vmlogin="using:Presentation.ViewModels.Login"
     xmlns:vmwp="using:Presentation.ViewModels.WorkPlace"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <!--  x:Class="Presentation.Views.WorkView"  -->
     <Design.DataContext>
-        <vmwp:DefaultWorkPlaceViewModel />
+        <vmlogin:LoginViewModel />
     </Design.DataContext>
     <Grid Margin="230">
-        <StackPanel Orientation="Vertical">
-            <TextBlock
-                Background="#abffda"
-                FontSize="18"
-                FontWeight="Bold"
-                Text="Добро пожаловать в автоматизированное рабочее место врача!"
-                TextAlignment="Center" />
+        <Image
+            Height="100"
+            Source="/Assets/logo_colorfull.svg"
+            Width="100" />
+
+
+        <StackPanel Orientation="Vertical" Width="500">
+            <Border Background="#abffda" CornerRadius="5">
+                <TextBlock
+                    FontFamily="OpenSans"
+                    FontSize="20"
+                    FontWeight="Bold"
+                    TextAlignment="Center">
+                    Добро пожаловать&#10;в автоматизированное рабочее место врача!
+                </TextBlock>
+            </Border>
             <TextBlock
                 FontSize="15"
                 FontWeight="Bold"

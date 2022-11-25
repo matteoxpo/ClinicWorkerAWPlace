@@ -19,6 +19,7 @@ namespace Presentation.ViewModels.WorkPlace
             Timetable.Add(temp);
             Timetable.Add(temp);
         }
+
         public IScreen HostScreen { get; }
         public string? UrlPathSegment { get; }
     }
