@@ -56,6 +56,8 @@ abstract public class BaseRepository<T>
         _serializer.Serialize(_writer, entities);
     }
     
+    // circurar references
+    
     protected void Append(T entity)
     {
         var newEntities = new List<T>(_subject.Value);
@@ -67,7 +69,12 @@ abstract public class BaseRepository<T>
     {
         _fs = File.Open(path, FileMode.Open);
         _serializer = new(typeof(List<T>));
-        _writer = XmlWriter.Create(_fs, new XmlWriterSettings() { Indent = true, IndentChars = "    ", });
+        _writer = XmlWriter.Create(_fs, new XmlWriterSettings()
+        {
+            Indent = true, 
+            IndentChars = "    ",
+            
+        });
         _reader = XmlReader.Create(_fs, new XmlReaderSettings());
         _subject = new BehaviorSubject<IEnumerable<T>>(new List<T>());
         AsObservable = _subject.AsObservable();
