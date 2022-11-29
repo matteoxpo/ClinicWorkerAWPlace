@@ -2,6 +2,7 @@
 using System.Xml.Serialization;
 namespace Domain.Entities.People;
 
+[Serializable]
 public class User : Human
 {
     public string Login { get => _login; set => _login = value; }
@@ -13,6 +14,12 @@ public class User : Human
     {
         _login = new string(login);
         _password = new string(password);
+    }
+
+    public User() : base()
+    {
+        _login = new string("login");
+        _password = new string("password");
     }
 
 

@@ -11,30 +11,34 @@ public class ClientDataStore
     public string Name;
     public string Surname;
     public string Complaints;
-    public DateTime MeetingTime;
-    public List<DoctorEmployeeDataStore> Doctors;
+    public List<KeyValuePair<string, DateTime>> Appointments;
     public List<RefForAnalysisDataStore> Analyzes;
 
     public int Id;
+    public ClientDataStore(string name, string surname, string complaints, List<KeyValuePair<string, DateTime>> appointments, List<RefForAnalysisDataStore> analyzes)
+    {
+        Name = name;
+        Surname = surname;
+        Complaints = complaints;
+        Appointments = appointments;
+        Analyzes = analyzes;
+    }
 
-    public ClientDataStore(Client client,IEnumerable<DoctorEmployeeDataStore> doctors,IEnumerable<RefForAnalysisDataStore> refForAnalysisDataStores, int id)
+    public ClientDataStore(Client client,IEnumerable<RefForAnalysisDataStore> refForAnalysisDataStores, List<KeyValuePair<string, DateTime>> appointments, int id)
     {
         Name = new string(client.Name);
         Surname = new string(client.Surname);
         Complaints = new string(client.Complaints);
-        MeetingTime = client.MeetingTime;
-        Doctors = new List<DoctorEmployeeDataStore>(doctors);
         Analyzes = new List<RefForAnalysisDataStore>(refForAnalysisDataStores);
+        Appointments = appointments;
         Id = id;
     }
     public ClientDataStore()
     {
+        Appointments = new List<KeyValuePair<string, DateTime>>();
         Name = new string("name");
         Surname = new string("surname");
         Complaints = new string("complaints");
-        
-        MeetingTime = new DateTime(0);
-        Doctors = new List<DoctorEmployeeDataStore>();
         Analyzes = new List<RefForAnalysisDataStore>();
         Id = 0;
     }
@@ -48,13 +52,10 @@ public class ClientDataStore
         }
 
         var doctors = new List<DoctorEmployee>();
-        foreach (var doc in Doctors)
-        {
-            doctors.Add(doc.MapToDoctorEmployee());
-        }
 
 
-        return new Client(Name, Surname, Complaints, MeetingTime, forAnalyses, doctors);
+
+        return new Client(Name, Surname, Complaints , forAnalyses, Appointments);
     }
     
 

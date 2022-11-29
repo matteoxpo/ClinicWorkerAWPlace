@@ -1,6 +1,7 @@
 
 namespace Domain.Entities;
 
+[Serializable]
 public class Medicines
 {
     public string Title;

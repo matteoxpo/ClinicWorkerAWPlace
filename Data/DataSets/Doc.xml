@@ -1,17 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfDoctorEmployee xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
     <DoctorEmployee>
-        <Name>Sereja</Name>
-        <Surname>Khromin</Surname>
-        <Login>KhrominS</Login>
-        <Password>1234</Password>
-        <Category>FirstCategory</Category>
-    </DoctorEmployee>
-    <DoctorEmployee>
-        <Name>Sophia</Name>
-        <Surname>Kuhalashvili</Surname>
-        <Login>KuhalashviliS</Login>
-        <Password>4321</Password>
-        <Category>FirstCategory</Category>
+        <Name>1</Name>
+        <Surname>1</Surname>
+        <Login>1</Login>
+        <Password>1</Password>
+        <Category>SecondCategory</Category>
+        <Patients>
+            <Client>
+                <Name>2</Name>
+                <Surname>2</Surname>
+                <Complaints>2</Complaints>
+                <Appointments>
+                    <KeyValuePairOfStringDateTime />
+                </Appointments>
+                <Analyzes />
+            </Client>
+        </Patients>
+        <Speciality>
+            <string>1</string>
+            <string>1</string>
+        </Speciality>
     </DoctorEmployee>
 </ArrayOfDoctorEmployee>

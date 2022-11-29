@@ -39,6 +39,17 @@ public class DoctorEmployeeDataStore
         Id = 0;
     }
 
+    public DoctorEmployeeDataStore(string name, string surname, string login, string password, List<string> speciality, List<ClientDataStore> patients, Qualifications category)
+    {
+        Name = name;
+        Surname = surname;
+        Login = login;
+        Password = password;
+        Speciality = speciality;
+        Patients = patients;
+        Category = category;
+    }
+
     public DoctorEmployee MapToDoctorEmployee()
     {
         var patients = new List<Client>();

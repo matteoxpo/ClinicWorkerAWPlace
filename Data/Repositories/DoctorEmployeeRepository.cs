@@ -14,7 +14,8 @@ public class DoctorEmployeeRepository : BaseRepository<DoctorEmployee>, IDoctorE
     public static DoctorEmployeeRepository GetInstance()
     { 
         return globalRepositoryInstance ??= new DoctorEmployeeRepository(
-            "C:/Users/s-hro/source/repos/AutomatedWorkPlace/Data/DataSets/Doc.xml");
+            "../../../../Data/DataSets/Doc.xml");
+        // C:\Users\s-hro\source\repos\AutomatedWorkPlace\\\Data\DataSets\Doc.xml
     }
 
     protected override bool CompareEntities(DoctorEmployee changedEntity, DoctorEmployee entity)
@@ -37,7 +38,7 @@ public class DoctorEmployeeRepository : BaseRepository<DoctorEmployee>, IDoctorE
         Append(newDoctorEmployee);
     }
 
-    public IEnumerable<DoctorEmployee> Read()
+    public List<DoctorEmployee> Read()
     {
         return DeserializationXml();
     }

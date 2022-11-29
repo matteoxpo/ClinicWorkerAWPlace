@@ -19,8 +19,8 @@ abstract public class BaseRepository<T>
     private XmlWriter _writer;
     private XmlReader _reader;
     private FileStream _fs;
-    public IObservable<IEnumerable<T>> AsObservable { get; }
-    private BehaviorSubject <IEnumerable<T>> _subject { get; }
+    public IObservable<List<T>> AsObservable { get; }
+    private BehaviorSubject <List<T>> _subject { get; }
     
     abstract protected bool CompareEntities(T changedEntity, T entity);
     protected void Change(T changedEntity)
@@ -49,7 +49,7 @@ abstract public class BaseRepository<T>
     }
     
     // read
-    protected void SerializationXml(IEnumerable<T> entities)
+    protected void SerializationXml(List<T> entities)
     {
         _fs.Seek(0, SeekOrigin.Begin);
         _subject.OnNext(entities);
@@ -76,14 +76,14 @@ abstract public class BaseRepository<T>
             
         });
         _reader = XmlReader.Create(_fs, new XmlReaderSettings());
-        _subject = new BehaviorSubject<IEnumerable<T>>(new List<T>());
+        _subject = new BehaviorSubject<List<T>>(new List<T>());
         AsObservable = _subject.AsObservable();
     }
 
-    protected  IEnumerable<T> DeserializationXml()
+    protected  List<T> DeserializationXml()
     {
         _fs.Seek(0, SeekOrigin.Begin);
-        List<T> deserialized = new();
+        var deserialized = new List<T>();
         object? temp = (_serializer.Deserialize(_fs));
         if (temp != null)
         {
@@ -93,5 +93,5 @@ abstract public class BaseRepository<T>
         return deserialized;
     }
 
- 
+
 }

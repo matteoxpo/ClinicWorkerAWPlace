@@ -14,7 +14,8 @@ namespace Presentation.ViewModels.WorkPlace
         public DefaultWorkPlaceViewModel(IScreen hostScreen)
         {
             HostScreen = hostScreen;
-            Client temp = new("Sereja", "Khromin", new DateTime(123));
+            // Client temp = new("Sereja", "Khromin", new DateTime(123), new KeyValuePair<string, DateTime>[1]);
+            Client temp = new Client();
             Timetable = new List<Client>();
             Timetable.Add(temp);
             Timetable.Add(temp);

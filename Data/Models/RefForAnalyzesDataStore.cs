@@ -13,6 +13,13 @@ public class RefForAnalysisDataStore
         AnalysisDataStore = analysisDataStore;
         AnalysisTime = analysisTime;
     }
+    
+    public RefForAnalysisDataStore()
+    {
+        AnalysisDataStore = new AnalysisDataStore();
+        AnalysisTime = new DateTime(0);
+    }
+    
 
 
     public RefForAnalysis MapToRefForAnalyzis()

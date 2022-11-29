@@ -2,6 +2,7 @@ using System;
 
 namespace Domain.Entities;
 
+[Serializable]
 public class RefForAnalysis
 {
     public Analysis Analysis;
@@ -11,6 +12,12 @@ public class RefForAnalysis
     {
         Analysis = analysis;
         AnalysisTime = analysisTime;
+    }
+    
+    public RefForAnalysis()
+    {
+        Analysis = new Analysis();
+        AnalysisTime = new DateTime(0);
     }
 
 }

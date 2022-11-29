@@ -1,4 +1,5 @@
 namespace Domain.Entities.People;
+[Serializable]
 public abstract class Human
 {
     protected string _name;
@@ -11,6 +12,12 @@ public abstract class Human
     {
         _name = new string(name);
         _surname = new string(surname);
+    }
+
+    public Human()
+    {
+        _name = new string("name");
+        _surname = new string("surname");
     }
 
 }
