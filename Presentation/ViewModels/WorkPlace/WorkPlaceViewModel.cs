@@ -3,12 +3,13 @@ using System.Reactive;
 using ReactiveUI;
 using Presentation.ViewModels.Login;
 using System.Collections.Generic;
+using Domain.Entities.People;
 
 namespace Presentation.ViewModels.WorkPlace
 {
     public class WorkPlaceViewModel : ViewModelBase, IRoutableViewModel, IScreen
     {
-
+        private DoctorEmployee self;
         public RoutingState Router { get; } = new RoutingState();
 
         public ReactiveCommand<Unit, IRoutableViewModel> GoToProfile { get; }
@@ -22,8 +23,10 @@ namespace Presentation.ViewModels.WorkPlace
 
         DefaultWorkPlaceViewModel DefaultWorkPlaceViewModel { get; }
 
-        public WorkPlaceViewModel(IScreen hostScreen)
+        public WorkPlaceViewModel(IScreen hostScreen, DoctorEmployee doctorEmployee)
         {
+            self = doctorEmployee;
+            
             HostScreen = hostScreen;
 
             DefaultWorkPlaceViewModel = new DefaultWorkPlaceViewModel(this);

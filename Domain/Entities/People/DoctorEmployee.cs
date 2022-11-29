@@ -16,6 +16,14 @@ public class DoctorEmployee : User
         Speciality = new List<string>();
         Patients = new List<Client>();
     }
+
+    public DoctorEmployee(DoctorEmployee doctorEmployee) : base(doctorEmployee.Name, doctorEmployee.Surname, doctorEmployee.Login , doctorEmployee.Password)
+    {
+        Category = doctorEmployee.Category;
+        Patients = new List<Client>(doctorEmployee.Patients);
+        Speciality = new List<string>(doctorEmployee.Speciality);
+    }
+    
     public DoctorEmployee(string name, string surname,  string login, string password, Qualifications category, List<string> speciality, List<Client> clients)
     : base(name, surname, login, password)
     {

@@ -1,5 +1,4 @@
 using System.Reactive.Linq;
-using Data.Models;
 using Domain.Entities.People;
 using Domain.Repositories;
 
@@ -17,6 +16,7 @@ public class DoctorEmployeeRepository : BaseRepository<DoctorEmployee>, IDoctorE
             "../../../../Data/DataSets/Doc.xml");
         // C:\Users\s-hro\source\repos\AutomatedWorkPlace\\\Data\DataSets\Doc.xml
     }
+    
 
     protected override bool CompareEntities(DoctorEmployee changedEntity, DoctorEmployee entity)
     {

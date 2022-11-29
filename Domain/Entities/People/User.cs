@@ -10,7 +10,7 @@ public class User : Human
     protected string _login;
     protected string _password;
 
-    public User(string name, string surname, string password, string login) : base(name, surname)
+    public User(string name, string surname,  string login, string password) : base(name, surname)
     {
         _login = new string(login);
         _password = new string(password);

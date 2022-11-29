@@ -55,7 +55,10 @@ namespace Presentation.ViewModels.Login
         { 
             if (_interactor.AuthorizationUseCase(_UserLogin, _Password))
             {
-            await HostScreen.Router.Navigate.Execute(new WorkPlaceViewModel(HostScreen));
+                var doc = _interactor.Get(_UserLogin, _Password);
+                
+                
+            await HostScreen.Router.Navigate.Execute(new WorkPlaceViewModel(HostScreen, doc));
             }
 
         }

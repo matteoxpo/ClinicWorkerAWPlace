@@ -1,13 +1,7 @@
-using Data.Models;
-using System.Collections.Generic;
-using System.Data;
 using System.Xml;
 using System.Xml.Serialization;
-using System.IO;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
-using Data.Exeptions;
-using Domain.Entities.People;
 
 namespace Data.Repositories;
 
