@@ -1,5 +1,4 @@
 namespace Domain.Entities;
-[Serializable]
 public enum Qualifications : byte
 {
     FirstCategory = 0,

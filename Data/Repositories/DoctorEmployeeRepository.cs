@@ -13,8 +13,7 @@ public class DoctorEmployeeRepository : BaseRepository<DoctorEmployee>, IDoctorE
     public static DoctorEmployeeRepository GetInstance()
     { 
         return globalRepositoryInstance ??= new DoctorEmployeeRepository(
-            "../../../../Data/DataSets/Doc.xml");
-        // C:\Users\s-hro\source\repos\AutomatedWorkPlace\\\Data\DataSets\Doc.xml
+            "../../../../Data/DataSets/Doctors.xml");
     }
     
 
@@ -40,15 +39,15 @@ public class DoctorEmployeeRepository : BaseRepository<DoctorEmployee>, IDoctorE
 
     public List<DoctorEmployee> Read()
     {
-        return DeserializationXml();
+        return DeserializationJson(); 
     }
 
-    public IObservable<DoctorEmployee> ObserveByLogin(string login)
+    public IObservable<DoctorEmployee> ObserveById(int id)
     {
         return AsObservable.Select(
             (empl) =>
             {
-                return empl.FirstOrDefault((emp) => string.Equals(emp.Login, login));
+                return empl.FirstOrDefault((emp) => emp.Id.Equals(id));
             }
         )!.Where<DoctorEmployee>((d) => !d.Equals(null));
     }

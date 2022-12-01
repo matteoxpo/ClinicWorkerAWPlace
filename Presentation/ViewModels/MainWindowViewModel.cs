@@ -10,7 +10,7 @@ using Presentation.ViewModels.Login;
 
 namespace Presentation.ViewModels
 {
-    public class MainWindowViewModel : ViewModelBase, IScreen
+    public class MainWindowViewModel : ReactiveObject, IScreen
     {
         public RoutingState Router { get; }
         public LoginViewModel LoginViewModel { get; }

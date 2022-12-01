@@ -6,19 +6,17 @@ using Domain.Entities.People;
 
 namespace Presentation.ViewModels.WorkPlace
 {
-    public class DefaultWorkPlaceViewModel : ViewModelBase, IRoutableViewModel
+    public class DefaultWorkPlaceViewModel : ReactiveObject, IRoutableViewModel
     {
-        // private DoctorEmployee self;
-        public List<Client> Timetable { get; }
+        public List<Tuple<Client, DateTime>> Timetable { get; }
+        
+        private DoctorEmployee self;
 
-        public DefaultWorkPlaceViewModel(IScreen hostScreen)
+        public DefaultWorkPlaceViewModel(IScreen hostScreen, DoctorEmployee doctorEmployee)
         {
+            self = doctorEmployee;
             HostScreen = hostScreen;
-            // Client temp = new("Sereja", "Khromin", new DateTime(123), new KeyValuePair<string, DateTime>[1]);
-            Client temp = new Client();
-            Timetable = new List<Client>();
-            Timetable.Add(temp);
-            Timetable.Add(temp);
+            Timetable = new List<Tuple<Client, DateTime>>(self.Patients);
         }
 
         public IScreen HostScreen { get; }

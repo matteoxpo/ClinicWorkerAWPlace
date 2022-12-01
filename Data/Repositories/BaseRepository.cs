@@ -1,91 +1,97 @@
-using System.Xml;
-using System.Xml.Serialization;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
+
+using System.Text.Json;
+
 
 namespace Data.Repositories;
 
 
-// abstracr soon
 abstract public class BaseRepository<T>
 {
-    private XmlSerializer _serializer;
-    private XmlWriter _writer;
-    private XmlReader _reader;
-    private FileStream _fs;
+    private Stream _fs;
+
+    private string _path;
     public IObservable<List<T>> AsObservable { get; }
     private BehaviorSubject <List<T>> _subject { get; }
+
+ 
+    
+    protected BaseRepository(string path)
+    {
+        _path = path;
+        _subject = new BehaviorSubject<List<T>>(new List<T>());
+        AsObservable = _subject.AsObservable();
+    }
     
     abstract protected bool CompareEntities(T changedEntity, T entity);
     protected void Change(T changedEntity)
     {
+        
         var newEntities = new List<T>(_subject.Value);
         foreach (var entity in _subject.Value)
         {
             if (!CompareEntities(changedEntity, entity)) continue;
             newEntities.Remove(entity);
             newEntities.Add(changedEntity);
-            SerializationXml(newEntities);
+            SerializationJson(newEntities);
             break;
         }
     }
     
     protected void Remove(T delitingEmtity)
     {
+        _fs = GetStream();
         var newEntities = new List<T>(_subject.Value);
         foreach (var entity in _subject.Value)
         {
             if (!CompareEntities(delitingEmtity,entity)) continue;
             newEntities.Remove(entity);
-            SerializationXml(newEntities);
+            SerializationJson(newEntities);
             break;
         }
+        _fs.Close();
     }
     
-    // read
-    protected void SerializationXml(List<T> entities)
+    protected void SerializationJson(List<T> entities)
     {
-        _fs.Seek(0, SeekOrigin.Begin);
+        _fs = GetStream();
         _subject.OnNext(entities);
-        _serializer.Serialize(_writer, entities);
+        JsonSerializer.Serialize(GetStream(), entities);
+        _fs.Close();
+
     }
-    
-    // circurar references
     
     protected void Append(T entity)
     {
         var newEntities = new List<T>(_subject.Value);
         newEntities.Add(entity);
-        SerializationXml(newEntities);
+        SerializationJson(newEntities);
     }
 
-    protected  BaseRepository(string path)
+    private JsonSerializerOptions _options = new JsonSerializerOptions()
     {
-        _fs = File.Open(path, FileMode.Open);
-        _serializer = new(typeof(List<T>));
-        _writer = XmlWriter.Create(_fs, new XmlWriterSettings()
-        {
-            Indent = true, 
-            IndentChars = "    ",
-            
-        });
-        _reader = XmlReader.Create(_fs, new XmlReaderSettings());
-        _subject = new BehaviorSubject<List<T>>(new List<T>());
-        AsObservable = _subject.AsObservable();
-    }
+        WriteIndented = true,
+    };
 
-    protected  List<T> DeserializationXml()
+    protected  List<T> DeserializationJson()
     {
-        _fs.Seek(0, SeekOrigin.Begin);
-        var deserialized = new List<T>();
-        object? temp = (_serializer.Deserialize(_fs));
-        if (temp != null)
-        {
-            deserialized = (List<T>)temp;
-            _subject.OnNext(deserialized);
-        }
+        _fs = GetStream();
+        var deserialized = JsonSerializer.Deserialize<List<T>>(_fs, _options);
+        _fs.Close();
         return deserialized;
     }
+    
+    private Stream GetStream()=> _fs = new FileStream
+        (
+            _path,
+            FileMode.OpenOrCreate,
+            FileAccess.ReadWrite,
+            FileShare.ReadWrite,
+            4096,
+            FileOptions.None
+        );
+   
 
 
 }

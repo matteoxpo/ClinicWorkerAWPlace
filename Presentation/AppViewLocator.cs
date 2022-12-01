@@ -1,8 +1,6 @@
 using System;
-using Presentation.ViewModels;
 using Presentation.ViewModels.WorkPlace;
 using Presentation.ViewModels.Login;
-using Presentation.Views;
 using Presentation.Views.WorkPlace;
 using Presentation.Views.WorkPlace.Default;
 using Presentation.Views.WorkPlace.Help;
@@ -15,6 +13,7 @@ using ReactiveUI;
 namespace Presentation
 {
     public class AppViewLocator : IViewLocator
+    
     {
         public IViewFor ResolveView<T>(T viewModel, string contract = null) => viewModel switch
         {

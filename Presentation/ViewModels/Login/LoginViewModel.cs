@@ -14,7 +14,7 @@ using Presentation.ViewModels.WorkPlace;
 
 namespace Presentation.ViewModels.Login
 {
-    public class LoginViewModel : ViewModelBase, IRoutableViewModel
+    public class LoginViewModel : ReactiveObject, IRoutableViewModel
     {
         private string _UserLogin = "";
         private string _Password = "";
