@@ -34,13 +34,6 @@ public class DoctorEmployeeInteractor
             if (string.Equals(empl.Login, login) && string.Equals(empl.Password, password))
             {
                 d = new DoctorEmployee(empl);
-<<<<<<< HEAD
-                foreach (var patient in d.Patients)
-                {
-                    patient.CurrentDoctorMeetTime = patient.Appointments[d.Id].ToString();
-                }
-=======
->>>>>>> temporary
                 break;
             }
         }

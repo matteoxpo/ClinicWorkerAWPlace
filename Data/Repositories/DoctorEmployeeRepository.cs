@@ -39,11 +39,7 @@ public class DoctorEmployeeRepository : BaseRepository<DoctorEmployee>, IDoctorE
 
     public List<DoctorEmployee> Read()
     {
-<<<<<<< HEAD
-        return DeserializationXml(); 
-=======
         return DeserializationJson(); 
->>>>>>> temporary
     }
 
     public IObservable<DoctorEmployee> ObserveById(int id)
