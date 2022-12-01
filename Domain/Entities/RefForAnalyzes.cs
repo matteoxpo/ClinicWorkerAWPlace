@@ -2,11 +2,9 @@ using System;
 
 namespace Domain.Entities;
 
-[Serializable]
 public class RefForAnalysis
 {
     public Analysis Analysis;
-
     public DateTime AnalysisTime;
     public RefForAnalysis(Analysis analysis, DateTime analysisTime)
     {

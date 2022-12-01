@@ -1,7 +1,5 @@
-
 namespace Domain.Entities;
 
-[Serializable]
 public class Analysis
 {
     public string Title;

@@ -8,7 +8,11 @@ namespace Presentation.ViewModels.WorkPlace
 {
     public class DefaultWorkPlaceViewModel : ReactiveObject, IRoutableViewModel
     {
+<<<<<<< HEAD
         public List<Client> Timetable { get; }
+=======
+        public List<Tuple<Client, DateTime>> Timetable { get; }
+>>>>>>> temporary
         
         private DoctorEmployee self;
 
@@ -16,7 +20,11 @@ namespace Presentation.ViewModels.WorkPlace
         {
             self = doctorEmployee;
             HostScreen = hostScreen;
+<<<<<<< HEAD
             Timetable = new List<Client>(self.Patients);
+=======
+            Timetable = new List<Tuple<Client, DateTime>>(self.Patients);
+>>>>>>> temporary
         }
 
         public IScreen HostScreen { get; }

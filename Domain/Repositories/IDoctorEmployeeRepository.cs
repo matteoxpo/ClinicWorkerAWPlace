@@ -9,6 +9,6 @@ public interface IDoctorEmployeeRepository
     void Delete(DoctorEmployee oldDoctorEmployee);
     void Add(DoctorEmployee newDoctorEmployee);
     List<DoctorEmployee> Read();
-    IObservable<DoctorEmployee> ObserveByLogin(string login);
+    IObservable<DoctorEmployee> ObserveById(int id);
 }
 

@@ -39,15 +39,19 @@ public class DoctorEmployeeRepository : BaseRepository<DoctorEmployee>, IDoctorE
 
     public List<DoctorEmployee> Read()
     {
+<<<<<<< HEAD
         return DeserializationXml(); 
+=======
+        return DeserializationJson(); 
+>>>>>>> temporary
     }
 
-    public IObservable<DoctorEmployee> ObserveByLogin(string login)
+    public IObservable<DoctorEmployee> ObserveById(int id)
     {
         return AsObservable.Select(
             (empl) =>
             {
-                return empl.FirstOrDefault((emp) => string.Equals(emp.Login, login));
+                return empl.FirstOrDefault((emp) => emp.Id.Equals(id));
             }
         )!.Where<DoctorEmployee>((d) => !d.Equals(null));
     }

@@ -2,7 +2,6 @@
 using System.Xml.Serialization;
 namespace Domain.Entities.People;
 
-[Serializable]
 public class User : Human
 {
     public string Login { get => _login; set => _login = value; }
@@ -12,6 +11,7 @@ public class User : Human
     public int Id; 
 
     public User(string name, string surname,  string login, string password, int id) : base(name, surname)
+    public User(string name, string surname,  DateTime bithTime,string login, string password) : base(name, surname, bithTime)
     {
         _login = new string(login);
         _password = new string(password);

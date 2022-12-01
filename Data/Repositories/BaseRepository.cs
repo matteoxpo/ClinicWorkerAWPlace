@@ -1,22 +1,34 @@
-using System.Xml;
-using System.Xml.Serialization;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
+
+using System.Text.Json;
+
 
 namespace Data.Repositories;
 
 
 abstract public class BaseRepository<T>
 {
+<<<<<<< HEAD
     private XmlSerializer _serializer;
     private XmlWriter _writer;
     private XmlReader _reader;
     private FileStream _fs;
+=======
+    private Stream _fs;
+>>>>>>> temporary
 
     private string _path;
     public IObservable<List<T>> AsObservable { get; }
     private BehaviorSubject <List<T>> _subject { get; }
+<<<<<<< HEAD
     protected  BaseRepository(string path)
+=======
+
+ 
+    
+    protected BaseRepository(string path)
+>>>>>>> temporary
     {
         _path = path;
         _subject = new BehaviorSubject<List<T>>(new List<T>());
@@ -26,7 +38,10 @@ abstract public class BaseRepository<T>
     abstract protected bool CompareEntities(T changedEntity, T entity);
     protected void Change(T changedEntity)
     {
+<<<<<<< HEAD
         PrepearTools();
+=======
+>>>>>>> temporary
         
         var newEntities = new List<T>(_subject.Value);
         foreach (var entity in _subject.Value)
@@ -34,7 +49,7 @@ abstract public class BaseRepository<T>
             if (!CompareEntities(changedEntity, entity)) continue;
             newEntities.Remove(entity);
             newEntities.Add(changedEntity);
-            SerializationXml(newEntities);
+            SerializationJson(newEntities);
             break;
         }
         _fs.Close();
@@ -42,19 +57,24 @@ abstract public class BaseRepository<T>
     
     protected void Remove(T delitingEmtity)
     {
+<<<<<<< HEAD
         PrepearTools();
         
+=======
+        _fs = GetStream();
+>>>>>>> temporary
         var newEntities = new List<T>(_subject.Value);
         foreach (var entity in _subject.Value)
         {
             if (!CompareEntities(delitingEmtity,entity)) continue;
             newEntities.Remove(entity);
-            SerializationXml(newEntities);
+            SerializationJson(newEntities);
             break;
         }
         _fs.Close();
     }
     
+<<<<<<< HEAD
     protected void SerializationXml(List<T> entities)
     {
         PrepearTools();
@@ -62,6 +82,15 @@ abstract public class BaseRepository<T>
         _subject.OnNext(entities);
         _serializer.Serialize(_writer, entities);
         _fs.Close();
+=======
+    protected void SerializationJson(List<T> entities)
+    {
+        _fs = GetStream();
+        _subject.OnNext(entities);
+        JsonSerializer.Serialize(GetStream(), entities);
+        _fs.Close();
+
+>>>>>>> temporary
     }
     
     protected void Append(T entity)
@@ -70,6 +99,7 @@ abstract public class BaseRepository<T>
         
         var newEntities = new List<T>(_subject.Value);
         newEntities.Add(entity);
+<<<<<<< HEAD
         SerializationXml(newEntities);
         _fs.Close();
     }
@@ -104,7 +134,34 @@ abstract public class BaseRepository<T>
         _reader = XmlReader.Create(_fs, new XmlReaderSettings());
         _fs.Seek(0, SeekOrigin.Begin);
 
+=======
+        SerializationJson(newEntities);
     }
+
+    private JsonSerializerOptions _options = new JsonSerializerOptions()
+    {
+        WriteIndented = true,
+    };
+
+    protected  List<T> DeserializationJson()
+    {
+        _fs = GetStream();
+        var deserialized = JsonSerializer.Deserialize<List<T>>(_fs, _options);
+        _fs.Close();
+        return deserialized;
+>>>>>>> temporary
+    }
+    
+    private Stream GetStream()=> _fs = new FileStream
+        (
+            _path,
+            FileMode.OpenOrCreate,
+            FileAccess.ReadWrite,
+            FileShare.ReadWrite,
+            4096,
+            FileOptions.None
+        );
+   
 
 
 }
