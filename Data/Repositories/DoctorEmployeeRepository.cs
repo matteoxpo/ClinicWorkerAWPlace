@@ -6,14 +6,16 @@ namespace Data.Repositories;
 public class DoctorEmployeeRepository : BaseRepository<DoctorEmployee>, IDoctorEmployeeRepository
 {
     // AutoFAC
-    private DoctorEmployeeRepository(string pathToFile) : base(pathToFile) { }
+    
+    // make private
+    public DoctorEmployeeRepository(string pathToFile) : base(pathToFile) { }
 
     private static DoctorEmployeeRepository? globalRepositoryInstance;
 
     public static DoctorEmployeeRepository GetInstance()
     { 
         return globalRepositoryInstance ??= new DoctorEmployeeRepository(
-            "../../../../Data/DataSets/Doctors.xml");
+            "../../../../Data/DataSets/Doctors.json");
     }
     
 
@@ -44,10 +46,15 @@ public class DoctorEmployeeRepository : BaseRepository<DoctorEmployee>, IDoctorE
 
     public IObservable<DoctorEmployee> ObserveById(int id)
     {
+        throw new NotImplementedException();
+    }
+
+    public IObservable<DoctorEmployee> ObserveByLogin(string login)
+    {
         return AsObservable.Select(
             (empl) =>
             {
-                return empl.FirstOrDefault((emp) => emp.Id.Equals(id));
+                return empl.FirstOrDefault((emp) => emp.Name.Equals(login));
             }
         )!.Where<DoctorEmployee>((d) => !d.Equals(null));
     }

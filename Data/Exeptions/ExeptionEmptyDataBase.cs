@@ -1,3 +1,4 @@
+
 namespace Data.Exeptions;
 
 class ExeptionEmptyDataBase : Exception

@@ -53,11 +53,13 @@ abstract public class BaseRepository<T>
         _fs.Close();
     }
     
-    protected void SerializationJson(List<T> entities)
+    
+    // make protected
+    public void SerializationJson(List<T> entities)
     {
         _fs = GetStream();
         _subject.OnNext(entities);
-        JsonSerializer.Serialize(GetStream(), entities);
+        JsonSerializer.Serialize(GetStream(), entities, _options);
         _fs.Close();
 
     }
