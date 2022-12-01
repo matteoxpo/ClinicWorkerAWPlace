@@ -5,18 +5,8 @@ using System.Collections.Generic;
 
 namespace Presentation.ViewModels.WorkPlace
 {
-    public class WorkPlaceHelpViewModel : ViewModelBase, IRoutableViewModel
+    public class WorkPlaceHelpViewModel : ReactiveObject, IRoutableViewModel
     {
-
-
-        public void changePasswordButton()
-        {
-            /*
-             self.Pass = newPass
-             
-             */
-            
-        }
         public WorkPlaceHelpViewModel(IScreen hostScreen)
         {
             HostScreen = hostScreen;

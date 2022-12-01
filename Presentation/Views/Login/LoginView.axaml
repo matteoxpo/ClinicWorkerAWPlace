@@ -14,12 +14,12 @@
         <vmlogin:LoginViewModel />
     </Design.DataContext>
     <Grid Margin="230">
-        <StackPanel Orientation="Vertical" Width="500">
+        <StackPanel Orientation="Vertical" Width="700">
             <Image
                 Height="100"
-                Source="{SvgImage /Assets/logo_colorfull.svg}"
+                Source="{SvgImage /Assets/logo_colorfully.svg}"
                 Width="100" />
-            <Border Background="#abffda" CornerRadius="5">
+            <Border Background="{StaticResource HeaderColor}" CornerRadius="5">
                 <TextBlock
                     FontFamily="OpenSans"
                     FontSize="20"

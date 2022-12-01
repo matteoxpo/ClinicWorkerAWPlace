@@ -11,38 +11,42 @@
     <Design.DataContext>
         <vmwp:DefaultWorkPlaceViewModel />
     </Design.DataContext>
-    <Grid>
-        <TextBlock
-            FontSize="18"
-            FontWeight="Bold"
-            HorizontalAlignment="Center"
-            Margin="0,50,0,0"
-            Text="Рабочее пространство"
-            VerticalAlignment="Top" />
-
-        <StackPanel
-            HorizontalAlignment="Left"
-            Margin="30,80,0,0"
-            Width="500">
-            <TextBlock
-                Background="#abffda"
-                FontSize="14"
-                Text="Список пациентов" />
-            <ListBox Items="{Binding Timetable}">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding Name}" />
-                            <TextBlock Margin="5,0,0,0" Text="{Binding Surname}" />
-                            <TextBlock Margin="5,0,0,0" Text="{Binding StringMeetingTime}" />
-                        </StackPanel>
-
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+    <Grid Margin="30">
+        <StackPanel Spacing="10">
+            <Border Background="{StaticResource HeaderColor}" CornerRadius="5">
+                <TextBlock
+                    FontSize="{StaticResource HeaderTextSize}"
+                    FontWeight="Heavy"
+                    HorizontalAlignment="Center"
+                    Text="Рабочее пространство"
+                    VerticalAlignment="Top" />
+            </Border>
+            <StackPanel Orientation="Horizontal">
+                <StackPanel Spacing="5" Width="500">
+                    <TextBlock
+                        Background="{StaticResource SubTitleColor}"
+                        FontSize="{StaticResource SubTitleTextSize}"
+                        Text="Список пациентов" />
+                    <ListBox Items="{Binding Timetable}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" Spacing="5">
+                                    <TextBlock FontSize="{StaticResource TextSize}" Text="{Binding Name}" />
+                                    <TextBlock FontSize="{StaticResource TextSize}" Text="{Binding Surname}" />
+                                    <TextBlock
+                                        FontSize="{StaticResource TextSize}"
+                                        FontStyle="Italic"
+                                        Text="{Binding CurrentDoctorMeetTime}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <Button Command="{Binding}" HorizontalAlignment="Center">
+                        Добавить человека из 'живой очереди'
+                    </Button>
+                </StackPanel>
+            </StackPanel>
         </StackPanel>
-
-        <!--    -->
 
     </Grid>
 </UserControl>

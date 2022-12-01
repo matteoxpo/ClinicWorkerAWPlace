@@ -14,23 +14,32 @@
         Title="AutomatedWorkPlace"
     -->
     <Design.DataContext>
-        <vmwp:WorkPlaceViewModel />
+        <vmwp:WorkPlaceProfileViewModel />
     </Design.DataContext>
-    <Grid>
-        <!--    -->
-        <TextBlock
-            FontSize="30"
-            FontWeight="Bold"
-            HorizontalAlignment="Center"
-            Margin="50"
-            Text="Ваш профиль"
-            VerticalAlignment="Top" />
-        <StackPanel HorizontalAlignment="Right" Margin="80">
-            <TextBlock FontSize="18" Text="Binding Name" />
+    <Grid Margin="30">
+        <StackPanel Spacing="5">
 
-            <TextBlock FontSize="18" Text="Binding SurName" />
+            <Border Background="{StaticResource HeaderColor}" CornerRadius="5">
+                <TextBlock
+                    FontSize="{StaticResource HeaderTextSize}"
+                    FontWeight="Heavy"
+                    HorizontalAlignment="Center"
+                    Text="Ваш профиль"
+                    VerticalAlignment="Top" />
+            </Border>
+            <StackPanel HorizontalAlignment="Left">
+                <Image
+                    Height="170"
+                    Source="{SvgImage /Assets/account.svg}"
+                    Width="170" />
+                <StackPanel Orientation="Horizontal" Spacing="10">
+                    <TextBlock FontSize="{StaticResource TextSize}" Text="{Binding Name}" />
+                    <TextBlock FontSize="{StaticResource TextSize}" Text="{Binding Surname}" />
+
+                </StackPanel>
+                <TextBlock FontSize="{StaticResource TextSize}" Text="{Binding Category}" />
+            </StackPanel>
         </StackPanel>
-
 
         <!--    -->
     </Grid>

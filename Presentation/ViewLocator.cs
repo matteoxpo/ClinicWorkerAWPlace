@@ -1,8 +1,7 @@
 using System;
-using System.ComponentModel;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
-using Presentation.ViewModels;
+using ReactiveUI;
 
 namespace Presentation
 {
@@ -24,7 +23,7 @@ namespace Presentation
         public bool Match(object data)
         {
 
-            return data is ViewModelBase;
+            return data is ReactiveObject;
         }
     }
 }

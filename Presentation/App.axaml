@@ -1,11 +1,30 @@
-<Application xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="using:Presentation"
-             x:Class="Presentation.App">
+<Application
+    x:Class="Presentation.App"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:local="using:Presentation"
+    xmlns:system="clr-namespace:System;assembly=mscorlib"
+    xmlns:system1="clr-namespace:System;assembly=System.Runtime"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Application.DataTemplates>
         <local:ViewLocator />
     </Application.DataTemplates>
     <Application.Styles>
         <FluentTheme Mode="Light" />
     </Application.Styles>
+    <Application.Resources>
+        <ResourceDictionary>
+            <system:Double x:Key="HeaderTextSize">18</system:Double>
+            <system:Double x:Key="SubTitleTextSize">15</system:Double>
+            <system:Double x:Key="TextSize">14</system:Double>
+            <system:Double x:Key="SmallTextSize">12</system:Double>
+            <Color x:Key="HeaderColor">#abffda</Color>
+
+            <Color x:Key="SubTitleColor">#d3fcea</Color>
+            <system:String x:Key="AboutWorkPlaceHelpText">
+В панели рабочее пространство находится основная часть - список вам пациентов.
+Когда человек пришел на прием - нажмите на него в списке и заполните необходимую информацию.
+Елси человек пришел 'из живой очереди', то выбирите соответвующюю кнопку в панели
+            </system:String>
+        </ResourceDictionary>
+    </Application.Resources>
 </Application>

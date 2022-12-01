@@ -13,8 +13,7 @@ public class DoctorEmployeeRepository : BaseRepository<DoctorEmployee>, IDoctorE
     public static DoctorEmployeeRepository GetInstance()
     { 
         return globalRepositoryInstance ??= new DoctorEmployeeRepository(
-            "../../../../Data/DataSets/Doc.xml");
-        // C:\Users\s-hro\source\repos\AutomatedWorkPlace\\\Data\DataSets\Doc.xml
+            "../../../../Data/DataSets/Doctors.xml");
     }
     
 
@@ -40,7 +39,7 @@ public class DoctorEmployeeRepository : BaseRepository<DoctorEmployee>, IDoctorE
 
     public List<DoctorEmployee> Read()
     {
-        return DeserializationXml();
+        return DeserializationXml(); 
     }
 
     public IObservable<DoctorEmployee> ObserveByLogin(string login)

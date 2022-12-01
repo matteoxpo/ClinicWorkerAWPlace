@@ -17,15 +17,15 @@ public class DoctorEmployee : User
         Patients = new List<Client>();
     }
 
-    public DoctorEmployee(DoctorEmployee doctorEmployee) : base(doctorEmployee.Name, doctorEmployee.Surname, doctorEmployee.Login , doctorEmployee.Password)
+    public DoctorEmployee(DoctorEmployee doctorEmployee) : base(doctorEmployee.Name, doctorEmployee.Surname, doctorEmployee.Login , doctorEmployee.Password, doctorEmployee.Id)
     {
         Category = doctorEmployee.Category;
         Patients = new List<Client>(doctorEmployee.Patients);
         Speciality = new List<string>(doctorEmployee.Speciality);
     }
     
-    public DoctorEmployee(string name, string surname,  string login, string password, Qualifications category, List<string> speciality, List<Client> clients)
-    : base(name, surname, login, password)
+    public DoctorEmployee(string name, string surname,  string login, string password, Qualifications category, List<string> speciality, List<Client> clients, int id)
+    : base(name, surname, login, password, id)
     {
         Category = category;
         Speciality = new List<string>(speciality);

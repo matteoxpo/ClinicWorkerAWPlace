@@ -6,7 +6,7 @@ namespace Domain.UseCases;
 public class DoctorEmployeeInteractor
 {
     private readonly IDoctorEmployeeRepository _repository;
-    // сюда приходит реализация из Db.Rep
+
     public DoctorEmployeeInteractor(IDoctorEmployeeRepository repository)
     {
         _repository = repository;
@@ -36,9 +36,13 @@ public class DoctorEmployeeInteractor
             if (string.Equals(empl.Login, login) && string.Equals(empl.Password, password))
             {
                 d = new DoctorEmployee(empl);
+                foreach (var patient in d.Patients)
+                {
+                    patient.CurrentDoctorMeetTime = patient.Appointments[d.Id].ToString();
+                }
+                break;
             }
         }
-
         return d;
     }
     
