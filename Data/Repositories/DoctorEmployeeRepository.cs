@@ -8,7 +8,7 @@ public class DoctorEmployeeRepository : BaseRepository<DoctorEmployee>, IDoctorE
     // AutoFAC
     
     // make private
-    public DoctorEmployeeRepository(string pathToFile) : base(pathToFile) { }
+    private DoctorEmployeeRepository(string pathToFile) : base(pathToFile) { }
 
     private static DoctorEmployeeRepository? globalRepositoryInstance;
 

@@ -55,7 +55,7 @@ abstract public class BaseRepository<T>
     
     
     // make protected
-    public void SerializationJson(List<T> entities)
+    protected void SerializationJson(List<T> entities)
     {
         _fs = GetStream();
         _subject.OnNext(entities);
