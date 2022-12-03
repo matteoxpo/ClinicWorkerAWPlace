@@ -1,12 +1,11 @@
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-
 namespace Domain.Entities.People;
+
+[Serializable]
 public class DoctorEmployee : User
 {
     public Qualifications Category { get; set; }
-    public List<Tuple<Client, DateTime>> Patients { get; set; }
-    public List<string> Speciality { get; set; }
+    public IEnumerable<Tuple<Client, DateTime>> Patients { get; set; }
+    public IEnumerable<string> Speciality { get; set; }
 
 
 
@@ -24,7 +23,7 @@ public class DoctorEmployee : User
         Speciality = new List<string>(doctorEmployee.Speciality);
     }
     
-    public DoctorEmployee(string name, string surname,  DateTime birthTime,string login, string password, Qualifications category, List<string> speciality, List<Tuple<Client, DateTime>> clients)
+    public DoctorEmployee(string name, string surname, DateTime birthTime ,string login, string password, Qualifications category, IEnumerable<string> speciality, IEnumerable<Tuple<Client, DateTime>> clients)
     : base(name, surname, birthTime ,login, password)
     {
         Category = category;

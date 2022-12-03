@@ -1,3 +1,4 @@
+using System.Net;
 using System.Reactive.Linq;
 using Domain.Entities.People;
 using Domain.Repositories;
@@ -10,18 +11,19 @@ public class DoctorEmployeeRepository : BaseRepository<DoctorEmployee>, IDoctorE
     // make private
     private DoctorEmployeeRepository(string pathToFile) : base(pathToFile) { }
 
-    private static DoctorEmployeeRepository? globalRepositoryInstance;
+    
+    private static DoctorEmployeeRepository? _globalRepositoryInstance;
 
     public static DoctorEmployeeRepository GetInstance()
     { 
-        return globalRepositoryInstance ??= new DoctorEmployeeRepository(
+        return _globalRepositoryInstance ??= new DoctorEmployeeRepository(
             "../../../../Data/DataSets/Doctors.json");
     }
     
 
-    protected override bool CompareEntities(DoctorEmployee changedEntity, DoctorEmployee entity)
+    protected override bool CompareEntities(DoctorEmployee entity1, DoctorEmployee entity2)
     {
-        return string.Equals(changedEntity.Login, entity.Login);
+        return string.Equals(entity1.Login, entity2.Login);
     }
 
     public void Update(DoctorEmployee newDoctorEmployee)
@@ -39,14 +41,9 @@ public class DoctorEmployeeRepository : BaseRepository<DoctorEmployee>, IDoctorE
         Append(newDoctorEmployee);
     }
 
-    public List<DoctorEmployee> Read()
+    public IEnumerable<DoctorEmployee> Read()
     {
         return DeserializationJson(); 
-    }
-
-    public IObservable<DoctorEmployee> ObserveById(int id)
-    {
-        throw new NotImplementedException();
     }
 
     public IObservable<DoctorEmployee> ObserveByLogin(string login)
@@ -58,4 +55,5 @@ public class DoctorEmployeeRepository : BaseRepository<DoctorEmployee>, IDoctorE
             }
         )!.Where<DoctorEmployee>((d) => !d.Equals(null));
     }
+   
 }

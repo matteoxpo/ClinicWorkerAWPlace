@@ -1,0 +1,25 @@
+﻿<Window
+    Icon="/Assets/logo_empty.ico"
+    Title="Поиск клиента"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d"
+    x:Class="Presentation.Views.WorkPlace.Default.AdditionPatientWindow"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:Presentation.ViewModels.WorkPlace.Default"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Design.DataContext>
+        <vm:AdditionPatientViewModel />
+    </Design.DataContext>
+    <Grid>
+        <StackPanel>
+            <TextBlock>asdasdasd test</TextBlock>
+            <Button Command="{Binding AddPatient}" />
+        </StackPanel>
+    </Grid>
+
+
+</Window>

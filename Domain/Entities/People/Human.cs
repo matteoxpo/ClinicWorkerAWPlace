@@ -1,24 +1,23 @@
 namespace Domain.Entities.People;
+
+[Serializable]
 public abstract class Human
 {
-    protected string _name;
-    public string Name { get => _name; set => _name = value; }
-    public string Surname { get => _surname; set => _surname = value; }
-    public  DateTime DateOfBirth { get => _dateOfBirth; set => _dateOfBirth = value; }
-    protected string _surname;
-    protected DateTime _dateOfBirth;
+    public string Name { get; set ; }
+    public string Surname { get ; set; }
+    public  DateTime DateOfBirth { get; set; }
     public Human(string name, string surname, DateTime dateTime)
     {
-        _name = new string(name);
-        _surname = new string(surname);
-        _dateOfBirth = dateTime;
+        Name = new string(name);
+        Surname = new string(surname);
+        DateOfBirth = dateTime;
     }
 
     public Human()
     {
-        _name = new string("name");
-        _surname = new string("surname");
-        _dateOfBirth = new DateTime(0);
+        Name = new string("name");
+        Surname = new string("surname");
+        DateOfBirth = new DateTime(0);
     }
 
 }

@@ -8,7 +8,6 @@ using System.Diagnostics.Tracing;
 using System.Collections.Generic;
 using Data.Repositories;
 using Domain.Entities.People;
-using Domain.Repositories;
 using Domain.UseCases;
 using Presentation.ViewModels.WorkPlace;
 
@@ -16,11 +15,8 @@ namespace Presentation.ViewModels.Login
 {
     public class LoginViewModel : ReactiveObject, IRoutableViewModel
     {
-        private string _UserLogin = "";
-        private string _Password = "";
-
-        
-        
+        private string _userLogin = "";
+        private string _userPassword = "";
         public ReactiveCommand<Unit, Unit> GoToWorkPlace { get; }
         private ObservableAsPropertyHelper<bool> _isDataValid { get; }
         private bool IsDataValid => _isDataValid.Value;
@@ -37,7 +33,7 @@ namespace Presentation.ViewModels.Login
                     .DistinctUntilChanged();
 
             var isUserPasswordValid = this
-                    .WhenAnyValue(v => v.Password)
+                    .WhenAnyValue(v => v.UserPassword)
                     .Select(w => w.Length != 0)
                     .DistinctUntilChanged();
 
@@ -52,26 +48,24 @@ namespace Presentation.ViewModels.Login
         public IScreen HostScreen { get; }
 
         private async Task TestData()
-        { 
-            if (_interactor.AuthorizationUseCase(_UserLogin, _Password))
+        {
+            DoctorEmployee doc;
+            if ( _interactor.Authorization(UserLogin, UserPassword))
             {
-                var doc = _interactor.Get(_UserLogin, _Password);
-                
-                
-            await HostScreen.Router.Navigate.Execute(new WorkPlaceViewModel(HostScreen, doc));
+                await HostScreen.Router.Navigate.Execute(new WorkPlaceViewModel(HostScreen, _interactor.Get(UserLogin)));
             }
 
         }
 
         public string UserLogin
         {
-            get => _UserLogin;
-            set => this.RaiseAndSetIfChanged(ref _UserLogin, value);
+            get => _userLogin;
+            set => this.RaiseAndSetIfChanged(ref _userLogin, value);
         }
-        public string Password
+        public string UserPassword
         {
-            get => _Password;
-            set => this.RaiseAndSetIfChanged(ref _Password, value);
+            get => _userPassword;
+            set => this.RaiseAndSetIfChanged(ref _userPassword, value);
         }
 
 

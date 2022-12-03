@@ -1,6 +1,5 @@
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
-
 using System.Text.Json;
 
 
@@ -24,10 +23,10 @@ abstract public class BaseRepository<T>
         AsObservable = _subject.AsObservable();
     }
     
-    abstract protected bool CompareEntities(T changedEntity, T entity);
+    protected abstract bool CompareEntities(T changedEntity, T entity);
     protected void Change(T changedEntity)
     {
-        
+        _fs = GetStream();
         var newEntities = new List<T>(_subject.Value);
         foreach (var entity in _subject.Value)
         {
@@ -37,6 +36,7 @@ abstract public class BaseRepository<T>
             SerializationJson(newEntities);
             break;
         }
+        _fs.Close();
     }
     
     protected void Remove(T delitingEmtity)
@@ -61,7 +61,6 @@ abstract public class BaseRepository<T>
         _subject.OnNext(entities);
         JsonSerializer.Serialize(GetStream(), entities, _options);
         _fs.Close();
-
     }
     
     protected void Append(T entity)

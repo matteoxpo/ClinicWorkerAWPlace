@@ -1,7 +1,6 @@
-using System;
-
 namespace Domain.Entities;
 
+[Serializable]
 public class RefForAnalysis
 {
     public Analysis Analysis;

@@ -1,6 +1,7 @@
 using System;
 using Presentation.ViewModels.WorkPlace;
 using Presentation.ViewModels.Login;
+using Presentation.ViewModels.WorkPlace.Default;
 using Presentation.Views.WorkPlace;
 using Presentation.Views.WorkPlace.Default;
 using Presentation.Views.WorkPlace.Help;

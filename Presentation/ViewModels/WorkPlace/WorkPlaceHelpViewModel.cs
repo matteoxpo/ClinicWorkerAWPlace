@@ -1,7 +1,4 @@
-using System;
-using System.Reactive;
 using ReactiveUI;
-using System.Collections.Generic;
 
 namespace Presentation.ViewModels.WorkPlace
 {
@@ -14,9 +11,5 @@ namespace Presentation.ViewModels.WorkPlace
 
         public string? UrlPathSegment { get; }
         public IScreen HostScreen { get; }
-
-        // public RoutingState Router { get; } = new RoutingState();
-
-
     }
 }

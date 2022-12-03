@@ -4,6 +4,7 @@ using ReactiveUI;
 using Presentation.ViewModels.Login;
 using System.Collections.Generic;
 using Domain.Entities.People;
+using Presentation.ViewModels.WorkPlace.Default;
 
 namespace Presentation.ViewModels.WorkPlace
 {
@@ -24,6 +25,7 @@ namespace Presentation.ViewModels.WorkPlace
 
         public WorkPlaceViewModel(IScreen hostScreen, DoctorEmployee doctorEmployee)
         {
+            
             self = doctorEmployee;
             
             HostScreen = hostScreen;

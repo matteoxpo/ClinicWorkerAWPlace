@@ -5,11 +5,12 @@
     x:Class="Presentation.Views.WorkPlace.Default.DefaultWorkPlaceView"
     xmlns="https://github.com/avaloniaui"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:default="clr-namespace:Presentation.ViewModels.WorkPlace.Default"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vmwp="using:Presentation.ViewModels.WorkPlace"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Design.DataContext>
-        <vmwp:DefaultWorkPlaceViewModel />
+        <default:DefaultWorkPlaceViewModel />
     </Design.DataContext>
     <Grid Margin="30">
         <StackPanel Spacing="10">
@@ -27,21 +28,10 @@
                         Background="{StaticResource SubTitleColor}"
                         FontSize="{StaticResource SubTitleTextSize}"
                         Text="Список пациентов" />
-                    <ListBox Items="{Binding Timetable}">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal" Spacing="5">
-                                    <TextBlock FontSize="{StaticResource TextSize}" Text="{Binding Name}" />
-                                    <TextBlock FontSize="{StaticResource TextSize}" Text="{Binding Surname}" />
-                                    <TextBlock
-                                        FontSize="{StaticResource TextSize}"
-                                        FontStyle="Italic"
-                                        Text="{Binding CurrentDoctorMeetTime}" />
-                                </StackPanel>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-                    <Button Command="{Binding}" HorizontalAlignment="Center">
+                    <ScrollViewer Height="600">
+                        <ListBox Items="{Binding Clients}" />
+                    </ScrollViewer>
+                    <Button Command="{Binding AddPatient}" HorizontalAlignment="Center">
                         Добавить человека из 'живой очереди'
                     </Button>
                 </StackPanel>

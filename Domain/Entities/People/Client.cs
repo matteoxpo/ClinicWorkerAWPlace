@@ -1,15 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Runtime;
-using System.Data;
-using System.Globalization;
-
 namespace Domain.Entities.People;
 
+[Serializable]
 public class Client : Human
 {
     public string Complaints;
-    public List<RefForAnalysis> Analyzes;
+    public IEnumerable<RefForAnalysis> Analyzes;
 
     public Client() : base()
     {
@@ -17,7 +12,7 @@ public class Client : Human
         Analyzes = new List<RefForAnalysis>();
     }
 
-    public Client(string name, string surname, string complaints, List<RefForAnalysis> analyses, DateTime birthTime) :
+    public Client(string name, string surname, DateTime birthTime, string complaints, IEnumerable<RefForAnalysis> analyses) :
         base(name, surname, birthTime)
     {
         Complaints = new string(complaints);

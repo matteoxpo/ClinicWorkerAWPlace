@@ -4,8 +4,6 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using ReactiveUI;
 using System;
-using Domain.Repositories;
-using Presentation.ViewModels.WorkPlace;
 using Presentation.ViewModels.Login;
 
 namespace Presentation.ViewModels
