@@ -13,6 +13,7 @@ public class DoctorEmployeeRepository : BaseRepository<DoctorEmployee>, IDoctorE
 
     
     private static DoctorEmployeeRepository? _globalRepositoryInstance;
+  
 
     public static DoctorEmployeeRepository GetInstance()
     { 
@@ -51,9 +52,9 @@ public class DoctorEmployeeRepository : BaseRepository<DoctorEmployee>, IDoctorE
         return AsObservable.Select(
             (empl) =>
             {
-                return empl.FirstOrDefault((emp) => emp.Name.Equals(login));
+                return empl.FirstOrDefault((emp) => emp.Login.Equals(login));
             }
-        )!.Where<DoctorEmployee>((d) => !d.Equals(null));
+        )!.Where<DoctorEmployee>((d) => d is not null);
     }
    
 }

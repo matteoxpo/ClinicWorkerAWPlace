@@ -30,13 +30,13 @@ namespace Presentation.ViewModels.WorkPlace
             
             HostScreen = hostScreen;
 
-            DefaultWorkPlaceViewModel = new DefaultWorkPlaceViewModel(this, self);
+            DefaultWorkPlaceViewModel = new DefaultWorkPlaceViewModel(this, self.Login);
 
             GoToProfile = ReactiveCommand.CreateFromObservable(
                 () => Router.Navigate.Execute(new WorkPlaceProfileViewModel(this, self)));
 
             GoToDefault = ReactiveCommand.CreateFromObservable(
-                () => Router.Navigate.Execute(new DefaultWorkPlaceViewModel(this, self)));
+                () => Router.Navigate.Execute(new DefaultWorkPlaceViewModel(this, self.Login)));
 
             GoToHelp = ReactiveCommand.CreateFromObservable(
                 () => Router.Navigate.Execute(new WorkPlaceHelpViewModel(this)));

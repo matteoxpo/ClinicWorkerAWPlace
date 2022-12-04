@@ -50,9 +50,16 @@ namespace Presentation.ViewModels.Login
         private async Task TestData()
         {
             DoctorEmployee doc;
-            if ( _interactor.Authorization(UserLogin, UserPassword))
+            try
             {
-                await HostScreen.Router.Navigate.Execute(new WorkPlaceViewModel(HostScreen, _interactor.Get(UserLogin)));
+                if ( _interactor.Authorization(UserLogin, UserPassword))
+                {
+                    await HostScreen.Router.Navigate.Execute(new WorkPlaceViewModel(HostScreen, _interactor.Get(UserLogin)));
+                }
+            }
+            catch (DoctorEmployeeException e)
+            {
+                Console.WriteLine(e);
             }
 
         }

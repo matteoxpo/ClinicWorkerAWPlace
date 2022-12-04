@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Reactive;
+using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Threading.Channels;
 using System.Threading.Tasks;
@@ -12,36 +13,37 @@ using ReactiveUI;
 
 namespace Presentation.ViewModels.WorkPlace.Default
 {
-    public class DefaultWorkPlaceViewModel : ReactiveObject, IRoutableViewModel
+    public class DefaultWorkPlaceViewModel : ReactiveObject, IRoutableViewModel, IActivatableViewModel
     {
-        //
-        // приноси данные по лоигу сюда прокидывай логин через интерактор все остальное получай
-        // 
         private List<Tuple<Client, DateTime>> Timetable { get; set; }
         public Interaction<AdditionPatientViewModel, Tuple<Client?, DateTime>?> ShowAdditionPatient { get; }
         public ReactiveCommand<Unit, Unit> AddPatient { get; }
         private DoctorEmployeeInteractor _interactor;
+        private IObservable<DoctorEmployee> _observable;
         public List<string> Clients { get; }
 
-        private DoctorEmployee self;
+
+        private string _login;
 
         public DefaultWorkPlaceViewModel(IScreen hostScreen, string login)
         {
+            _login = login;
+            
+            HostScreen = hostScreen;
+
+            Activator = new ViewModelActivator();
 
             _interactor = new DoctorEmployeeInteractor(DoctorEmployeeRepository.GetInstance());
 
-            // get login from wp
-            // string login = new string("asdas");
-            var t = _interactor.Observe(login);
-             t.Subscribe((d) => Timetable = new List<Tuple<Client, DateTime>>(d.Patients)).Dispose();
-            //
+            _observable = _interactor.Observe(login);
             
-            HostScreen = hostScreen;
+            Timetable = new List<Tuple<Client, DateTime>>(_interactor.Get(login).Patients);
             
-            // Timetable = new List<Tuple<Client, DateTime>>(self.Patients);
+            var q = _observable.Subscribe((d) => Timetable = new List<Tuple<Client, DateTime>>(d.Patients));
+            this.WhenActivated(r => q.DisposeWith(r));
+            
             Clients = new List<string>();
 
-            ShowAdditionPatient = new Interaction<AdditionPatientViewModel, Tuple<Client?, DateTime>?>();
             
             foreach (var el in Timetable)
             {
@@ -51,9 +53,11 @@ namespace Presentation.ViewModels.WorkPlace.Default
                     "  " + el.Item1.Surname);
             }
 
+            ShowAdditionPatient = new Interaction<AdditionPatientViewModel, Tuple<Client?, DateTime>?>();
             AddPatient = ReactiveCommand.CreateFromTask(OnAddPatient);
-
-
+            
+            // this.WhenActivated((d) => d.Subscribe((h) => Timetable = new List<Tuple<Client, DateTime>>(h.Patients)).DisposeWith(d));
+            
         }
 
         private async Task OnAddPatient()
@@ -61,8 +65,7 @@ namespace Presentation.ViewModels.WorkPlace.Default
             try
             {
                 var newPatien = await ShowAdditionPatient.Handle(new AdditionPatientViewModel());
-                // self.Patients.Add(newPatien!);
-                // _interactor.AddPatienUseCae(self, newPatient);
+                _interactor.AddPatient(_login, new Client(), new DateTime(2023, 12, 12)); 
             }
             catch (Exception e)
             {
@@ -72,5 +75,6 @@ namespace Presentation.ViewModels.WorkPlace.Default
 
         public IScreen HostScreen { get; }
         public string? UrlPathSegment { get; }
+        public ViewModelActivator Activator { get; }
     }
 }
