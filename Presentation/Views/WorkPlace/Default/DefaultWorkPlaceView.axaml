@@ -17,17 +17,19 @@
             <Border Background="{StaticResource HeaderColor}" CornerRadius="5">
                 <TextBlock
                     FontSize="{StaticResource HeaderTextSize}"
-                    FontWeight="Heavy"
+                    Foreground="{StaticResource HeaderTextColor}"
                     HorizontalAlignment="Center"
                     Text="Рабочее пространство"
                     VerticalAlignment="Top" />
             </Border>
             <StackPanel Orientation="Horizontal">
                 <StackPanel Spacing="5" Width="500">
-                    <TextBlock
-                        Background="{StaticResource SubTitleColor}"
-                        FontSize="{StaticResource SubTitleTextSize}"
-                        Text="Список пациентов" />
+                    <Border Background="{StaticResource SubTitleColor}" CornerRadius="5">
+                        <TextBlock
+                            FontSize="{StaticResource SubTitleTextSize}"
+                            Foreground="{StaticResource SubTitleTextColor}"
+                            Text="Список пациентов" />
+                    </Border>
                     <ScrollViewer Height="600">
                         <ListBox Items="{Binding Clients}" />
                     </ScrollViewer>

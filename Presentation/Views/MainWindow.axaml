@@ -1,6 +1,7 @@
 
 <!--  xmlns:viewmodels="clr-namespace:Presentation.ViewModels"  -->
 <Window
+    Background="{StaticResource BackGroundColor}"
     Icon="/Assets/logo_empty.ico"
     MinHeight="450"
     MinWidth="800"
@@ -17,13 +18,8 @@
     xmlns:vm="using:Presentation.ViewModels"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <!--  d:DesignHeight="450"  -->
-    <!--  d:DesignWidth="800"  -->
-
-    <!--  xmlns:workplace="clr-namespace:Presentation.Views.WorkPlace"  -->
-
-    <Grid Grid.Row="1">
-        <rxui:RoutedViewHost Grid.Row="0" Router="{Binding Router}">
+    <Grid>
+        <rxui:RoutedViewHost Router="{Binding Router}">
             <rxui:RoutedViewHost.DefaultContent>
                 <login:LoginView DataContext="{Binding LoginViewModel}" />
             </rxui:RoutedViewHost.DefaultContent>

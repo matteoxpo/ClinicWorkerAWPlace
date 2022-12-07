@@ -13,13 +13,19 @@
     </Application.Styles>
     <Application.Resources>
         <ResourceDictionary>
+            <Color x:Key="BackGroundColor">#d5e9cd</Color>
+
             <system:Double x:Key="HeaderTextSize">18</system:Double>
             <system:Double x:Key="SubTitleTextSize">15</system:Double>
             <system:Double x:Key="TextSize">14</system:Double>
             <system:Double x:Key="SmallTextSize">12</system:Double>
-            <Color x:Key="HeaderColor">#abffda</Color>
 
-            <Color x:Key="SubTitleColor">#d3fcea</Color>
+            <Color x:Key="HeaderColor">#a6cc96</Color>
+            <Color x:Key="HeaderTextColor">White</Color>
+
+            <Color x:Key="SubTitleColor">#a3c197</Color>
+            <Color x:Key="SubTitleTextColor">White</Color>
+
             <system:String x:Key="AboutWorkPlaceHelpText">
                 В панели рабочее пространство находится основная часть - список вам пациентов.
                 Когда человек пришел на прием - нажмите на него в списке и заполните необходимую информацию.

@@ -22,7 +22,7 @@
             <Border Background="{StaticResource HeaderColor}" CornerRadius="5">
                 <TextBlock
                     FontSize="{StaticResource HeaderTextSize}"
-                    FontWeight="Heavy"
+                    Foreground="{StaticResource HeaderTextColor}"
                     HorizontalAlignment="Center"
                     Text="О программе"
                     VerticalAlignment="Top" />
