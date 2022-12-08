@@ -26,7 +26,6 @@ abstract public class BaseRepository<T>
     protected abstract bool CompareEntities(T changedEntity, T entity);
     protected void Change(T changedEntity)
     {
-        _fs = GetStream();
         var newEntities = new List<T>(_subject.Value);
         foreach (var entity in _subject.Value)
         {
@@ -36,12 +35,10 @@ abstract public class BaseRepository<T>
             SerializationJson(newEntities);
             break;
         }
-        _fs.Close();
     }
     
     protected void Remove(T delitingEmtity)
     {
-        _fs = GetStream();
         var newEntities = new List<T>(_subject.Value);
         foreach (var entity in _subject.Value)
         {
@@ -50,14 +47,12 @@ abstract public class BaseRepository<T>
             SerializationJson(newEntities);
             break;
         }
-        _fs.Close();
     }
     
     
     // make protected
-    protected void SerializationJson(List<T> entities)
+    public void SerializationJson(List<T> entities)
     {
-        _fs = GetStream();
         _subject.OnNext(entities);
         JsonSerializer.Serialize(GetStream(), entities, _options);
         _fs.Close();

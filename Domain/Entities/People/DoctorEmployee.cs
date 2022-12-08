@@ -19,7 +19,7 @@ public class DoctorEmployee : User
     public DoctorEmployee(DoctorEmployee doctorEmployee) : base(doctorEmployee.Name, doctorEmployee.Surname, doctorEmployee.DateOfBirth, doctorEmployee.Login , doctorEmployee.Password)
     {
         Category = doctorEmployee.Category;
-        Patients = new List<Tuple<Client, DateTime>>(doctorEmployee.Patients);
+        Patients = new List<Tuple<Client, DateTime>>(doctorEmployee.Patients );
         Speciality = new List<string>(doctorEmployee.Speciality);
     }
     
@@ -30,4 +30,13 @@ public class DoctorEmployee : User
         Speciality = new List<string>(speciality);
         Patients = new List<Tuple<Client, DateTime>>(clients);
     }
+    
+    public DoctorEmployee(string name, string surname, DateTime birthTime ,string login, string password, Qualifications category, IEnumerable<string> speciality)
+        : base(name, surname, birthTime ,login, password)
+    {
+        Category = category;
+        Speciality = new List<string>(speciality);
+    }
+    
+    
 }

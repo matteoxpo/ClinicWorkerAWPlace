@@ -42,7 +42,7 @@ namespace Presentation.ViewModels.Login
 
             GoToWorkPlace = ReactiveCommand.CreateFromTask(TestData);
 
-            _interactor = new DoctorEmployeeInteractor(DoctorEmployeeRepository.GetInstance());
+            _interactor = new DoctorEmployeeInteractor(DoctorEmployeeRepository.GetInstance(),ClientRepository.GetInstance());
         }
         public string? UrlPathSegment { get; }
         public IScreen HostScreen { get; }

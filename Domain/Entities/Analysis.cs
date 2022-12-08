@@ -3,7 +3,7 @@ namespace Domain.Entities;
 [Serializable]
 public class Analysis
 {
-    public string Title;
+    public string Title { get; }
     public int TimeForPrepearing;
 
 

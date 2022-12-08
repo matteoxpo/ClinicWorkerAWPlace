@@ -33,7 +33,7 @@ namespace Presentation.ViewModels.WorkPlace.Default
 
             Activator = new ViewModelActivator();
 
-            _interactor = new DoctorEmployeeInteractor(DoctorEmployeeRepository.GetInstance());
+            _interactor = new DoctorEmployeeInteractor(DoctorEmployeeRepository.GetInstance(), ClientRepository.GetInstance());
 
             _observable = _interactor.Observe(login);
             

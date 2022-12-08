@@ -3,8 +3,9 @@ namespace Domain.Entities.People;
 [Serializable]
 public class Client : Human
 {
-    public string Complaints;
-    public IEnumerable<RefForAnalysis> Analyzes;
+    public string Complaints { get; set; }
+    public IEnumerable<RefForAnalysis> Analyzes { get; set; }
+    public IEnumerable<Tuple<DoctorEmployee, DateTime>> Doctors { get; set; }
 
     public Client() : base()
     {
@@ -12,10 +13,11 @@ public class Client : Human
         Analyzes = new List<RefForAnalysis>();
     }
 
-    public Client(string name, string surname, DateTime birthTime, string complaints, IEnumerable<RefForAnalysis> analyses) :
+    public Client(string name, string surname, DateTime birthTime, string complaints, IEnumerable<RefForAnalysis> analyses, List<Tuple<DoctorEmployee, DateTime>> doctors) :
         base(name, surname, birthTime)
     {
         Complaints = new string(complaints);
         Analyzes = new List<RefForAnalysis>(analyses);
+        Doctors = new List<Tuple<DoctorEmployee, DateTime>>(doctors);
     }
 }

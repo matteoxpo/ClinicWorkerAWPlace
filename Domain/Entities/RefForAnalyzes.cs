@@ -3,8 +3,8 @@ namespace Domain.Entities;
 [Serializable]
 public class RefForAnalysis
 {
-    public Analysis Analysis;
-    public DateTime AnalysisTime;
+    public Analysis Analysis { get; }
+    public DateTime AnalysisTime { get; }
     public RefForAnalysis(Analysis analysis, DateTime analysisTime)
     {
         Analysis = analysis;

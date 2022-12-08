@@ -1,5 +1,6 @@
 using System.Globalization;
 using System.Reactive.Linq;
+using Domain.Entities;
 using Domain.Entities.People;
 using Domain.Repositories;
 
@@ -7,14 +8,15 @@ namespace Data.Repositories;
 
 public class ClientRepository : BaseRepository<Client>, IClientRepository
 {
-    private ClientRepository(string pathToFile) : base(pathToFile) { }
+    // сделать приватным!
+    public ClientRepository(string pathToFile) : base(pathToFile) { }
 
     private static ClientRepository? globalRepositoryInstance;
 
     public static ClientRepository GetInstance()
     { 
         return globalRepositoryInstance ??= new ClientRepository(
-            "../../../../Data/DataSets/Clients.xml");
+            "../../../../Data/DataSets/Patients.json");
     }
     
 
@@ -38,21 +40,25 @@ public class ClientRepository : BaseRepository<Client>, IClientRepository
         Append(newClient);
     }
 
-    public List<Client> Read()
+    public IEnumerable<Client> Read()
     {
-        return DeserializationJson(); 
+        var clients =  DeserializationJson();
+        foreach (var client in clients)
+        {
+            if (client.Analyzes is null)
+            {
+                client.Analyzes = new List<RefForAnalysis>();
+            }
+
+            if (client.Doctors is null)
+            {
+                client.Doctors = new List<Tuple<DoctorEmployee, DateTime>>();
+            }
+        }
+
+        return clients;
     }
 
-    public IObservable<Client> ObserveByNameSurnameDateOFBirth(string nameSurnameDate)
-    {
-        return AsObservable.Select(
-            (empl) =>
-            {
-                return empl.FirstOrDefault((emp) => string.Equals(
-                    emp.Name + emp.Surname + emp.DateOfBirth.ToString(CultureInfo.InvariantCulture), 
-                    nameSurnameDate));
-            }
-        )!.Where<Client>((d) => !d.Equals(null));
-    }
+   
 
 }

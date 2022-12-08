@@ -9,7 +9,7 @@ public class DoctorEmployeeRepository : BaseRepository<DoctorEmployee>, IDoctorE
     // AutoFAC
     
     // make private
-    private DoctorEmployeeRepository(string pathToFile) : base(pathToFile) { }
+    public DoctorEmployeeRepository(string pathToFile) : base(pathToFile) { }
 
     
     private static DoctorEmployeeRepository? _globalRepositoryInstance;
@@ -44,7 +44,21 @@ public class DoctorEmployeeRepository : BaseRepository<DoctorEmployee>, IDoctorE
 
     public IEnumerable<DoctorEmployee> Read()
     {
-        return DeserializationJson(); 
+        var doctors =  new List<DoctorEmployee>(DeserializationJson());
+        foreach (var doc in doctors)
+        {
+            if (doc.Patients is null)
+            {
+                doc.Patients = new List<Tuple<Client, DateTime>>();
+            }
+
+            if (doc.Speciality is null)
+            {
+                doc.Speciality = new List<string>();
+            }
+        }
+
+        return doctors;
     }
 
     public IObservable<DoctorEmployee> ObserveByLogin(string login)
