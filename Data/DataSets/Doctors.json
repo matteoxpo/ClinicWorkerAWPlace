@@ -1,7 +1,7 @@
 ﻿[
         {
                 "Category": 1,
-                "Patients": null,
+                "Patients": [],
                 "Speciality": [
                         "spec#2",
                         "spec#4",

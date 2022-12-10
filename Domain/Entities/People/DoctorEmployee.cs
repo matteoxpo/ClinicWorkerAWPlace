@@ -4,10 +4,12 @@ namespace Domain.Entities.People;
 public class DoctorEmployee : User
 {
     public Qualifications Category { get; set; }
+    // добавить класс Appointment
     public IEnumerable<Tuple<Client, DateTime>> Patients { get; set; }
     public IEnumerable<string> Speciality { get; set; }
 
-
+    // лучше сделать бы здесь поле о ролях
+    // public IEnumerable<User> Roles;
 
     public DoctorEmployee() : base()
     {

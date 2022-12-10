@@ -47,7 +47,7 @@ public class ClientRepository : BaseRepository<Client>, IClientRepository
         {
             if (client.Analyzes is null)
             {
-                client.Analyzes = new List<RefForAnalysis>();
+                client.Analyzes = new List<ReferenceForAnalysis>();
             }
 
             if (client.Doctors is null)
