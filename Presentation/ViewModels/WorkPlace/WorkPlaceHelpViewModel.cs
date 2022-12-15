@@ -1,3 +1,4 @@
+using Domain.Entities;
 using ReactiveUI;
 
 namespace Presentation.ViewModels.WorkPlace

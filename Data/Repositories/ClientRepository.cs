@@ -1,5 +1,3 @@
-using System.Globalization;
-using System.Reactive.Linq;
 using Domain.Entities;
 using Domain.Entities.People;
 using Domain.Repositories;
@@ -9,25 +7,32 @@ namespace Data.Repositories;
 public class ClientRepository : BaseRepository<Client>, IClientRepository
 {
     // сделать приватным!
-    public ClientRepository(string pathToFile) : base(pathToFile) { }
+
+    private IAppointmentRepository _appointmentRepository;
+    private ClientRepository(string pathToFile, IAppointmentRepository appointmentRepository) : base(pathToFile)
+    {
+        _appointmentRepository = appointmentRepository;
+    }
 
     private static ClientRepository? globalRepositoryInstance;
 
     public static ClientRepository GetInstance()
-    { 
+    {
         return globalRepositoryInstance ??= new ClientRepository(
-            "../../../../Data/DataSets/Patients.json");
-    }
-    
-
-    protected override bool CompareEntities(Client changedEntity, Client entity)
-    {
-        return (string.Equals(changedEntity.Surname, entity.Surname) && string.Equals(changedEntity.Name, entity.Name));
+            "../../../../Data/DataSets/Client.json", AppointmentRepository.GetInstance());
     }
 
-    public void Update(Client newClient)
+  
+
+
+    public override bool CompareEntities(Client changedEntity, Client entity)
     {
-        Change(newClient);
+        return (changedEntity.Id.Equals(entity.Id));
+    }
+
+    public void Update(Client changedClient)
+    {
+        Change(changedClient);
     }
 
     public void Delete(Client newClient)
@@ -42,23 +47,12 @@ public class ClientRepository : BaseRepository<Client>, IClientRepository
 
     public IEnumerable<Client> Read()
     {
-        var clients =  DeserializationJson();
+        var clients = DeserializationJson();
         foreach (var client in clients)
         {
-            if (client.Analyzes is null)
-            {
-                client.Analyzes = new List<ReferenceForAnalysis>();
-            }
-
-            if (client.Doctors is null)
-            {
-                client.Doctors = new List<Tuple<DoctorEmployee, DateTime>>();
-            }
+            client.Appointments = _appointmentRepository.ReadByClient(client);
         }
-
+        
         return clients;
     }
-
-   
-
 }

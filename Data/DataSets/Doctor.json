@@ -1,0 +1,42 @@
+[
+  {
+    "Category": 0,
+    "Speciality": [
+      "spec 0"
+    ],
+    "Appointments": [],
+    "Login": "log0"
+  },
+  {
+    "Category": 0,
+    "Speciality": [
+      "spec 1"
+    ],
+    "Appointments": [],
+    "Login": "log1"
+  },
+  {
+    "Category": 0,
+    "Speciality": [
+      "spec 2"
+    ],
+    "Appointments": [],
+    "Login": "log2"
+  },
+  {
+    "Category": 0,
+    "Speciality": [
+      "spec 3"
+    ],
+    "Appointments": [],
+    "Login": "log3"
+  },
+  {
+    "Category": 0,
+    "Speciality": [
+      "spec 4"
+    ],
+    "Appointments": [],
+    "Login": "log4"
+  }
+]

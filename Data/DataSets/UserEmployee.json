@@ -1,0 +1,42 @@
+[
+  {
+    "Name": "name0",
+    "Surname": "surname0",
+    "DateOfBirth": "2000-02-02T00:00:00",
+    "Login": "log0",
+    "Password": "pas0",
+    "JobTitles": []
+  },
+  {
+    "Name": "name1",
+    "Surname": "surname1",
+    "DateOfBirth": "2000-02-02T00:00:00",
+    "Login": "log1",
+    "Password": "pas1",
+    "JobTitles": []
+  },
+  {
+    "Name": "name2",
+    "Surname": "surname2",
+    "DateOfBirth": "2000-02-02T00:00:00",
+    "Login": "log2",
+    "Password": "pas2",
+    "JobTitles": []
+  },
+  {
+    "Name": "name3",
+    "Surname": "surname3",
+    "DateOfBirth": "2000-02-02T00:00:00",
+    "Login": "log3",
+    "Password": "pas3",
+    "JobTitles": []
+  },
+  {
+    "Name": "name4",
+    "Surname": "surname4",
+    "DateOfBirth": "2000-02-02T00:00:00",
+    "Login": "log4",
+    "Password": "pas4",
+    "JobTitles": []
+  }
+]

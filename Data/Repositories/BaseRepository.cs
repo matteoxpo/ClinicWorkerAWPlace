@@ -1,6 +1,8 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Text.Json;
+using Domain.Repositories;
 
 
 namespace Data.Repositories;
@@ -8,26 +10,26 @@ namespace Data.Repositories;
 
 abstract public class BaseRepository<T>
 {
-    private Stream _fs;
+    private Stream? _fs;
 
     private string _path;
-    public IObservable<List<T>> AsObservable { get; }
-    private BehaviorSubject <List<T>> _subject { get; }
+    protected IObservable<List<T>> AsObservable { get; }
+    private BehaviorSubject <List<T>> _entitiesSubject { get; }
 
  
     
     protected BaseRepository(string path)
     {
         _path = path;
-        _subject = new BehaviorSubject<List<T>>(new List<T>());
-        AsObservable = _subject.AsObservable();
+        _entitiesSubject = new BehaviorSubject<List<T>>(new List<T>());
+        AsObservable = _entitiesSubject.AsObservable();
     }
     
-    protected abstract bool CompareEntities(T changedEntity, T entity);
+    public abstract bool CompareEntities(T changedEntity, T entity);
     protected void Change(T changedEntity)
     {
-        var newEntities = new List<T>(_subject.Value);
-        foreach (var entity in _subject.Value)
+        var newEntities = new List<T>(_entitiesSubject.Value);
+        foreach (var entity in _entitiesSubject.Value)
         {
             if (!CompareEntities(changedEntity, entity)) continue;
             newEntities.Remove(entity);
@@ -39,8 +41,8 @@ abstract public class BaseRepository<T>
     
     protected void Remove(T delitingEmtity)
     {
-        var newEntities = new List<T>(_subject.Value);
-        foreach (var entity in _subject.Value)
+        var newEntities = new List<T>(_entitiesSubject.Value);
+        foreach (var entity in _entitiesSubject.Value)
         {
             if (!CompareEntities(delitingEmtity,entity)) continue;
             newEntities.Remove(entity);
@@ -49,36 +51,56 @@ abstract public class BaseRepository<T>
         }
     }
     
-    
-    // make protected
-    public void SerializationJson(List<T> entities)
+    protected void SerializationJson(List<T> entities)
     {
-        _subject.OnNext(entities);
-        JsonSerializer.Serialize(GetStream(), entities, _options);
+        if (entities is null) return;
+        
+        _entitiesSubject.OnNext(entities);
+        File.WriteAllText(_path,"");
+        _fs = GetStream();
+        JsonSerializer.SerializeAsync(_fs, entities, _options);
         _fs.Close();
     }
     
     protected void Append(T entity)
     {
-        var newEntities = new List<T>(_subject.Value);
+        var newEntities = new List<T>(_entitiesSubject.Value);
         newEntities.Add(entity);
         SerializationJson(newEntities);
     }
 
-    private JsonSerializerOptions _options = new JsonSerializerOptions()
+    private JsonSerializerOptions _options = new ()
     {
         WriteIndented = true,
     };
 
     protected  List<T> DeserializationJson()
     {
+        List<T> deserialized = null;
         _fs = GetStream();
-        var deserialized = JsonSerializer.Deserialize<List<T>>(_fs, _options);
-        _fs.Close();
+        try
+        {
+            _fs = GetStream();
+            deserialized = JsonSerializer.Deserialize<List<T>>(_fs, _options);
+        }
+        catch (Exception)
+        {
+            // ignored
+        }
+        finally
+        {
+            _fs.Close();
+            if (deserialized is null)
+            {
+                deserialized = new List<T>();
+            }
+        }
+        _entitiesSubject.OnNext(deserialized);
         return deserialized;
+
     }
     
-    private Stream GetStream()=> _fs = new FileStream
+    private Stream GetStream()=> new FileStream
         (
             _path,
             FileMode.OpenOrCreate,

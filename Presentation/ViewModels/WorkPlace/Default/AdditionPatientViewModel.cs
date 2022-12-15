@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Reactive;
 using System.Threading.Tasks;
 using Data.Repositories;
+using Domain.Entities;
 using Domain.Entities.People;
 using Domain.UseCases;
 using ReactiveUI;
@@ -27,13 +28,13 @@ namespace Presentation.ViewModels.WorkPlace.Default
         private string? _surname;
         private string? _name;
 
-        public ReactiveCommand<Unit, Tuple<Client, DateTime>> AddPatient { get; } 
+        public ReactiveCommand<Unit, Appointment> AddPatient { get; } 
 
         public AdditionPatientViewModel()
         {
             AddPatient = ReactiveCommand.Create(() =>
                 {
-                    return new Tuple<Client, DateTime>(new Client(), DateTime.Now);
+                    return new Appointment("", "", DateTime.Now);
                 }
                 );
         }

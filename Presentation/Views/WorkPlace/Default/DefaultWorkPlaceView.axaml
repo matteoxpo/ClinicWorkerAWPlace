@@ -13,7 +13,7 @@
         <default:DefaultWorkPlaceViewModel />
     </Design.DataContext>
     <Grid Margin="30">
-        <StackPanel Spacing="10">
+        <StackPanel Spacing="10" IsVisible="{Binding IsUserDoctor}">
             <Border Background="{StaticResource HeaderColor}" CornerRadius="5">
                 <TextBlock
                     FontSize="{StaticResource HeaderTextSize}"
@@ -31,7 +31,7 @@
                             Text="Список пациентов" />
                     </Border>
                     <ScrollViewer Height="600">
-                        <ListBox Items="{Binding Clients}" />
+                        <ListBox Items="{Binding Timetable}" />
                     </ScrollViewer>
                     <Button Command="{Binding AddPatient}" HorizontalAlignment="Center">
                         Добавить человека из 'живой очереди'

@@ -37,7 +37,7 @@
                     <TextBlock FontSize="{StaticResource TextSize}" Text="{Binding Surname}" />
 
                 </StackPanel>
-                <TextBlock FontSize="{StaticResource TextSize}" Text="{Binding Category}" />
+                <TextBlock FontSize="{StaticResource TextSize}" Text="{Binding Login}" />
             </StackPanel>
         </StackPanel>
 

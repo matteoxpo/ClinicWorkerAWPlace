@@ -10,8 +10,7 @@ namespace Presentation.ViewModels.WorkPlace
 {
     public class WorkPlaceViewModel : ReactiveObject, IRoutableViewModel, IScreen
     {
-        private DoctorEmployee self;
-        public RoutingState Router { get; } = new RoutingState();
+        public RoutingState Router { get; } 
 
         public ReactiveCommand<Unit, IRoutableViewModel> GoToProfile { get; }
         public ReactiveCommand<Unit, IRoutableViewModel> GoToDefault { get; }
@@ -21,22 +20,24 @@ namespace Presentation.ViewModels.WorkPlace
         public string? UrlPathSegment { get; }
         public IScreen HostScreen { get; }
 
+        private string _login;
         DefaultWorkPlaceViewModel DefaultWorkPlaceViewModel { get; }
 
-        public WorkPlaceViewModel(IScreen hostScreen, DoctorEmployee doctorEmployee)
+        public WorkPlaceViewModel(IScreen hostScreen, string login)
         {
+            _login = new string(login);
             
-            self = doctorEmployee;
+            Router = new RoutingState();
             
             HostScreen = hostScreen;
 
-            DefaultWorkPlaceViewModel = new DefaultWorkPlaceViewModel(this, self.Login);
+            DefaultWorkPlaceViewModel = new DefaultWorkPlaceViewModel(this, login);
 
             GoToProfile = ReactiveCommand.CreateFromObservable(
-                () => Router.Navigate.Execute(new WorkPlaceProfileViewModel(this, self)));
+                () => Router.Navigate.Execute(new WorkPlaceProfileViewModel(this, login)));
 
             GoToDefault = ReactiveCommand.CreateFromObservable(
-                () => Router.Navigate.Execute(new DefaultWorkPlaceViewModel(this, self.Login)));
+                () => Router.Navigate.Execute(new DefaultWorkPlaceViewModel(this, login)));
 
             GoToHelp = ReactiveCommand.CreateFromObservable(
                 () => Router.Navigate.Execute(new WorkPlaceHelpViewModel(this)));

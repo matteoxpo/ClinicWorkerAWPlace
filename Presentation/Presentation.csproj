@@ -24,6 +24,7 @@
         <PackageReference Include="Avalonia.Svg" Version="11.0.0-preview4" />
         <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.0-preview4" />
         <PackageReference Include="Citrus.Avalonia" Version="1.6.1" />
+        <PackageReference Include="MessageBox.Avalonia" Version="2.2.0" />
         <PackageReference Include="Svg" Version="3.4.4" />
         <PackageReference Include="System.Reactive" Version="5.0.0" />
         <PackageReference Include="XamlNameReferenceGenerator" Version="1.3.4" />
@@ -31,23 +32,4 @@
         <ProjectReference Include="../Data/Data.csproj" />
     </ItemGroup>
     
-    <ItemGroup>
-      <AdditionalFiles Include="Views\WorkPlace\Default\DefaultWorkPlaceView.axaml" />
-      <AdditionalFiles Include="Views\WorkPlace\Help\WorkPlaceHelpView.axaml" />
-      <AdditionalFiles Include="Views\WorkPlace\Profile\WorkPlaceProfileView.axaml" />
-    </ItemGroup>
-    <ItemGroup>
-      <Compile Update="Views\WorkPlace\Default\DefaultWorkPlaceView.axaml.cs">
-        <DependentUpon>DefaultWorkPlaceView.axaml</DependentUpon>
-        <SubType>Code</SubType>
-      </Compile>
-      <Compile Update="Views\WorkPlace\Help\WorkPlaceHelpView.axaml.cs">
-        <DependentUpon>WorkPlaceHelpView.axaml</DependentUpon>
-        <SubType>Code</SubType>
-      </Compile>
-      <Compile Update="Views\WorkPlace\Profile\WorkPlaceProfileView.axaml.cs">
-        <DependentUpon>WorkPlaceProfileView.axaml</DependentUpon>
-        <SubType>Code</SubType>
-      </Compile>
-    </ItemGroup>
 </Project>

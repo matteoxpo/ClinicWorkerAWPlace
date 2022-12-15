@@ -1,0 +1,27 @@
+[
+  {
+    "ClientId": "1230",
+    "DoctorLogin": "log0",
+    "MeetTime": "2023-12-01T12:20:00"
+  },
+  {
+    "ClientId": "1231",
+    "DoctorLogin": "log1",
+    "MeetTime": "2023-12-01T12:20:00"
+  },
+  {
+    "ClientId": "1232",
+    "DoctorLogin": "log2",
+    "MeetTime": "2023-12-01T12:20:00"
+  },
+  {
+    "ClientId": "1233",
+    "DoctorLogin": "log3",
+    "MeetTime": "2023-12-01T12:20:00"
+  },
+  {
+    "ClientId": "1234",
+    "DoctorLogin": "log4",
+    "MeetTime": "2023-12-01T12:20:00"
+  }
+]

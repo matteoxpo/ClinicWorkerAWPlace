@@ -3,10 +3,7 @@ using Domain.Entities.People;
 
 namespace Domain.Repositories;
 
-public interface IClientRepository
+public interface IClientRepository : IBasePerository<Client>
 {
-    void Update(Client newClient);
-    void Delete(Client oldClient);
-    void Add(Client newClient);
-    IEnumerable<Client> Read();
+
 }
