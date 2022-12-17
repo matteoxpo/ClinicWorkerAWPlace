@@ -25,9 +25,10 @@ namespace Presentation.ViewModels.WorkPlace.Default
         public Interaction<AdditionPatientViewModel, Appointment?> ShowAdditionPatient { get; }
         public ReactiveCommand<Unit, Unit> AddPatient { get; }
         public IScreen HostScreen { get; }
-        
+
         public string? UrlPathSegment { get; }
         public bool IsUserDoctor { get; }
+
         public Client SelectedClient
         {
             get => _selectedClient;
@@ -41,30 +42,25 @@ namespace Presentation.ViewModels.WorkPlace.Default
         }
 
         private ObservableCollection<Client> _clients;
-        
-        public ObservableCollection<DateTime> TimeTable
-        {
-            get => _timeTable;
-            set => this.RaiseAndSetIfChanged(ref _timeTable, value);
-        }
 
-        private ObservableCollection<DateTime> _timeTable;
-        
-        
+
         public DefaultWorkPlaceViewModel(IScreen hostScreen, string login)
         {
             _login = login;
             HostScreen = hostScreen;
+            
+            
             Activator = new ViewModelActivator();
 
-            _userEmployeeInteractor = new UserEmployeeInteractor(UserEmployeeRepository.GetInstance());
             _doctorInteractor = new DoctorInteractor(
                 ClientRepository.GetInstance(),
                 AppointmentRepository.GetInstance(),
                 DoctorRepository.GetInstance()
-                );
+            );
 
-            IsUserDoctor = _userEmployeeInteractor.IsUserDoctor(login);
+            IsUserDoctor = new UserEmployeeInteractor(
+                UserEmployeeRepository.GetInstance())
+                .IsUserDoctor(login);
 
             this.WhenActivated(compositeDisposable =>
                 _doctorInteractor
@@ -72,8 +68,10 @@ namespace Presentation.ViewModels.WorkPlace.Default
                     .Subscribe(UpdateClients)
                     .DisposeWith(compositeDisposable)
             );
-            
+
             Clients = new ObservableCollection<Client>(_doctorInteractor.GetDoctorClients(_login));
+
+            SelectedClient = Clients.Count > 0 ? Clients.First() : new Client();
             
             ShowAdditionPatient = new Interaction<AdditionPatientViewModel, Appointment?>();
 
@@ -95,12 +93,13 @@ namespace Presentation.ViewModels.WorkPlace.Default
         }
 
         private string _login;
-        private Doctor _doctor;
+        // private Doctor _doctor;
 
         private readonly DoctorInteractor _doctorInteractor;
+
         // private readonly ClientInteractor _clientInteractor;
-        private readonly UserEmployeeInteractor _userEmployeeInteractor;
-        
+        // private readonly UserEmployeeInteractor _userEmployeeInteractor;
+
         private Client _selectedClient;
         public ViewModelActivator Activator { get; }
     }

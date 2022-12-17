@@ -1,0 +1,66 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:default="clr-namespace:Presentation.ViewModels.WorkPlace.Default"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Presentation.Views.WorkPlace.Default.ClientData">
+    <Design.DataContext>
+        <default:DefaultWorkPlaceViewModel />
+    </Design.DataContext>
+
+    <StackPanel Spacing="5" Width="500">
+        <Border Background="{StaticResource Header2Color}" CornerRadius="5">
+            <TextBlock FontSize="{StaticResource SubTitleTextSize}"
+                       Foreground="{StaticResource Header2TextColor}"
+                       Text="Имя" />
+        </Border>
+        <TextBlock 
+            FontSize="{StaticResource TextSize}"
+            Text="{Binding SelectedClient.Name}" />
+
+
+        <Border Background="{StaticResource Header2Color}" CornerRadius="5">
+            <TextBlock FontSize="{StaticResource SubTitleTextSize}"
+                       Foreground="{StaticResource Header2TextColor}"
+                       Text="Фамилия" />
+        </Border>
+        <TextBlock 
+            FontSize="{StaticResource TextSize}"
+            Text="{Binding SelectedClient.Surname}" />
+
+        <Border Background="{StaticResource Header2Color}" CornerRadius="5">
+            <TextBlock FontSize="{StaticResource SubTitleTextSize}"
+                       Foreground="{StaticResource Header2TextColor}"
+                       Text="Дата рождения" />
+        </Border>
+        <TextBlock 
+            FontSize="{StaticResource TextSize}" 
+            Text="{Binding SelectedClient.DateOfBirth}" />
+
+        <Border Background="{StaticResource Header2Color}" CornerRadius="5">
+            <TextBlock FontSize="{StaticResource SubTitleTextSize}"
+                       Foreground="{StaticResource Header2TextColor}"
+                       Text="Жалобы" />
+        </Border>
+        <TextBlock 
+            FontSize="{StaticResource TextSize}"
+            Text="{Binding SelectedClient.Complaints}" />
+
+        <Border Background="{StaticResource Header2Color}" CornerRadius="5">
+            <TextBlock FontSize="{StaticResource SubTitleTextSize}"
+                       Foreground="{StaticResource Header2TextColor}"
+                       Text="Направления на анализы" />
+        </Border>
+        <ListBox
+            HorizontalAlignment="Stretch"
+            Height="500"
+            FontSize="{StaticResource TextSize}"
+            CornerRadius="5"
+            ScrollViewer.HorizontalScrollBarVisibility="Auto"
+            ScrollViewer.VerticalScrollBarVisibility="Auto"
+            SelectionMode="Single"
+            Items="{Binding SelectedClient.Analyzes}">
+        </ListBox>
+    </StackPanel>
+</UserControl>

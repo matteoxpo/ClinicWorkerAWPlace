@@ -51,6 +51,13 @@ namespace Presentation.ViewModels.WorkPlace.Default
             private set => this.RaiseAndSetIfChanged(ref _clients, value);
         }
 
+        private string _clientComplaints;
+
+        public string ClientComplaints
+        {
+            get => _clientComplaints;
+            set => this.RaiseAndSetIfChanged(ref _clientComplaints, value);
+        }
 
         public AdditionPatientViewModel(string login)
         {
@@ -66,7 +73,7 @@ namespace Presentation.ViewModels.WorkPlace.Default
             
             SearchPattient = ReactiveCommand.Create(SetClients);
             AddPatient = ReactiveCommand.Create(() =>
-                new Appointment(login, SelectedClient.Id, DateTime.Now)
+                new Appointment(login, SelectedClient.Id, DateTime.Now,  ClientComplaints)
             );
         }
 

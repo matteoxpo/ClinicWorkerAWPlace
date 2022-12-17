@@ -19,10 +19,10 @@
     <Grid Margin="30">
         <StackPanel Spacing="5">
 
-            <Border Background="{StaticResource HeaderColor}" CornerRadius="5">
+            <Border Background="{StaticResource Header1Color}" CornerRadius="5">
                 <TextBlock
                     FontSize="{StaticResource HeaderTextSize}"
-                    Foreground="{StaticResource HeaderTextColor}"
+                    Foreground="{StaticResource Header1TextColor}"
                     HorizontalAlignment="Center"
                     Text="Ваш профиль"
                     VerticalAlignment="Top" />

@@ -14,39 +14,23 @@ namespace Presentation.ViewModels.Login
 {
     public class LoginViewModel : ReactiveObject, IRoutableViewModel
     {
-        private string _userLogin;
-        private string _userPassword;
+        private string? _userLogin;
+        private string? _userPassword;
         public ReactiveCommand<Unit, Unit> GoToWorkPlace { get; }
-        private ObservableAsPropertyHelper<bool> _isDataValid { get; }
-        private bool IsDataValid => _isDataValid.Value;
 
-        private UserEmployeeInteractor _userEmployeeInteractor;
+        private readonly UserEmployeeInteractor _userEmployeeInteractor;
         
         public LoginViewModel(IScreen hostScreen)
         {
             HostScreen = hostScreen;
-            _userLogin = new string("");
-            _userPassword = new string("");
             
-            var isUserLoginValid = this
-                    .WhenAnyValue(v => v.UserLogin)
-                    .Select(w => w.Length != 0)
-                    .DistinctUntilChanged();
-
-            var isUserPasswordValid = this
-                    .WhenAnyValue(v => v.UserPassword)
-                    .Select(w => w.Length != 0)
-                    .DistinctUntilChanged();
-
-            var temp = isUserLoginValid.And(isUserPasswordValid).Then((b1, b2) => b1 && b2);
-            _isDataValid = Observable.When(temp).ToProperty(this, h => h.IsDataValid);
-
             GoToWorkPlace = ReactiveCommand.CreateFromTask(TryAuthorize);
 
             _userEmployeeInteractor =
                 new UserEmployeeInteractor(UserEmployeeRepository.GetInstance());
-
         }
+
+
         public string? UrlPathSegment { get; }
         public IScreen HostScreen { get; }
 
@@ -54,11 +38,9 @@ namespace Presentation.ViewModels.Login
         {
             try
             {
-                if ( _userEmployeeInteractor.Authorization(UserLogin, UserPassword))
+                if ( _userEmployeeInteractor.Authorization(UserLogin!, UserPassword!))
                 {
-                    // var wp = new WorkPlaceViewModel(HostScreen, UserLogin);
-                    // var dwp = new DefaultWorkPlaceViewModel(HostScreen, UserLogin);
-                    await HostScreen.Router.Navigate.Execute(new WorkPlaceViewModel(HostScreen, UserLogin));
+                    await HostScreen.Router.Navigate.Execute(new WorkPlaceViewModel(HostScreen, UserLogin!));
                 }
             }
             catch (Exception e)
@@ -68,7 +50,6 @@ namespace Presentation.ViewModels.Login
                     {
                         ContentTitle = "Ошибка авторизации",
                         ContentMessage = e.Message,
-                        // WindowIcon = new WindowIcon("icon-rider.png")
                     });
             await messageBoxStandardWindow.Show();
                 
@@ -76,17 +57,15 @@ namespace Presentation.ViewModels.Login
 
         }
 
-        public string UserLogin
+        public string? UserLogin
         {
             get => _userLogin;
             set => this.RaiseAndSetIfChanged(ref _userLogin, value);
         }
-        public string UserPassword
+        public string? UserPassword
         {
             get => _userPassword;
             set => this.RaiseAndSetIfChanged(ref _userPassword, value);
         }
-
-
     }
 }

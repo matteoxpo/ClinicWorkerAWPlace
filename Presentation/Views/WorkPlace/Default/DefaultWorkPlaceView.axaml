@@ -4,56 +4,50 @@
     mc:Ignorable="d"
     x:Class="Presentation.Views.WorkPlace.Default.DefaultWorkPlaceView"
     xmlns="https://github.com/avaloniaui"
+    xmlns:defaultViews="clr-namespace:Presentation.Views.WorkPlace.Default"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:default="clr-namespace:Presentation.ViewModels.WorkPlace.Default"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:vmwp="using:Presentation.ViewModels.WorkPlace"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Design.DataContext>
         <default:DefaultWorkPlaceViewModel />
     </Design.DataContext>
     <Grid Margin="30">
         <StackPanel Spacing="10" IsVisible="{Binding IsUserDoctor}">
-            <Border Background="{StaticResource HeaderColor}" CornerRadius="5">
+            <Border Background="{StaticResource Header1Color}" CornerRadius="5">
                 <TextBlock
                     FontSize="{StaticResource HeaderTextSize}"
-                    Foreground="{StaticResource HeaderTextColor}"
+                    Foreground="{StaticResource Header1TextColor}"
                     HorizontalAlignment="Center"
                     Text="Рабочее пространство"
                     VerticalAlignment="Top" />
             </Border>
-            <StackPanel Orientation="Horizontal">
+            <StackPanel  Orientation="Horizontal" Spacing="20">
                 <StackPanel Spacing="5" Width="500">
-                    <Border Background="{StaticResource SubTitleColor}" CornerRadius="5">
+                    <Border Background="{StaticResource Header2Color}" CornerRadius="5">
                         <TextBlock
                             FontSize="{StaticResource SubTitleTextSize}"
-                            Foreground="{StaticResource SubTitleTextColor}"
-                            Text="Список пациентов" />
+                            Foreground="{StaticResource Header2TextColor}"
+                            Text="Список пациентов, записанных к вам" />
                     </Border>
-                    <StackPanel Orientation="Horizontal"  
-                                Height="400" Width="500">
                         <ListBox
+                            HorizontalAlignment="Stretch"
+                            Height="500"
                             CornerRadius="5"
+                            FontSize="{StaticResource TextSize}"
                             ScrollViewer.HorizontalScrollBarVisibility="Auto"
                             ScrollViewer.VerticalScrollBarVisibility="Auto"
                             SelectionMode="Single"
                             SelectedItem="{Binding SelectedClient}"
                             Items="{Binding Clients}">
-                            <!-- <ListBox.ItemTemplate> -->
-                            <!--     <DataTemplate> -->
-                            <!--         <StackPanel> -->
-                            <!--              -->
-                            <!--         </StackPanel> -->
-                            <!--     </DataTemplate> -->
-                            <!-- </ListBox.ItemTemplate> -->
                         </ListBox>
               
-                        
-                    </StackPanel>
-                    <Button Command="{Binding AddPatient}" HorizontalAlignment="Center">
-                        Добавить человека из 'живой очереди'
-                    </Button>
+                    <Button Command="{Binding AddPatient}" HorizontalAlignment="Center"
+                            FontSize="{StaticResource TextSize}"
+                            Content="Добавить человека из 'живой очереди'"/>
                 </StackPanel>
+            <defaultViews:ClientData DataContext="{Binding}"/>    
+            
             </StackPanel>
         </StackPanel>
 

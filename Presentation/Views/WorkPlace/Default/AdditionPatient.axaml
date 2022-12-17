@@ -17,35 +17,46 @@
     </Design.DataContext>
     <Grid>
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="10">
-            <Border CornerRadius="5" Background="{StaticResource HeaderColor}">
+            <Border CornerRadius="5" Background="{StaticResource Header1Color}">
                 <TextBlock
                     FontSize="{StaticResource HeaderTextSize}"
-                    Foreground="{StaticResource HeaderTextColor}"
+                    Foreground="{StaticResource Header1TextColor}"
                     HorizontalAlignment="Center"
-                    Text="Поиск пациента в базе" />
+                    Text="Создание 'экстренной' записи" />
             </Border>
 
             <TextBox
                 Text="{Binding Name, Mode=TwoWay}"
                 Watermark="Введите имя"
+                FontSize="{StaticResource TextSize}"
                 Width="350" />
 
             <TextBox
                 Text="{Binding Surname, Mode=TwoWay}"
                 Watermark="Введите фамилию"
+                FontSize="{StaticResource TextSize}"
                 Width="350" />
+            
+          
 
-            <Button Content="Поиск" Command="{Binding SearchPattient}" />
+            <Button 
+                VerticalAlignment="Center"
+                Content="Поиск"
+                FontSize="{StaticResource TextSize}"
+                Command="{Binding SearchPattient}"/>
 
-            <Border CornerRadius="5" Background="{StaticResource HeaderColor}">
+            <Border 
+                CornerRadius="5"
+                Background="{StaticResource Header1Color}">
                 <TextBlock
                     FontSize="{StaticResource HeaderTextSize}"
-                    Foreground="{StaticResource HeaderTextColor}"
+                    Foreground="{StaticResource Header1TextColor}"
                     HorizontalAlignment="Center"
                     Text="Возможные варианты" />
             </Border>
 
             <ListBox
+                FontSize="{StaticResource TextSize}"
                 Height="400"
                 Width="500"
                 CornerRadius="5"
@@ -54,6 +65,12 @@
                 SelectedItem="{Binding SelectedClient}"
                 Items="{Binding Clients}">
             </ListBox>
+            
+            <TextBox
+                Text="{Binding ClientComplaints, Mode=TwoWay}"
+                FontSize="{StaticResource TextSize}"
+                Watermark="Введите жалобы/причины визита"
+                Width="350" />
 
             <Button Content="Добавить пациента" Command="{Binding AddPatient}" />
 
@@ -61,6 +78,7 @@
         </StackPanel>
         <Border Margin="30" HorizontalAlignment="Center" IsVisible="{Binding IsDataInvalid}" VerticalAlignment="Bottom" Background="Red" CornerRadius="5">
             <TextBlock Foreground="White"
+                       FontSize="{StaticResource TextSize}"
                        Text="Пациент не найден, если он не заргистрирован, необходимо направить в регистратуру" />
         </Border>
         

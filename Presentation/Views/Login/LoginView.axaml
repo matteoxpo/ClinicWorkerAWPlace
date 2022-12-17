@@ -12,58 +12,43 @@
         <vmlogin:LoginViewModel />
     </Design.DataContext>
     <Grid VerticalAlignment="Center">
-        <StackPanel Orientation="Vertical" Width="700">
+        <StackPanel Orientation="Vertical" Spacing="7">
             <Border CornerRadius="5" Background="#c1dbb5" Width="170" Height="170">
             <Image
                 Height="170"
                 Source="{SvgImage /Assets/logo.svg}"
                 Width="170" />
             </Border>
-            <Border Margin="0, 10, 0,0" Background="{StaticResource HeaderColor}" CornerRadius="5">
+            <Border Margin="0, 10, 0,0" Background="{StaticResource Header1Color}" CornerRadius="5">
                 <TextBlock
                     FontFamily="OpenSans"
-                    FontSize="20"
-                    Foreground="{StaticResource HeaderTextColor}"
-                    TextAlignment="Center">
-                    Рады снова вас видеть
-                </TextBlock>
+                    FontSize="{StaticResource HeaderTextSize}"
+                    Foreground="{StaticResource Header1TextColor}"
+                    TextAlignment="Center"
+                    Text="Рады снова вас видеть"/>
             </Border>
             <TextBlock
-                FontSize="14"
+                FontSize="{StaticResource SubTitleTextSize}"
                 Text="Для использования сервиса необходимо авторизоваться"
                 TextAlignment="Center" />
             <TextBox
                 Margin="0,10,0,0"
+                FontSize="{StaticResource TextSize}"
                 Text="{Binding UserLogin, Mode=TwoWay}"
                 Watermark="Введите логин"
                 Width="350" />
             <TextBox
                 Margin="0,10,0,0"
                 PasswordChar="*"
+                FontSize="{StaticResource TextSize}"
                 Text="{Binding UserPassword, Mode=TwoWay}"
                 Watermark="Введите пароль"
                 Width="350" />
             <Button
+                FontSize="{StaticResource TextSize}"
                 Command="{Binding GoToWorkPlace}"
                 HorizontalAlignment="Center"
-                IsVisible="{Binding IsDataValid}"
-                Width="160">
-                Войти
-            </Button>
-            <Border HorizontalAlignment="Center"
-                    CornerRadius="5"
-                    VerticalAlignment="Bottom" Margin="0,80,0,0"
-                    Background="{StaticResource QuoteBackColor} ">
-                <!-- Foreground="#93c47d" -->
-
-                <TextBlock
-                    Margin="3"
-                    VerticalAlignment="Bottom"
-                    HorizontalAlignment="Center"
-                    FontSize="14"
-                    Text="{StaticResource StartPageQuote}">
-                </TextBlock>
-            </Border>
+                Width="160" Content="Войти"/>
         </StackPanel>
     </Grid>
 </UserControl>

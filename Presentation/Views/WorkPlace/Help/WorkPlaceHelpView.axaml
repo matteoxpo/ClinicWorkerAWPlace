@@ -19,10 +19,10 @@
     <Grid Margin="30">
         <!--    -->
         <StackPanel Orientation="Vertical">
-            <Border Background="{StaticResource HeaderColor}" CornerRadius="5">
+            <Border Background="{StaticResource Header1Color}" CornerRadius="5">
                 <TextBlock
                     FontSize="{StaticResource HeaderTextSize}"
-                    Foreground="{StaticResource HeaderTextColor}"
+                    Foreground="{StaticResource Header1TextColor}"
                     HorizontalAlignment="Center"
                     Text="О программе"
                     VerticalAlignment="Top" />
