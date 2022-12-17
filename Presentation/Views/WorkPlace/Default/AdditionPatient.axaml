@@ -36,6 +36,8 @@
                 Watermark="Введите фамилию"
                 FontSize="{StaticResource TextSize}"
                 Width="350" />
+            
+            
 
             <Button 
                 VerticalAlignment="Center"
