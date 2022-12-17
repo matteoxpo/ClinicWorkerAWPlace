@@ -26,8 +26,13 @@ public class DoctorInteractor
         var clients = new List<Client>();
         foreach (var appointment in doctor.Appointments)
         {
-            clients.Add(_clientInteractor.Get(appointment.ClientId));
+            var client = _clientInteractor.Get(appointment.ClientId);
+            client.Complaints = appointment.ClientComplaints;
+            client.MeetTime = appointment.MeetTime;
+            clients.Add(client);
         }
+
+        var t = clients.OrderBy(client => client.MeetTime);
 
         return clients;
     }
@@ -71,10 +76,6 @@ public class DoctorInteractor
     public IObservable<Doctor> Observe(string login)
     {
         return _doctorRepository.ObserveByLogin(login);
-        // .SelectMany(d => 
-        //     _appointmentInteractor.ObserveByDoctorLogin(d.Login)
-        //     .CombineLatest(Observable.Return(d)))
-        // .Select(h => new Doctor(h.Second.Category, h.Second.Speciality, h.First, h.Second.Login));
     }
 }
 

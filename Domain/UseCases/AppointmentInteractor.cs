@@ -22,14 +22,14 @@ class AppointmentInteractor
     }
 
 
-    public void Add(Doctor doctor, Client client, DateTime meetTime)
+    public void Add(Doctor doctor, Client client, DateTime meetTime, string clientComplaints)
     {
-        Add(new Appointment(doctor.Login, client.Id, meetTime));
+        Add(new Appointment(doctor.Login, client.Id, meetTime, clientComplaints));
     }
 
-    public void Add(Doctor doctor, Client client, DateTime meetTime, bool unconditionedAppointmentToken)
+    public void Add(Doctor doctor, Client client, DateTime meetTime, string clientComplaints, bool unconditionedAppointmentToken)
     {
-        Add(new Appointment(doctor.Login, client.Id, meetTime), unconditionedAppointmentToken);
+        Add(new Appointment(doctor.Login, client.Id, meetTime, clientComplaints), unconditionedAppointmentToken);
     }
 
 

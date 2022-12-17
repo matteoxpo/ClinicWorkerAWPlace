@@ -35,8 +35,8 @@ public class AdminRepository : BaseRepository<Admin>, IAdminRepository
         return DeserializationJson();
     }
 
-    public override bool CompareEntities(Admin changedEntity, Admin entity)
+    public override bool CompareEntities(Admin entity1, Admin entity2)
     {
-        return changedEntity.Login.Equals(entity.Login);
+        return entity1.Login.Equals(entity2.Login);
     }
 }

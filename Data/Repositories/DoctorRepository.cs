@@ -8,7 +8,7 @@ namespace Data.Repositories;
 
 public class DoctorRepository : BaseRepository<Doctor>, IDoctorRepository
 {
-    private IAppointmentRepository _appointmentRepository;
+    private readonly IAppointmentRepository _appointmentRepository;
     
     private DoctorRepository(string path, IAppointmentRepository appointmentRepository) : base(path)
     {
@@ -49,9 +49,9 @@ public class DoctorRepository : BaseRepository<Doctor>, IDoctorRepository
         return doctors;
     }
 
-    public override bool CompareEntities(Doctor changedEntity, Doctor entity)
+    public override bool CompareEntities(Doctor entity1, Doctor entity2)
     {
-        return changedEntity.Login.Equals(entity.Login);
+        return entity1.Login.Equals(entity2.Login);
     }
 
     public IObservable<Doctor> ObserveByLogin(string login)

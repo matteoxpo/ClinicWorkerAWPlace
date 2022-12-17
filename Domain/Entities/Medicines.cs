@@ -3,10 +3,10 @@ namespace Domain.Entities;
 [Serializable]
 public class Medicines
 {
-    public string Title;
-    public string IndicationsForUse;
-    public string Manufacturer;
-    public bool CanBeSoldWithoutPrescription;
+    public string Title { get; set; }
+    public string IndicationsForUse{ get; set; }
+    public string Manufacturer{ get; set; }
+    public bool CanBeSoldWithoutPrescription{ get; set; }
 
 
     public Medicines(string title, string indicationsForUse, string manufacturer, bool canBeSoldWithoutPrescription)

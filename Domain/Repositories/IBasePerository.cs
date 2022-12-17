@@ -6,5 +6,5 @@ public interface IBasePerository<T>
     void Delete(T oldEntity);
     void Add(T newEntity);
     IEnumerable<T> Read();
-    bool CompareEntities(T Entity1, T Entity2);
+    bool CompareEntities(T entity1, T entity2);
 }

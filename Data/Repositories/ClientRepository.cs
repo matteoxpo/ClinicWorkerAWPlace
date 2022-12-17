@@ -14,20 +14,20 @@ public class ClientRepository : BaseRepository<Client>, IClientRepository
         _appointmentRepository = appointmentRepository;
     }
 
-    private static ClientRepository? globalRepositoryInstance;
+    private static ClientRepository? _globalRepositoryInstance;
 
     public static ClientRepository GetInstance()
     {
-        return globalRepositoryInstance ??= new ClientRepository(
+        return _globalRepositoryInstance ??= new ClientRepository(
             "../../../../Data/DataSets/Client.json", AppointmentRepository.GetInstance());
     }
 
   
 
 
-    public override bool CompareEntities(Client changedEntity, Client entity)
+    public override bool CompareEntities(Client entity1, Client entity2)
     {
-        return (changedEntity.Id.Equals(entity.Id));
+        return (entity1.Id.Equals(entity2.Id));
     }
 
     public void Update(Client changedClient)

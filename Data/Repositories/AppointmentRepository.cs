@@ -8,9 +8,7 @@ namespace Data.Repositories;
 
 public class AppointmentRepository : BaseRepository<Appointment>, IAppointmentRepository
 {
-    public AppointmentRepository(string path) : base(path)
-    {
-    }
+    private AppointmentRepository(string path) : base(path) { }
 
     private static AppointmentRepository? _globalRepositoryInstance;
 
@@ -41,11 +39,11 @@ public class AppointmentRepository : BaseRepository<Appointment>, IAppointmentRe
         return DeserializationJson();
     }
 
-    public override bool CompareEntities(Appointment changedEntity, Appointment entity)
+    public override bool CompareEntities(Appointment entity1, Appointment entity2)
     {
-        return changedEntity.ClientId.Equals(entity.ClientId) &&
-               changedEntity.DoctorLogin.Equals(entity.DoctorLogin) &&
-               changedEntity.MeetTime.Equals(entity.MeetTime);
+        return entity1.ClientId.Equals(entity2.ClientId) &&
+               entity1.DoctorLogin.Equals(entity2.DoctorLogin) &&
+               entity1.MeetTime.Equals(entity2.MeetTime);
     }
 
     public IEnumerable<Appointment> ReadByClient(Client client)
@@ -55,16 +53,7 @@ public class AppointmentRepository : BaseRepository<Appointment>, IAppointmentRe
 
     public IEnumerable<Appointment> ReadByClient(string passportSerial)
     {
-        var clientAppoinmetns = new List<Appointment>();
-        foreach (var appointment in Read())
-        {
-            if (appointment.ClientId.Equals(passportSerial))
-            {
-                clientAppoinmetns.Add(appointment);
-            }
-        }
-
-        return clientAppoinmetns;
+        return Read().Where(appointment => appointment.ClientId.Equals(passportSerial));
     }
 
     public IEnumerable<Appointment> ReadByDoctor(Doctor doctor)
@@ -74,16 +63,7 @@ public class AppointmentRepository : BaseRepository<Appointment>, IAppointmentRe
 
     public IEnumerable<Appointment> ReadByDoctor(string doctorLogin)
     {
-        var doctorAppoinmetns = new List<Appointment>();
-        foreach (var appointment in Read())
-        {
-            if (doctorLogin.Equals(appointment.DoctorLogin))
-            {
-                doctorAppoinmetns.Add(appointment);
-            }
-        }
-
-        return doctorAppoinmetns;
+        return Read().Where(appointment => doctorLogin.Equals(appointment.DoctorLogin));
     }
 
     public IObservable<IEnumerable<Appointment>> ObserveByDoctor(string login)

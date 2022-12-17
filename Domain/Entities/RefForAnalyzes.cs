@@ -16,5 +16,5 @@ public class ReferenceForAnalysis
         Analysis = new Analysis();
         AnalysisTime = new DateTime(0);
     }
-
+    public override string ToString() => string.Join(" Направление на дату:", Analysis.ToString(), AnalysisTime);
 }

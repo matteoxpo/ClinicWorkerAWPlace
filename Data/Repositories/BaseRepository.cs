@@ -38,7 +38,7 @@ abstract public class BaseRepository<T>
         }
     }
     
-    public abstract bool CompareEntities(T changedEntity, T entity);
+    public abstract bool CompareEntities(T entity1, T entity2);
     protected void Change(T changedEntity)
     {
         var newEntities = new List<T>(EntitiesSubject.Value);
@@ -69,7 +69,6 @@ abstract public class BaseRepository<T>
     {
         if (entities is null) return;
         
-        File.WriteAllText(_path,"{}");
         _fs = GetStream();
         JsonSerializer.SerializeAsync(_fs, entities, _options);
         _fs.Close();
