@@ -31,8 +31,10 @@ namespace Presentation.ViewModels.WorkPlace
             
             HostScreen = hostScreen;
 
-            DefaultWorkPlaceViewModel = new DefaultWorkPlaceViewModel(this, login);
 
+            DefaultWorkPlaceViewModel = new DefaultWorkPlaceViewModel(this, login);
+    
+            
             GoToProfile = ReactiveCommand.CreateFromObservable(
                 () => Router.Navigate.Execute(new WorkPlaceProfileViewModel(this, login)));
 
@@ -44,7 +46,6 @@ namespace Presentation.ViewModels.WorkPlace
 
             LogOut = ReactiveCommand.CreateFromObservable(
                 () => HostScreen.Router.Navigate.Execute(new LoginViewModel(HostScreen)));
-
         }
 
     }

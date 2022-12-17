@@ -3,6 +3,7 @@
     Title="Поиск клиента"
     d:DesignHeight="450"
     d:DesignWidth="800"
+    Background="{StaticResource BackGroundColor}"
     mc:Ignorable="d"
     x:Class="Presentation.Views.WorkPlace.Default.AdditionPatientWindow"
     xmlns="https://github.com/avaloniaui"
@@ -15,10 +16,54 @@
         <vm:AdditionPatientViewModel />
     </Design.DataContext>
     <Grid>
-        <StackPanel>
-            <TextBlock>asdasdasd test</TextBlock>
-            <Button Command="{Binding AddPatient}" />
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="10">
+            <Border CornerRadius="5" Background="{StaticResource HeaderColor}">
+                <TextBlock
+                    FontSize="{StaticResource HeaderTextSize}"
+                    Foreground="{StaticResource HeaderTextColor}"
+                    HorizontalAlignment="Center"
+                    Text="Поиск пациента в базе" />
+            </Border>
+
+            <TextBox
+                Text="{Binding Name, Mode=TwoWay}"
+                Watermark="Введите имя"
+                Width="350" />
+
+            <TextBox
+                Text="{Binding Surname, Mode=TwoWay}"
+                Watermark="Введите фамилию"
+                Width="350" />
+
+            <Button Content="Поиск" Command="{Binding SearchPattient}" />
+
+            <Border CornerRadius="5" Background="{StaticResource HeaderColor}">
+                <TextBlock
+                    FontSize="{StaticResource HeaderTextSize}"
+                    Foreground="{StaticResource HeaderTextColor}"
+                    HorizontalAlignment="Center"
+                    Text="Возможные варианты" />
+            </Border>
+
+            <ListBox
+                Height="400"
+                Width="500"
+                CornerRadius="5"
+                ScrollViewer.HorizontalScrollBarVisibility="Visible"
+                SelectionMode="Single"
+                SelectedItem="{Binding SelectedClient}"
+                Items="{Binding Clients}">
+            </ListBox>
+
+            <Button Content="Добавить пациента" Command="{Binding AddPatient}" />
+
+            
         </StackPanel>
+        <Border Margin="30" HorizontalAlignment="Center" IsVisible="{Binding IsDataInvalid}" VerticalAlignment="Bottom" Background="Red" CornerRadius="5">
+            <TextBlock Foreground="White"
+                       Text="Пациент не найден, если он не заргистрирован, необходимо направить в регистратуру" />
+        </Border>
+        
     </Grid>
 
 

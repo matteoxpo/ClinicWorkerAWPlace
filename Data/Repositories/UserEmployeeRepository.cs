@@ -45,6 +45,11 @@ public class UserEmployeeRepository : BaseRepository<UserEmployee>, IUserEmploye
         Append(newUserEmployee);
     }
 
+    public IEnumerable<UserEmployee> ReadOnlyLoginPassword()
+    {
+        return DeserializationJson();
+    }
+
     public IEnumerable<UserEmployee> Read()
     {
         var employees =  new List<UserEmployee>(DeserializationJson());

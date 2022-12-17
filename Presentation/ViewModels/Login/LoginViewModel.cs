@@ -8,6 +8,7 @@ using Data.Repositories;
 using Domain.UseCases;
 using MessageBox.Avalonia.DTO;
 using Presentation.ViewModels.WorkPlace;
+using Presentation.ViewModels.WorkPlace.Default;
 
 namespace Presentation.ViewModels.Login
 {
@@ -55,10 +56,12 @@ namespace Presentation.ViewModels.Login
             {
                 if ( _userEmployeeInteractor.Authorization(UserLogin, UserPassword))
                 {
+                    // var wp = new WorkPlaceViewModel(HostScreen, UserLogin);
+                    // var dwp = new DefaultWorkPlaceViewModel(HostScreen, UserLogin);
                     await HostScreen.Router.Navigate.Execute(new WorkPlaceViewModel(HostScreen, UserLogin));
                 }
             }
-            catch (UserEmployeeException e)
+            catch (Exception e)
             {
                var messageBoxStandardWindow = MessageBox.Avalonia.MessageBoxManager.GetMessageBoxStandardWindow(
                     new MessageBoxStandardParams

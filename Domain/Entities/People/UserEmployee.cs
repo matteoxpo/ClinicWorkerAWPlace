@@ -54,6 +54,8 @@ public class UserEmployee
         Password = new string("password");
         JobTitles = new List<JobTitle>();
     }
+    
+    public override string ToString() => string.Join(" ", Name, Surname, Login);
 
 
 }

@@ -30,9 +30,26 @@
                             Foreground="{StaticResource SubTitleTextColor}"
                             Text="Список пациентов" />
                     </Border>
-                    <ScrollViewer Height="600">
-                        <ListBox Items="{Binding Timetable}" />
-                    </ScrollViewer>
+                    <StackPanel Orientation="Horizontal"  
+                                Height="400" Width="500">
+                        <ListBox
+                            CornerRadius="5"
+                            ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                            ScrollViewer.VerticalScrollBarVisibility="Auto"
+                            SelectionMode="Single"
+                            SelectedItem="{Binding SelectedClient}"
+                            Items="{Binding Clients}">
+                            <!-- <ListBox.ItemTemplate> -->
+                            <!--     <DataTemplate> -->
+                            <!--         <StackPanel> -->
+                            <!--              -->
+                            <!--         </StackPanel> -->
+                            <!--     </DataTemplate> -->
+                            <!-- </ListBox.ItemTemplate> -->
+                        </ListBox>
+              
+                        
+                    </StackPanel>
                     <Button Command="{Binding AddPatient}" HorizontalAlignment="Center">
                         Добавить человека из 'живой очереди'
                     </Button>

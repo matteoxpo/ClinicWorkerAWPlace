@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
 using System.Reactive;
@@ -13,73 +14,94 @@ using Domain.Entities.People;
 using Domain.Entities.Roles;
 using Domain.UseCases;
 using DynamicData;
+using DynamicData.Binding;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using ReactiveUI;
 
 namespace Presentation.ViewModels.WorkPlace.Default
 {
     public class DefaultWorkPlaceViewModel : ReactiveObject, IRoutableViewModel, IActivatableViewModel
     {
-        public Interaction<AdditionPatientViewModel, Appointment> ShowAdditionPatient { get; }
+        public Interaction<AdditionPatientViewModel, Appointment?> ShowAdditionPatient { get; }
         public ReactiveCommand<Unit, Unit> AddPatient { get; }
+        public IScreen HostScreen { get; }
         
-        private DoctorInteractor _doctorInteractor;
-        private ClientInteractor _clientInteractor;
-        private UserEmployeeInteractor _userEmployeeInteractor;
+        public string? UrlPathSegment { get; }
+        public bool IsUserDoctor { get; }
+        public Client SelectedClient
+        {
+            get => _selectedClient;
+            set => this.RaiseAndSetIfChanged(ref _selectedClient, value);
+        }
 
-        private Doctor _doctor;
+        public ObservableCollection<Client> Clients
+        {
+            get => _clients;
+            set => this.RaiseAndSetIfChanged(ref _clients, value);
+        }
 
-        private List<Client> _clients;
-        public List<string> Timetable { get; }
+        private ObservableCollection<Client> _clients;
+        
+        public ObservableCollection<DateTime> TimeTable
+        {
+            get => _timeTable;
+            set => this.RaiseAndSetIfChanged(ref _timeTable, value);
+        }
 
-        private string _login;
-
+        private ObservableCollection<DateTime> _timeTable;
+        
+        
         public DefaultWorkPlaceViewModel(IScreen hostScreen, string login)
         {
             _login = login;
-            
             HostScreen = hostScreen;
-
-            _clientInteractor = new ClientInteractor(ClientRepository.GetInstance());
-            _userEmployeeInteractor = new UserEmployeeInteractor(UserEmployeeRepository.GetInstance());
-            _doctorInteractor = new DoctorInteractor(ClientRepository.GetInstance(),
-                AppointmentRepository.GetInstance(), DoctorRepository.GetInstance());
-
-            _doctor = _doctorInteractor.Get(login);
-            _clients =new List<Client>();
-            Timetable = new List<string>();
-            foreach (var appointment in _doctor.Appointments)
-            {
-                _clients.Add(_clientInteractor.Get(appointment.ClientId));
-                Timetable.Add( _clients.Last().Surname + " " + _clients.Last().Name + " " + appointment.MeetTime );
-            }
-            
             Activator = new ViewModelActivator();
-    
-            // var q = _observable.Subscribe((d) => Timetable = new List<Tuple<Client, DateTime>>(d.Patients));
-            // this.WhenActivated(r => q.DisposeWith(r));
-            
-            ShowAdditionPatient = new Interaction<AdditionPatientViewModel, Appointment>();
-            AddPatient = ReactiveCommand.CreateFromTask(OnAddAppointment);
+
+            _userEmployeeInteractor = new UserEmployeeInteractor(UserEmployeeRepository.GetInstance());
+            _doctorInteractor = new DoctorInteractor(
+                ClientRepository.GetInstance(),
+                AppointmentRepository.GetInstance(),
+                DoctorRepository.GetInstance()
+                );
 
             IsUserDoctor = _userEmployeeInteractor.IsUserDoctor(login);
 
+            this.WhenActivated(compositeDisposable =>
+                _doctorInteractor
+                    .Observe(login)
+                    .Subscribe(UpdateClients)
+                    .DisposeWith(compositeDisposable)
+            );
+            
+            Clients = new ObservableCollection<Client>(_doctorInteractor.GetDoctorClients(_login));
+            
+            ShowAdditionPatient = new Interaction<AdditionPatientViewModel, Appointment?>();
+
+            AddPatient = ReactiveCommand.CreateFromTask(OnAddAppointment);
         }
 
         private async Task OnAddAppointment()
         {
-            try
+            var newAppointment = await ShowAdditionPatient.Handle(new AdditionPatientViewModel(_login));
+            if (newAppointment is not null)
             {
-                var newPatien = await ShowAdditionPatient.Handle(new AdditionPatientViewModel());
-                // _doctorInteractor.
-            }
-            catch (Exception e)
-            {
+                _doctorInteractor.AddAppointmnet(newAppointment);
             }
         }
 
-        public IScreen HostScreen { get; }
-        public string? UrlPathSegment { get; }
+        private void UpdateClients(Doctor doctor)
+        {
+            Clients = new ObservableCollection<Client>(_doctorInteractor.GetDoctorClients(doctor.Login));
+        }
+
+        private string _login;
+        private Doctor _doctor;
+
+        private readonly DoctorInteractor _doctorInteractor;
+        // private readonly ClientInteractor _clientInteractor;
+        private readonly UserEmployeeInteractor _userEmployeeInteractor;
+        
+        private Client _selectedClient;
         public ViewModelActivator Activator { get; }
-        public bool IsUserDoctor { get; }
     }
 }

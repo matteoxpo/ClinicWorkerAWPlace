@@ -45,6 +45,8 @@ public class Client
         Appointments = new List<Appointment>();
         Id = id;
     }
+
+    public override string ToString() => string.Join(" ", Name, Surname, Id);
     
     
 }

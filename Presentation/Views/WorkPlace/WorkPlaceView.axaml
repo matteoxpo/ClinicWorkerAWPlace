@@ -17,7 +17,7 @@
     </Design.DataContext>
     <Grid>
 
-        <Menu VerticalAlignment="Top">
+        <Menu Background="{StaticResource MenuBarColor}" CornerRadius="5" VerticalAlignment="Top" Height="22">
             <MenuItem Command="{Binding GoToDefault}" Header="Рабочая зона" />
             <MenuItem Command="{Binding GoToHelp}" Header="Помощь" />
             <MenuItem Command="{Binding GoToProfile}" Header="Профиль" />

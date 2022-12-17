@@ -31,7 +31,7 @@ public class UserEmployeeInteractor
 
     public bool Authorization(string login, string password)
     {
-        foreach (var empl in _userRepository.Read())
+        foreach (var empl in _userRepository.ReadOnlyLoginPassword())
         {
             if (string.Equals(empl.Login, login))
             {
@@ -93,7 +93,6 @@ public class UserEmployeeInteractor
         var user = Get(login);
         foreach (var job in user.JobTitles)
         {
-            var t = job;
             if (job.GetType() == typeof(Doctor) )
             {
                 return true;

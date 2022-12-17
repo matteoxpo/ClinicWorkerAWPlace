@@ -5,7 +5,7 @@
     Icon="/Assets/logo_empty.ico"
     MinHeight="450"
     MinWidth="800"
-    Title="AWPD-Рабочее место"
+    Title=""
     WindowState="Maximized"
     mc:Ignorable="d"
     x:Class="Presentation.Views.MainWindow"

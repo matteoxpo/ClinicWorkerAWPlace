@@ -13,24 +13,32 @@
     </Application.Styles>
     <Application.Resources>
         <ResourceDictionary>
-            <Color x:Key="BackGroundColor">#d5e9cd</Color>
 
             <system:Double x:Key="HeaderTextSize">18</system:Double>
             <system:Double x:Key="SubTitleTextSize">15</system:Double>
             <system:Double x:Key="TextSize">14</system:Double>
             <system:Double x:Key="SmallTextSize">12</system:Double>
 
+            <Color x:Key="MenuBarColor">#b7c5b1</Color>
+            <Color x:Key="BackGroundColor">#d5e9cd</Color>
             <Color x:Key="HeaderColor">#a6cc96</Color>
+            <Color x:Key="QuoteBackColor">#dff2d8</Color>
             <Color x:Key="HeaderTextColor">White</Color>
 
             <Color x:Key="SubTitleColor">#a3c197</Color>
             <Color x:Key="SubTitleTextColor">White</Color>
 
             <system:String x:Key="AboutWorkPlaceHelpText">
-                В панели рабочее пространство находится основная часть - список вам пациентов.
-                Когда человек пришел на прием - нажмите на него в списке и заполните необходимую информацию.
-                Елси человек пришел 'из живой очереди', то выбирите соответвующюю кнопку в панели
+В панели рабочее пространство находится основная часть - список вам пациентов.
+Когда человек пришел на прием - нажмите на него в списке и заполните необходимую информацию.
+Елси человек пришел 'из живой очереди', то выбирите соответвующюю кнопку в панели
             </system:String>
+            
+            <system:String x:Key="StartPageQuote">
+ Ничто так не обязательно всему роду человеческому, как медицина - М.Ф.Квинтилиан
+            </system:String>
+
+            
         </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 using Domain.Entities.People;
+using Domain.Entities.Roles;
 using Domain.Repositories;
 
 namespace Domain.UseCases;
@@ -45,6 +46,34 @@ public class ClientInteractor
 
         return clients;
     }
+    
+    public IEnumerable<Client> Get()
+    {
+        return _clientRepository.Read();
+    }
+    
+    public IEnumerable<Client> Get(IEnumerable<string> clientsId)
+    {
+        var clients = new List<Client>();
+        
+        foreach (var patient in new List<Client>(_clientRepository.Read()))
+        {
+            if (new List<string>(clientsId).Any(id => id.Equals(patient.Id)))
+            {
+                clients.Add(patient);
+            }
+        }
+
+        return clients;
+    }
+    
+    
+    public IEnumerable<Client> GetDoctorsPatients(Doctor doctor)
+    {
+        return Get(doctor.Appointments.Select(appointment => appointment.ClientId).ToList());
+    }
+    
+    
 }
 
 

@@ -1,3 +1,4 @@
+using System.Reactive.Linq;
 using System.Text;
 using Domain.Entities;
 using Domain.Entities.Roles;
@@ -51,5 +52,15 @@ public class DoctorRepository : BaseRepository<Doctor>, IDoctorRepository
     public override bool CompareEntities(Doctor changedEntity, Doctor entity)
     {
         return changedEntity.Login.Equals(entity.Login);
+    }
+
+    public IObservable<Doctor> ObserveByLogin(string login)
+    {
+        return AsObservable.Select(
+            (empl) =>
+            {
+                return empl.FirstOrDefault((emp) => emp.Login.Equals(login));
+            }
+        )!.Where<Doctor>((d) => d is not null);
     }
 }

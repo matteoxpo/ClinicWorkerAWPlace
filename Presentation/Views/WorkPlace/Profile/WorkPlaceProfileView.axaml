@@ -40,7 +40,6 @@
                 <TextBlock FontSize="{StaticResource TextSize}" Text="{Binding Login}" />
             </StackPanel>
         </StackPanel>
-
         <!--    -->
     </Grid>
 </UserControl>

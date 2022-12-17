@@ -1,3 +1,4 @@
+using System.Reactive.Linq;
 using Domain.Entities;
 using Domain.Entities.People;
 using Domain.Entities.Roles;
@@ -7,14 +8,18 @@ namespace Data.Repositories;
 
 public class AppointmentRepository : BaseRepository<Appointment>, IAppointmentRepository
 {
-    public AppointmentRepository(string path) : base(path) {}
+    public AppointmentRepository(string path) : base(path)
+    {
+    }
 
     private static AppointmentRepository? _globalRepositoryInstance;
+
     public static AppointmentRepository GetInstance()
-    { 
+    {
         return _globalRepositoryInstance ??= new AppointmentRepository(
             "../../../../Data/DataSets/Appointment.json");
     }
+
     public void Update(Appointment nextAppointment)
     {
         Change(nextAppointment);
@@ -29,7 +34,7 @@ public class AppointmentRepository : BaseRepository<Appointment>, IAppointmentRe
     {
         Append(newAppointment);
     }
-    
+
 
     public IEnumerable<Appointment> Read()
     {
@@ -38,8 +43,8 @@ public class AppointmentRepository : BaseRepository<Appointment>, IAppointmentRe
 
     public override bool CompareEntities(Appointment changedEntity, Appointment entity)
     {
-        return changedEntity.ClientId.Equals(entity.ClientId) && 
-               changedEntity.DoctorLogin.Equals(entity.DoctorLogin) && 
+        return changedEntity.ClientId.Equals(entity.ClientId) &&
+               changedEntity.DoctorLogin.Equals(entity.DoctorLogin) &&
                changedEntity.MeetTime.Equals(entity.MeetTime);
     }
 
@@ -58,6 +63,7 @@ public class AppointmentRepository : BaseRepository<Appointment>, IAppointmentRe
                 clientAppoinmetns.Add(appointment);
             }
         }
+
         return clientAppoinmetns;
     }
 
@@ -71,11 +77,22 @@ public class AppointmentRepository : BaseRepository<Appointment>, IAppointmentRe
         var doctorAppoinmetns = new List<Appointment>();
         foreach (var appointment in Read())
         {
-            if(doctorLogin.Equals(appointment.DoctorLogin))
+            if (doctorLogin.Equals(appointment.DoctorLogin))
             {
                 doctorAppoinmetns.Add(appointment);
             }
         }
+
         return doctorAppoinmetns;
+    }
+
+    public IObservable<IEnumerable<Appointment>> ObserveByDoctor(string login)
+    {
+        return AsObservable.Select(d => d.Where(h => h.DoctorLogin.Equals(login)));
+    }
+
+    public IObservable<IEnumerable<Appointment>> ObserveByDoctor(Doctor doctor)
+    {
+        return ObserveByDoctor(doctor.Login);
     }
 }

@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Security.Cryptography;
 using Domain.Entities;
 using Domain.Entities.People;
 using Domain.Entities.Roles;
@@ -19,42 +20,52 @@ class AppointmentInteractor
     {
         return _appointmentRepository.Read();
     }
-    
+
 
     public void Add(Doctor doctor, Client client, DateTime meetTime)
     {
-        foreach (var appintment in GetDoctorsAppointments(doctor))
+        Add(new Appointment(doctor.Login, client.Id, meetTime));
+    }
+
+    public void Add(Doctor doctor, Client client, DateTime meetTime, bool unconditionedAppointmentToken)
+    {
+        Add(new Appointment(doctor.Login, client.Id, meetTime), unconditionedAppointmentToken);
+    }
+
+
+    public void Add(Appointment appointment, bool unconditionedAppointmentToken = false)
+    {
+        if (!unconditionedAppointmentToken)
         {
-            if (appintment.MeetTime.Equals(meetTime))
+            if (GetDoctorsAppointments(appointment.DoctorLogin).Any(meet => meet.MeetTime.Equals(appointment.MeetTime)))
             {
                 throw new AppointmentException(AppointmentException.AddingToTheSameTime);
             }
-        }
 
-        foreach (var appointment in GetClientsAppointments(client))
-        {
-            if (appointment.MeetTime.Equals(meetTime))
+            if (GetClientsAppointments(appointment.ClientId).Any(meet => meet.MeetTime.Equals(appointment.MeetTime)))
             {
                 throw new AppointmentException(AppointmentException.BusyClientTime);
-            }            
+            }
         }
-        _appointmentRepository.Add(new Appointment(doctor.Login, client.Id.ToString(), meetTime ));
+
+        _appointmentRepository.Add(appointment);
     }
+
 
     public IEnumerable<Appointment> GetDoctorsAppointments(Doctor doctor)
     {
         return GetDoctorsAppointments(doctor.Login);
     }
-    
+
     public IEnumerable<Appointment> GetClientsAppointments(Client client)
     {
         return GetClientsAppointments(client.Id);
-    } 
+    }
 
-    private IEnumerable<Appointment> GetDoctorsAppointments(string doctorsLogin)
+    public IEnumerable<Appointment> GetDoctorsAppointments(string doctorsLogin)
     {
         var appointments = new List<Appointment>();
-        foreach (var appointment in _appointmentRepository.Read())
+        foreach (var appointment in GetAllAppointments())
         {
             if (appointment.DoctorLogin.Equals(doctorsLogin))
             {
@@ -64,23 +75,29 @@ class AppointmentInteractor
 
         return appointments;
     }
-    private IEnumerable<Appointment> GetClientsAppointments(string passportSerial)
+
+    public  IEnumerable<Appointment> GetClientsAppointments(string passportSerial)
     {
         return _appointmentRepository.ReadByClient(passportSerial);
     }
-
-
-
+    
     public void Delete(Appointment appointment)
     {
         _appointmentRepository.Delete(appointment);
     }
 
+    public IObservable<IEnumerable<Appointment>> ObserveByDoctorLogin(string login)
+    {
+        return _appointmentRepository.ObserveByDoctor(login);
+    }
+    
 }
 
 public class AppointmentException : Exception
 {
-    public AppointmentException(string message) : base(message){}
+    public AppointmentException(string message) : base(message)
+    {
+    }
 
     public static string AddingToTheSameTime => "Человек уже записан на это время";
     public static string BusyClientTime => "Клиент уже записан на это время";
