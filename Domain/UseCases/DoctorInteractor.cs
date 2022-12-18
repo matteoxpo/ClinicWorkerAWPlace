@@ -54,15 +54,14 @@ public class DoctorInteractor
         throw new DoctorEmployeeException(DoctorEmployeeException.NotFound);
     }
 
-    public void AddAppointmnet(Appointment appointment)
+    public void AddAppointmnet(Appointment appointment, bool unconditionedAppointmentToken = false)
     {
-        _appointmentInteractor.Add(appointment);
+        _appointmentInteractor.Add(appointment, unconditionedAppointmentToken);
         var oldDoctor = Get(appointment.DoctorLogin);
         var newAppointments = oldDoctor.Appointments.ToList();
-        newAppointments.Add(appointment);
         Doctor newDoctor =
             new Doctor(oldDoctor.Category, oldDoctor.Speciality, newAppointments, oldDoctor.Login);
-
+        
         _doctorRepository.Update(newDoctor);
     }
 

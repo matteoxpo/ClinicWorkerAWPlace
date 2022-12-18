@@ -37,15 +37,13 @@ namespace Presentation
                         new List<Appointment>(), $"log{i}");
                     UserEmployee user = new UserEmployee($"name{i}", $"surname{i}", $"log{i}", $"pas{i}",
                         new DateTime(2000, 2, 2));
-                    // Client client = new Client($"Name{i}", $"Surname{i}", new DateTime(2003, 10, 12), $"complaints{i}",
-                    //     new List<ReferenceForAnalysis>(), $"{i}");
                     Client client = new Client($"Name{i}", $"Surname{i}", new DateTime(2003, 10, 12),
                         new List<ReferenceForAnalysis>(), $"{i}");
-                    // usrRep.Add(user);
+                    usrRep.Add(user);
                     dRep.Add(doc);
-                    // clRep.Add(client);
-                    // appRep.Add(new Appointment(doc.Login, client.Id, new DateTime(2023, 12, 1, 12, 20, 0),
-                    // new string($"complaints{i}")));
+                    clRep.Add(client);
+                    appRep.Add(new Appointment(doc.Login, client.Id, new DateTime(2023, 12, 1, 12, 20, 0),
+                    new string($"complaints{i}")));
                 }
             }
             catch (Exception ex)

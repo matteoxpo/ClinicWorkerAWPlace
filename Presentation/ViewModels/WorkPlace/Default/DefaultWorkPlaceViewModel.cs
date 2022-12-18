@@ -46,7 +46,7 @@ namespace Presentation.ViewModels.WorkPlace.Default
 
         public DefaultWorkPlaceViewModel(IScreen hostScreen, string login)
         {
-            _login = login;
+            Login = login;
             HostScreen = hostScreen;
             
             
@@ -68,8 +68,8 @@ namespace Presentation.ViewModels.WorkPlace.Default
                     .Subscribe(UpdateClients)
                     .DisposeWith(compositeDisposable)
             );
-
-            Clients = new ObservableCollection<Client>(_doctorInteractor.GetDoctorClients(_login));
+            UpdateClients(login);
+            // Clients = new ObservableCollection<Client>(_doctorInteractor.GetDoctorClients(Login));
 
             SelectedClient = Clients.Count > 0 ? Clients.First() : new Client();
             
@@ -80,10 +80,10 @@ namespace Presentation.ViewModels.WorkPlace.Default
 
         private async Task OnAddAppointment()
         {
-            var newAppointment = await ShowAdditionPatient.Handle(new AdditionPatientViewModel(_login));
+            var newAppointment = await ShowAdditionPatient.Handle(new AdditionPatientViewModel(Login));
             if (newAppointment is not null)
             {
-                _doctorInteractor.AddAppointmnet(newAppointment);
+                _doctorInteractor.AddAppointmnet(newAppointment, true);
             }
         }
 
@@ -91,8 +91,13 @@ namespace Presentation.ViewModels.WorkPlace.Default
         {
             Clients = new ObservableCollection<Client>(_doctorInteractor.GetDoctorClients(doctor.Login));
         }
+        private void UpdateClients(string doctorLogin)
+        {
+            Clients = new ObservableCollection<Client>(_doctorInteractor.GetDoctorClients(doctorLogin));
+        }
+        
 
-        private string _login;
+        private string  Login { get; }
         // private Doctor _doctor;
 
         private readonly DoctorInteractor _doctorInteractor;

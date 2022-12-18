@@ -418,150 +418,6 @@
   {
     "Category": 0,
     "Speciality": [
-      "spec 53"
-    ],
-    "Appointments": [],
-    "Login": "log53"
-  },
-  {
-    "Category": 0,
-    "Speciality": [
-      "spec 54"
-    ],
-    "Appointments": [],
-    "Login": "log54"
-  },
-  {
-    "Category": 0,
-    "Speciality": [
-      "spec 55"
-    ],
-    "Appointments": [],
-    "Login": "log55"
-  },
-  {
-    "Category": 0,
-    "Speciality": [
-      "spec 56"
-    ],
-    "Appointments": [],
-    "Login": "log56"
-  },
-  {
-    "Category": 0,
-    "Speciality": [
-      "spec 57"
-    ],
-    "Appointments": [],
-    "Login": "log57"
-  },
-  {
-    "Category": 0,
-    "Speciality": [
-      "spec 58"
-    ],
-    "Appointments": [],
-    "Login": "log58"
-  },
-  {
-    "Category": 0,
-    "Speciality": [
-      "spec 59"
-    ],
-    "Appointments": [],
-    "Login": "log59"
-  },
-  {
-    "Category": 0,
-    "Speciality": [
-      "spec 60"
-    ],
-    "Appointments": [],
-    "Login": "log60"
-  },
-  {
-    "Category": 0,
-    "Speciality": [
-      "spec 61"
-    ],
-    "Appointments": [],
-    "Login": "log61"
-  },
-  {
-    "Category": 0,
-    "Speciality": [
-      "spec 62"
-    ],
-    "Appointments": [],
-    "Login": "log62"
-  },
-  {
-    "Category": 0,
-    "Speciality": [
-      "spec 63"
-    ],
-    "Appointments": [],
-    "Login": "log63"
-  },
-  {
-    "Category": 0,
-    "Speciality": [
-      "spec 64"
-    ],
-    "Appointments": [],
-    "Login": "log64"
-  },
-  {
-    "Category": 0,
-    "Speciality": [
-      "spec 65"
-    ],
-    "Appointments": [],
-    "Login": "log65"
-  },
-  {
-    "Category": 0,
-    "Speciality": [
-      "spec 66"
-    ],
-    "Appointments": [],
-    "Login": "log66"
-  },
-  {
-    "Category": 0,
-    "Speciality": [
-      "spec 67"
-    ],
-    "Appointments": [],
-    "Login": "log67"
-  },
-  {
-    "Category": 0,
-    "Speciality": [
-      "spec 68"
-    ],
-    "Appointments": [],
-    "Login": "log68"
-  },
-  {
-    "Category": 0,
-    "Speciality": [
-      "spec 69"
-    ],
-    "Appointments": [],
-    "Login": "log69"
-  },
-  {
-    "Category": 0,
-    "Speciality": [
-      "spec 70"
-    ],
-    "Appointments": [],
-    "Login": "log70"
-  },
-  {
-    "Category": 0,
-    "Speciality": [
       "spec 0"
     ],
     "Appointments": [
@@ -572,22 +428,22 @@
         "ClientComplaints": "complaints0"
       },
       {
-        "ClientId": "4",
+        "ClientId": "1",
         "DoctorLogin": "log0",
-        "MeetTime": "2022-12-18T01:07:48.0613823+07:00",
-        "ClientComplaints": "SAdasdas"
+        "MeetTime": "2022-12-18T12:56:32.9611791+07:00",
+        "ClientComplaints": "TEST"
       },
       {
-        "ClientId": "6",
+        "ClientId": "2",
         "DoctorLogin": "log0",
-        "MeetTime": "2022-12-18T01:44:47.3992438+07:00",
-        "ClientComplaints": "asdasd"
+        "MeetTime": "2022-12-18T12:59:21.6685733+07:00",
+        "ClientComplaints": "TEST2"
       },
       {
-        "ClientId": "6",
+        "ClientId": "3",
         "DoctorLogin": "log0",
-        "MeetTime": "2022-12-18T01:44:47.3992438+07:00",
-        "ClientComplaints": "asdasd"
+        "MeetTime": "2022-12-18T13:00:02.4627137+07:00",
+        "ClientComplaints": "TEST3"
       }
     ],
     "Login": "log0"

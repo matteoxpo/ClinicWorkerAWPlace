@@ -526,45 +526,5 @@
     "Login": "log65",
     "Password": "pas65",
     "JobTitles": []
-  },
-  {
-    "Name": "name66",
-    "Surname": "surname66",
-    "DateOfBirth": "2000-02-02T00:00:00",
-    "Login": "log66",
-    "Password": "pas66",
-    "JobTitles": []
-  },
-  {
-    "Name": "name67",
-    "Surname": "surname67",
-    "DateOfBirth": "2000-02-02T00:00:00",
-    "Login": "log67",
-    "Password": "pas67",
-    "JobTitles": []
-  },
-  {
-    "Name": "name68",
-    "Surname": "surname68",
-    "DateOfBirth": "2000-02-02T00:00:00",
-    "Login": "log68",
-    "Password": "pas68",
-    "JobTitles": []
-  },
-  {
-    "Name": "name69",
-    "Surname": "surname69",
-    "DateOfBirth": "2000-02-02T00:00:00",
-    "Login": "log69",
-    "Password": "pas69",
-    "JobTitles": []
-  },
-  {
-    "Name": "name70",
-    "Surname": "surname70",
-    "DateOfBirth": "2000-02-02T00:00:00",
-    "Login": "log70",
-    "Password": "pas70",
-    "JobTitles": []
   }
 ]
