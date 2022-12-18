@@ -7,8 +7,7 @@ using Presentation.Views.WorkPlace.Default;
 using Presentation.Views.WorkPlace.Help;
 using Presentation.Views.WorkPlace.Profile;
 using Presentation.Views.Login;
-
-
+using Presentation.Views.WorkPlace.ListOfMedecines;
 using ReactiveUI;
 
 namespace Presentation
@@ -27,6 +26,8 @@ namespace Presentation
             WorkPlaceProfileViewModel context => new WorkPlaceProfileView { DataContext = context },
 
             WorkPlaceHelpViewModel context => new WorkPlaceHelpView { DataContext = context },
+            
+            ListOfMedicinesViewModel context => new ListOfMedicinesView { DataContext = context},
 
             _ => throw new ArgumentOutOfRangeException(nameof(viewModel))
         };

@@ -16,7 +16,10 @@
         <vm:AdditionPatientViewModel />
     </Design.DataContext>
     <Grid>
-        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="10">
+        <StackPanel
+            VerticalAlignment="Center"
+            HorizontalAlignment="Center"
+            Spacing="10">
             <Border CornerRadius="5" Background="{StaticResource Header1Color}">
                 <TextBlock
                     FontSize="{StaticResource HeaderTextSize}"
@@ -36,16 +39,14 @@
                 Watermark="Введите фамилию"
                 FontSize="{StaticResource TextSize}"
                 Width="350" />
-            
-            
 
-            <Button 
-                VerticalAlignment="Center"
+            <Button
+                HorizontalAlignment="Center"
                 Content="Поиск"
                 FontSize="{StaticResource TextSize}"
-                Command="{Binding SearchPattient}"/>
+                Command="{Binding SearchPattient}" />
 
-            <Border 
+            <Border
                 CornerRadius="5"
                 Background="{StaticResource Header1Color}">
                 <TextBlock
@@ -65,23 +66,24 @@
                 SelectedItem="{Binding SelectedClient}"
                 Items="{Binding Clients}">
             </ListBox>
-            
+
             <TextBox
                 Text="{Binding ClientComplaints, Mode=TwoWay}"
                 FontSize="{StaticResource TextSize}"
                 Watermark="Введите жалобы/причины визита"
                 Width="350" />
 
-            <Button Content="Добавить пациента" Command="{Binding AddPatient}" />
+            <Button HorizontalAlignment="Center" Content="Добавить пациента" Command="{Binding AddPatient}" />
 
-            
+
         </StackPanel>
-        <Border Margin="30" HorizontalAlignment="Center" IsVisible="{Binding IsDataInvalid}" VerticalAlignment="Bottom" Background="Red" CornerRadius="5">
+        <Border Margin="30" HorizontalAlignment="Center" IsVisible="{Binding IsDataInvalid}" VerticalAlignment="Bottom"
+                Background="Red" CornerRadius="5">
             <TextBlock Foreground="White"
                        FontSize="{StaticResource TextSize}"
                        Text="Пациент не найден, если он не заргистрирован, необходимо направить в регистратуру" />
         </Border>
-        
+
     </Grid>
 
 

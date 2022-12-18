@@ -50,8 +50,9 @@ public class Client
     public override string ToString() => string.Join(" ", 
         Name,
         Surname,
-        "\nДата рождения: " + DateOfBirth.ToString("MM/dd/yyyy"),
-        MeetTime.Equals(new DateTime(0)) ? "" : "\nВремя записи: " + MeetTime );
+        MeetTime.Equals(new DateTime(0)) ? 
+            "\nДата рождения: " + DateOfBirth.ToString("MM/dd/yyyy") :
+            "\nВремя записи: " + MeetTime );
     
     
 }

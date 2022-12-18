@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.IO;
-using System.Linq;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Text.Json;
@@ -32,7 +27,7 @@ abstract public class BaseRepository<T>
 
     private void SetOnNext(List<T> entities)
     {
-        if (entities.Count() != 0)
+        if (entities.Count != 0)
         {
             EntitiesSubject.OnNext(entities);
         }
@@ -64,8 +59,8 @@ abstract public class BaseRepository<T>
             break;
         }
     }
-    
-    protected void SerializationJson(List<T>? entities)
+
+    private void SerializationJson(List<T>? entities)
     {
         if (entities is null) return;
         

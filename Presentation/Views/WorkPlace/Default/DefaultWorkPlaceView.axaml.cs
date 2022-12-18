@@ -1,15 +1,10 @@
-using System;
-using System.Reactive;
 using System.Reactive.Disposables;
 using System.Threading.Tasks;
 using Avalonia;
-using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using Avalonia.ReactiveUI;
 using Domain.Entities;
-using Domain.Entities.People;
-using Presentation.ViewModels.WorkPlace;
 using Presentation.ViewModels.WorkPlace.Default;
 using ReactiveUI;
 
@@ -50,5 +45,6 @@ namespace Presentation.Views.WorkPlace.Default
         {
             AvaloniaXamlLoader.Load(this);
         }
+ 
     }
 }

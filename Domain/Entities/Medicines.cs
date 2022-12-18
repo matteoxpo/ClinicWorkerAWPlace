@@ -23,4 +23,12 @@ public class Medicines
         IndicationsForUse = new string("indications");
         Manufacturer = new string("manuf");
     }
+    
+    public override string ToString() => string.Join("\n", 
+        "Название: " + Title,
+        "Применятеся при:\n" + IndicationsForUse,
+        CanBeSoldWithoutPrescription ? "Продается без рецепта" : "Без рецепта не продается",
+        "Производитель " + Manufacturer);
+
+    
 }

@@ -9,41 +9,58 @@
         <default:DefaultWorkPlaceViewModel />
     </Design.DataContext>
 
-    <StackPanel Spacing="5" Width="500">
-        <Border Background="{StaticResource Header2Color}" CornerRadius="5">
-            <TextBlock FontSize="{StaticResource SubTitleTextSize}"
-                       Foreground="{StaticResource Header2TextColor}"
-                       Text="Имя" />
+    <StackPanel
+        Spacing="5"
+        Width="500"
+        Background="White">
+        <Border
+            Background="{StaticResource Header2Color}"
+            CornerRadius="3">
+            <TextBlock
+                FontSize="{StaticResource SubTitleTextSize}"
+                Foreground="{StaticResource Header2TextColor}"
+                Text="Имя" />
         </Border>
-        <TextBlock 
+        <TextBlock
             FontSize="{StaticResource TextSize}"
             Text="{Binding SelectedClient.Name}" />
 
 
-        <Border Background="{StaticResource Header2Color}" CornerRadius="5">
-            <TextBlock FontSize="{StaticResource SubTitleTextSize}"
-                       Foreground="{StaticResource Header2TextColor}"
-                       Text="Фамилия" />
+        <Border
+            Background="{StaticResource Header2Color}"
+            CornerRadius="3">
+            <TextBlock
+                FontSize="{StaticResource SubTitleTextSize}"
+                Foreground="{StaticResource Header2TextColor}"
+                Text="Фамилия" />
         </Border>
-        <TextBlock 
+        <TextBlock
             FontSize="{StaticResource TextSize}"
             Text="{Binding SelectedClient.Surname}" />
 
-        <Border Background="{StaticResource Header2Color}" CornerRadius="5">
-            <TextBlock FontSize="{StaticResource SubTitleTextSize}"
-                       Foreground="{StaticResource Header2TextColor}"
-                       Text="Дата рождения" />
+        <Border
+            Background="{StaticResource Header2Color}"
+            CornerRadius="3">
+            <TextBlock
+                FontSize="{StaticResource SubTitleTextSize}"
+                Foreground="{StaticResource Header2TextColor}"
+
+                Text="Дата рождения" />
         </Border>
-        <TextBlock 
-            FontSize="{StaticResource TextSize}" 
+        <TextBlock
+            FontSize="{StaticResource TextSize}"
             Text="{Binding SelectedClient.DateOfBirth}" />
 
-        <Border Background="{StaticResource Header2Color}" CornerRadius="5">
-            <TextBlock FontSize="{StaticResource SubTitleTextSize}"
-                       Foreground="{StaticResource Header2TextColor}"
-                       Text="Жалобы" />
+        <Border
+            Background="{StaticResource Header2Color}"
+            CornerRadius="3">
+            <TextBlock
+                FontSize="{StaticResource SubTitleTextSize}"
+                Foreground="{StaticResource Header2TextColor}"
+                Text="Жалобы" />
         </Border>
-        <TextBlock 
+        <TextBlock
+            Height="200"
             FontSize="{StaticResource TextSize}"
             Text="{Binding SelectedClient.Complaints}" />
 
@@ -54,7 +71,7 @@
         </Border>
         <ListBox
             HorizontalAlignment="Stretch"
-            Height="500"
+            Height="100"
             FontSize="{StaticResource TextSize}"
             CornerRadius="5"
             ScrollViewer.HorizontalScrollBarVisibility="Auto"
@@ -62,5 +79,22 @@
             SelectionMode="Single"
             Items="{Binding SelectedClient.Analyzes}">
         </ListBox>
+
+        <Border Background="{StaticResource Header2Color}" CornerRadius="5">
+            <TextBlock FontSize="{StaticResource SubTitleTextSize}"
+                       Foreground="{StaticResource Header2TextColor}"
+                       Text="Записи к врачам" />
+        </Border>
+        <ListBox
+            HorizontalAlignment="Stretch"
+            Height="100"
+            FontSize="{StaticResource TextSize}"
+            CornerRadius="5"
+            ScrollViewer.HorizontalScrollBarVisibility="Auto"
+            ScrollViewer.VerticalScrollBarVisibility="Auto"
+            Items="{Binding SelectedClient.Appointments}">
+        </ListBox>
+
+
     </StackPanel>
 </UserControl>

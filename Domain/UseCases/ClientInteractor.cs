@@ -36,7 +36,7 @@ public class ClientInteractor
     public IEnumerable<Client> Get(string name, string surname)
     {
         var clients = new List<Client>();
-        foreach (var patient in new List<Client>(_clientRepository.Read()))
+        foreach (var patient in _clientRepository.Read())
         {
             if (string.Equals(patient.Name, name) && string.Equals(patient.Surname, surname))
             {

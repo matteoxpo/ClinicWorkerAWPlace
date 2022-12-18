@@ -57,12 +57,7 @@ public class DoctorInteractor
     public void AddAppointmnet(Appointment appointment, bool unconditionedAppointmentToken = false)
     {
         _appointmentInteractor.Add(appointment, unconditionedAppointmentToken);
-        var oldDoctor = Get(appointment.DoctorLogin);
-        var newAppointments = oldDoctor.Appointments.ToList();
-        Doctor newDoctor =
-            new Doctor(oldDoctor.Category, oldDoctor.Speciality, newAppointments, oldDoctor.Login);
-        
-        _doctorRepository.Update(newDoctor);
+        _doctorRepository.Update(Get(appointment.DoctorLogin));
     }
 
     public IEnumerable<Client> GetClients(Doctor doctor)

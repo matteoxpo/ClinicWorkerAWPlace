@@ -12,44 +12,80 @@
     <Design.DataContext>
         <default:DefaultWorkPlaceViewModel />
     </Design.DataContext>
-    <Grid Margin="30">
-        <StackPanel Spacing="10" IsVisible="{Binding IsUserDoctor}">
-            <Border Background="{StaticResource Header1Color}" CornerRadius="5">
-                <TextBlock
-                    FontSize="{StaticResource HeaderTextSize}"
-                    Foreground="{StaticResource Header1TextColor}"
-                    HorizontalAlignment="Center"
-                    Text="Рабочее пространство"
-                    VerticalAlignment="Top" />
-            </Border>
-            <StackPanel  Orientation="Horizontal" Spacing="20">
-                <StackPanel Spacing="5" Width="500">
+    <StackPanel>
+        <Border Margin="30" Background="{StaticResource Header1Color}" CornerRadius="5">
+            <TextBlock
+                FontSize="{StaticResource HeaderTextSize}"
+                Foreground="{StaticResource Header1TextColor}"
+                HorizontalAlignment="Center"
+                Text="Рабочее пространство"
+                VerticalAlignment="Top" />
+        </Border>
+        <Grid Margin="15" ColumnDefinitions="*, *, *">
+            <StackPanel Spacing="5" Grid.Column="0">
+                <Border Background="{StaticResource Header2Color}" CornerRadius="5">
+                    <TextBlock
+                        FontSize="{StaticResource SubTitleTextSize}"
+                        Foreground="{StaticResource Header2TextColor}"
+                        Text="Список пациентов, записанных к вам" />
+                </Border>
+                <ListBox
+                    HorizontalAlignment="Stretch"
+                    Height="500"
+                    CornerRadius="5"
+                    FontSize="{StaticResource TextSize}"
+                    ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                    ScrollViewer.VerticalScrollBarVisibility="Auto"
+                    SelectionMode="Single"
+                    SelectedItem="{Binding SelectedClient}"
+                    Items="{Binding Clients}">
+                </ListBox>
+
+                <Button Command="{Binding AddPatient}" HorizontalAlignment="Center"
+                        FontSize="{StaticResource TextSize}"
+                        Content="Добавить человека из 'живой очереди'" />
+            </StackPanel>
+            <defaultViews:ClientData Grid.Column="1" DataContext="{Binding}" />
+            <Border Grid.Column="2" Background="{StaticResource CardColor}" CornerRadius="5">
+                <StackPanel Spacing="5">
+                    <TextBlock
+                        FontSize="{StaticResource SubTitleTextSize}"
+                        Foreground="{StaticResource CardTitleColor}"
+                        Text="Назаначение следующей встречи" />
                     <Border Background="{StaticResource Header2Color}" CornerRadius="5">
                         <TextBlock
                             FontSize="{StaticResource SubTitleTextSize}"
                             Foreground="{StaticResource Header2TextColor}"
-                            Text="Список пациентов, записанных к вам" />
+                            Text="Информация о самочуствие пациента" />
                     </Border>
-                        <ListBox
-                            HorizontalAlignment="Stretch"
-                            Height="500"
-                            CornerRadius="5"
-                            FontSize="{StaticResource TextSize}"
-                            ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                            ScrollViewer.VerticalScrollBarVisibility="Auto"
-                            SelectionMode="Single"
-                            SelectedItem="{Binding SelectedClient}"
-                            Items="{Binding Clients}">
-                        </ListBox>
-              
-                    <Button Command="{Binding AddPatient}" HorizontalAlignment="Center"
-                            FontSize="{StaticResource TextSize}"
-                            Content="Добавить человека из 'живой очереди'"/>
-                </StackPanel>
-            <defaultViews:ClientData DataContext="{Binding}"/>    
-            
-            </StackPanel>
-        </StackPanel>
 
-    </Grid>
+                    <TextBox
+                        Height="120"
+                        Text="{Binding SelectedClientNewAppointmentComplaints, Mode=TwoWay}"
+                        Watermark="Введите жалобы пациента, изменения с прошлого визита, самочуствие"
+                        FontSize="{StaticResource TextSize}" />
+
+                    <Border  Background="{StaticResource Header2Color}" CornerRadius="5">
+                        <TextBlock
+                            FontSize="{StaticResource SubTitleTextSize}"
+                            Foreground="{StaticResource Header2TextColor}"
+                            Text="Введите дату следующего визита в формате ГГ:ММ:ДД:чч:мм" />
+                    </Border>
+
+                    <TextBox
+                        Text="{Binding SelectedClientNewAppointmentTime, Mode=TwoWay}"
+                        Watermark="Введите дату"
+                        FontSize="{StaticResource TextSize}" />
+
+                    <Button Command="{Binding AddAppointment}"
+                            HorizontalAlignment="Center"
+                            FontSize="{StaticResource TextSize}"
+                            Content="Записать пациента" />
+
+
+                </StackPanel>
+            </Border>
+
+        </Grid>
+    </StackPanel>
 </UserControl>

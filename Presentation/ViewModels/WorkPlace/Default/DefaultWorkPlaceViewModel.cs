@@ -8,6 +8,7 @@ using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Threading.Channels;
 using System.Threading.Tasks;
+using Avalonia.Media.TextFormatting;
 using Data.Repositories;
 using Domain.Entities;
 using Domain.Entities.People;
@@ -23,34 +24,51 @@ namespace Presentation.ViewModels.WorkPlace.Default
     public class DefaultWorkPlaceViewModel : ReactiveObject, IRoutableViewModel, IActivatableViewModel
     {
         public Interaction<AdditionPatientViewModel, Appointment?> ShowAdditionPatient { get; }
+        public ReactiveCommand<Unit, Unit> AddAppointment { get; }
         public ReactiveCommand<Unit, Unit> AddPatient { get; }
         public IScreen HostScreen { get; }
 
         public string? UrlPathSegment { get; }
-        public bool IsUserDoctor { get; }
-
-        public Client SelectedClient
+        
+        public Client? SelectedClient
         {
             get => _selectedClient;
             set => this.RaiseAndSetIfChanged(ref _selectedClient, value);
         }
 
-        public ObservableCollection<Client> Clients
+        public string? SelectedClientNewAppointmentTime
+        {
+            get => _selectedClientNewAppointmentTime;
+            set => this.RaiseAndSetIfChanged(ref _selectedClientNewAppointmentTime, value);
+        }
+
+        public string? SelectedClientNewAppointmentComplaints
+        {
+            get => _selectedClientNewAppointmentComplaints;
+            set => this.RaiseAndSetIfChanged(ref _selectedClientNewAppointmentComplaints, value);
+        }
+
+        public ObservableCollection<Client>? Clients
         {
             get => _clients;
             set => this.RaiseAndSetIfChanged(ref _clients, value);
         }
 
-        private ObservableCollection<Client> _clients;
-
-
         public DefaultWorkPlaceViewModel(IScreen hostScreen, string login)
         {
             Login = login;
+   
             HostScreen = hostScreen;
+            
+            SelectedClient = null;
+
+            SelectedClientNewAppointmentComplaints = null;
+
             
             
             Activator = new ViewModelActivator();
+            
+            _clientInteractor = new ClientInteractor(ClientRepository.GetInstance());
 
             _doctorInteractor = new DoctorInteractor(
                 ClientRepository.GetInstance(),
@@ -58,8 +76,9 @@ namespace Presentation.ViewModels.WorkPlace.Default
                 DoctorRepository.GetInstance()
             );
 
-            IsUserDoctor = new UserEmployeeInteractor(
-                UserEmployeeRepository.GetInstance())
+
+            new UserEmployeeInteractor(
+                    UserEmployeeRepository.GetInstance())
                 .IsUserDoctor(login);
 
             this.WhenActivated(compositeDisposable =>
@@ -69,21 +88,44 @@ namespace Presentation.ViewModels.WorkPlace.Default
                     .DisposeWith(compositeDisposable)
             );
             UpdateClients(login);
-            // Clients = new ObservableCollection<Client>(_doctorInteractor.GetDoctorClients(Login));
 
-            SelectedClient = Clients.Count > 0 ? Clients.First() : new Client();
+            SelectedClient = Clients != null && Clients.Count > 0 ? Clients.First() : new Client();
             
             ShowAdditionPatient = new Interaction<AdditionPatientViewModel, Appointment?>();
 
-            AddPatient = ReactiveCommand.CreateFromTask(OnAddAppointment);
+            AddPatient = ReactiveCommand.CreateFromTask(OnAddExtraAppointment);
+
+            AddAppointment = ReactiveCommand.Create(OnAddNextAppointment);
+
         }
 
-        private async Task OnAddAppointment()
+        private async Task OnAddExtraAppointment()
         {
             var newAppointment = await ShowAdditionPatient.Handle(new AdditionPatientViewModel(Login));
             if (newAppointment is not null)
             {
                 _doctorInteractor.AddAppointmnet(newAppointment, true);
+            }
+        }
+
+        private void OnAddNextAppointment()
+        {
+            try
+            {
+                if (SelectedClientNewAppointmentTime is null)
+                {
+                    throw new NullReferenceException();
+                }
+                if (SelectedClientNewAppointmentComplaints is null)
+                {
+                    throw new NullReferenceException();
+                }
+                var newAppointment = new Appointment(Login, SelectedClient.Id,
+                    DateTime.Parse(SelectedClientNewAppointmentTime), SelectedClientNewAppointmentComplaints);
+            }
+            catch (Exception ex)
+            {
+                // ignored for a whiele
             }
         }
 
@@ -95,17 +137,25 @@ namespace Presentation.ViewModels.WorkPlace.Default
         {
             Clients = new ObservableCollection<Client>(_doctorInteractor.GetDoctorClients(doctorLogin));
         }
-        
+
+
 
         private string  Login { get; }
         // private Doctor _doctor;
 
         private readonly DoctorInteractor _doctorInteractor;
 
-        // private readonly ClientInteractor _clientInteractor;
+        private readonly ClientInteractor _clientInteractor;
         // private readonly UserEmployeeInteractor _userEmployeeInteractor;
+        
+        private ObservableCollection<Client>? _clients;
 
-        private Client _selectedClient;
+        private Client? _selectedClient;
         public ViewModelActivator Activator { get; }
+
+
+
+        private string? _selectedClientNewAppointmentTime;
+        private string? _selectedClientNewAppointmentComplaints;
     }
 }

@@ -1,0 +1,34 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:workPlace="clr-namespace:Presentation.ViewModels.WorkPlace"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Presentation.Views.WorkPlace.ListOfMedecines.ListOfMedicinesView">
+    <Design.DataContext>
+        <workPlace:ListOfMedicinesViewModel />
+    </Design.DataContext>
+    <StackPanel Margin="30"
+                HorizontalAlignment="Stretch"
+                Spacing="10">
+        <Border Background="{StaticResource Header1Color}" CornerRadius="5">
+            <TextBlock
+                FontSize="{StaticResource HeaderTextSize}"
+                Foreground="{StaticResource Header1TextColor}"
+                HorizontalAlignment="Center"
+                Text="Памятка о фармацевтике"
+                VerticalAlignment="Top" />
+        </Border>
+  
+        <ListBox
+            Height="800"
+            Width="400"
+            CornerRadius="5"
+            FontSize="{StaticResource TextSize}"
+            ScrollViewer.HorizontalScrollBarVisibility="Auto"
+            ScrollViewer.VerticalScrollBarVisibility="Auto"
+            SelectionMode="Single"
+            Items="{Binding Medicines}">
+        </ListBox>
+    </StackPanel>
+</UserControl>

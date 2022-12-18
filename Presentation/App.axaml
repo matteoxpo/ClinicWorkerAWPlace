@@ -10,11 +10,16 @@
     </Application.DataTemplates>
     <Application.Styles>
         <FluentTheme Mode="Light" />
+        <Style Selector="TextBlock">
+            <Setter Property="FontFamily" Value="Rubik"/>
+            <Setter Property="Padding" Value="3"/>
+        </Style>
     </Application.Styles>
     <Application.Resources>
         <ResourceDictionary>
 
             <system:Double x:Key="HeaderTextSize">23</system:Double>
+            <system:Double x:Key="MenuItemTextSize">17</system:Double>
             <system:Double x:Key="SubTitleTextSize">19</system:Double>
             <system:Double x:Key="TextSize">18</system:Double>
             <system:Double x:Key="SmallTextSize">16</system:Double>
@@ -22,6 +27,8 @@
             <Color x:Key="MenuBarColor">#b7c5b1</Color>
             
             <Color x:Key="BackGroundColor">#d5e9cd</Color>
+            <Color x:Key="CardColor">#ebf8e6</Color>
+            <Color x:Key="CardTitleColor">#68875b</Color>
             
             <Color x:Key="Header1Color">#a6cc96</Color>
             <Color x:Key="Header1TextColor">White</Color>

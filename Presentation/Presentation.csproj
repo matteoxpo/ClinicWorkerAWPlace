@@ -31,5 +31,17 @@
         <ProjectReference Include="../Domain/Domain.csproj" />
         <ProjectReference Include="../Data/Data.csproj" />
     </ItemGroup>
+    <ItemGroup>
+        <Resource Include="Assets\Fonts\**.ttf" />
+    </ItemGroup>
+<!--    <ItemGroup>-->
+<!--      <Compile Update="Views\WorkPlace\ListOfMedecines\ListOfMedicines.axaml.cs">-->
+<!--        <DependentUpon>ListOfMedicines.axaml</DependentUpon>-->
+<!--        <SubType>Code</SubType>-->
+<!--      </Compile>-->
+<!--    </ItemGroup>-->
+<!--    <ItemGroup>-->
+<!--      <AdditionalFiles Include="Views\WorkPlace\ListOfMedecines\ListOfMedicines.axaml" />-->
+<!--    </ItemGroup>-->
     
 </Project>

@@ -17,25 +17,34 @@
     </Design.DataContext>
     <Grid>
 
-        <Menu Background="{StaticResource MenuBarColor}" CornerRadius="5" VerticalAlignment="Top" Height="22">
-            <MenuItem Command="{Binding GoToDefault}" Header="Рабочая зона" />
-            <MenuItem Command="{Binding GoToHelp}" Header="Помощь" />
-            <MenuItem Command="{Binding GoToProfile}" Header="Профиль" />
-            <MenuItem Command="{Binding LogOut}" Header="Выйти из профиля" />
-        </Menu>
+        <Grid RowDefinitions="Auto,*" IsVisible="{Binding IsUserDocotr}">
+            <Menu Grid.Row="0" Background="{StaticResource MenuBarColor}" CornerRadius="5" VerticalAlignment="Top">
+                <MenuItem FontSize="{StaticResource MenuItemTextSize}" Foreground="White"
+                          Command="{Binding GoToDefault}"
+                          Header="Рабочая зона" />
+                <MenuItem FontSize="{StaticResource MenuItemTextSize}" Foreground="White"
+                          Command="{Binding GoListOfMedicines}"
+                          Header="Список медикаментов" />
+                <MenuItem FontSize="{StaticResource MenuItemTextSize}" Foreground="White" Command="{Binding GoToHelp}"
+                          Header="Помощь" />
+                <MenuItem FontSize="{StaticResource MenuItemTextSize}" Foreground="White"
+                          Command="{Binding GoToProfile}"
+                          Header="Профиль" />
+                <MenuItem FontSize="{StaticResource MenuItemTextSize}" Foreground="White" Command="{Binding LogOut}"
+                          Header="Выйти из профиля" />
+            </Menu>
 
-        <rxui:RoutedViewHost
-            Grid.Row="0"
-            PageTransition="{x:Null}"
-            Router="{Binding Router}">
-            <rxui:RoutedViewHost.DefaultContent>
-                <work:DefaultWorkPlaceView DataContext="{Binding DefaultWorkPlaceViewModel}" />
-            </rxui:RoutedViewHost.DefaultContent>
-            <!--    -->
-            <rxui:RoutedViewHost.ViewLocator>
-                <AutomatedWorkPlace:AppViewLocator />
-            </rxui:RoutedViewHost.ViewLocator>
-            <!--    -->
-        </rxui:RoutedViewHost>
+            <rxui:RoutedViewHost
+                Grid.Row="1"
+                PageTransition="{x:Null}"
+                Router="{Binding Router}">
+                <rxui:RoutedViewHost.DefaultContent>
+                    <work:DefaultWorkPlaceView DataContext="{Binding DefaultWorkPlaceViewModel}" />
+                </rxui:RoutedViewHost.DefaultContent>
+                <rxui:RoutedViewHost.ViewLocator>
+                    <AutomatedWorkPlace:AppViewLocator />
+                </rxui:RoutedViewHost.ViewLocator>
+            </rxui:RoutedViewHost>
+        </Grid>
     </Grid>
 </UserControl>

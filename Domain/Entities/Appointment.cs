@@ -23,4 +23,6 @@ public class Appointment
         ClientComplaints = new string("ClientComplaints");
     }
     
+    public override string ToString() => string.Join(" ", DoctorLogin, MeetTime.ToString("MM/dd/yyyy"));
+    
 }
