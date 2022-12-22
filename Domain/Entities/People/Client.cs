@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace Domain.Entities.People;
 
 [Serializable]
@@ -6,12 +8,12 @@ public class Client
     public string Name { get; set; }
     public string Surname { get ; set; }
     public  DateTime DateOfBirth { get; set; }
-    [field: NonSerialized] public DateTime MeetTime;
-    [field: NonSerialized] public string Complaints { get; set; }
+    [field: NonSerialized] [JsonIgnore] public DateTime MeetTime;
+    [field: NonSerialized] [JsonIgnore] public string Complaints { get; set; }
     public IEnumerable<ReferenceForAnalysis> Analyzes { get; set; }
     public string Id { get; set;}
     
-    [field: NonSerialized] public IEnumerable<Appointment> Appointments { get; set; }
+    [field: NonSerialized] [JsonIgnore] public IEnumerable<Appointment> Appointments { get; set; }
 
     public Client()
     {

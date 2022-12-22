@@ -1,22 +1,16 @@
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Globalization;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
-using System.Threading.Channels;
 using System.Threading.Tasks;
-using Avalonia.Media.TextFormatting;
 using Data.Repositories;
 using Domain.Entities;
 using Domain.Entities.People;
 using Domain.Entities.Roles;
 using Domain.UseCases;
-using DynamicData;
-using DynamicData.Binding;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
+using ExCSS;
 using ReactiveUI;
 
 namespace Presentation.ViewModels.WorkPlace.Default
@@ -48,11 +42,11 @@ namespace Presentation.ViewModels.WorkPlace.Default
             set => this.RaiseAndSetIfChanged(ref _selectedClientNewAppointmentComplaints, value);
         }
 
-        public ObservableCollection<Client>? Clients
-        {
-            get => _clients;
-            set => this.RaiseAndSetIfChanged(ref _clients, value);
-        }
+        // public ObservableCollection<Client>? Clients
+        // {
+        //     get => _clients;
+        //     set => this.RaiseAndSetIfChanged(ref _clients, value);
+        // }
 
         public DefaultWorkPlaceViewModel(IScreen hostScreen, string login)
         {
@@ -89,13 +83,23 @@ namespace Presentation.ViewModels.WorkPlace.Default
             );
             UpdateClients(login);
 
-            SelectedClient = Clients != null && Clients.Count > 0 ? Clients.First() : new Client();
-            
             ShowAdditionPatient = new Interaction<AdditionPatientViewModel, Appointment?>();
 
             AddPatient = ReactiveCommand.CreateFromTask(OnAddExtraAppointment);
 
             AddAppointment = ReactiveCommand.Create(OnAddNextAppointment);
+
+            ShowAllClients = ReactiveCommand.Create(() =>
+            {
+                ShowingClients = _allClients;
+            });
+            
+            ShowTodayClients = ReactiveCommand.Create(() =>
+            {
+                ShowingClients = _todaysClients;
+            });
+                
+            ShowingClients = _allClients;
 
         }
 
@@ -131,11 +135,21 @@ namespace Presentation.ViewModels.WorkPlace.Default
 
         private void UpdateClients(Doctor doctor)
         {
-            Clients = new ObservableCollection<Client>(_doctorInteractor.GetDoctorClients(doctor.Login));
+            UpdateClients(doctor.Login);
         }
         private void UpdateClients(string doctorLogin)
         {
-            Clients = new ObservableCollection<Client>(_doctorInteractor.GetDoctorClients(doctorLogin));
+            _allClients = new ObservableCollection<Client>(_doctorInteractor.GetDoctorClients(doctorLogin));
+            _todaysClients = new ObservableCollection<Client>();
+            foreach (var client in _allClients)
+            {
+                if (client.MeetTime.Year == DateTime.Today.Year && 
+                    client.MeetTime.Month == DateTime.Today.Month && 
+                    client.MeetTime.Day == DateTime.Today.Day )
+                {
+                    _todaysClients.Add(client);
+                }
+            }
         }
 
 
@@ -148,10 +162,23 @@ namespace Presentation.ViewModels.WorkPlace.Default
         private readonly ClientInteractor _clientInteractor;
         // private readonly UserEmployeeInteractor _userEmployeeInteractor;
         
-        private ObservableCollection<Client>? _clients;
+        private ObservableCollection<Client>? _allClients;
+        private ObservableCollection<Client>? _todaysClients;
 
         private Client? _selectedClient;
         public ViewModelActivator Activator { get; }
+
+        public ObservableCollection<Client>? ShowingClients
+        {
+            get => _showingClients;
+            set => this.RaiseAndSetIfChanged(ref _showingClients, value);
+        }
+
+        public ReactiveCommand<Unit, Unit> ShowAllClients { get; }
+        public ReactiveCommand<Unit, Unit> ShowTodayClients { get; }
+
+        
+        private ObservableCollection<Client>? _showingClients;
 
 
 

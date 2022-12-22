@@ -8,11 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vmwp="using:Presentation.ViewModels.WorkPlace"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <!--
-        x:Class="AutomatedWorkPlace.Views.LoginView"
-        Icon="/Assets/doc-logo.ico"
-        Title="AutomatedWorkPlace"
-    -->
+
     <Design.DataContext>
         <vmwp:WorkPlaceProfileViewModel />
     </Design.DataContext>
@@ -27,18 +23,67 @@
                     Text="Ваш профиль"
                     VerticalAlignment="Top" />
             </Border>
-            <StackPanel HorizontalAlignment="Left">
-                <Image
-                    Height="170"
-                    Source="{SvgImage /Assets/account.svg}"
-                    Width="170" />
-                <StackPanel Orientation="Horizontal" Spacing="10">
-                    <TextBlock FontSize="{StaticResource TextSize}" Text="{Binding Name}" />
-                    <TextBlock FontSize="{StaticResource TextSize}" Text="{Binding Surname}" />
-
+            <Grid ColumnDefinitions="*,*">
+                <StackPanel Orientation="Vertical" Grid.Column="0">
+                    <Image
+                        Height="170"
+                        Source="{SvgImage /Assets/account.svg}"
+                        Width="170" />
+                    <Border Background="{StaticResource Header2Color}" CornerRadius="5">
+                        <Grid>
+                            <TextBlock
+                                FontSize="{StaticResource SubTitleTextSize}"
+                                Foreground="{StaticResource Header2TextColor}"
+                                Text="{Binding UserEmployee}" />
+                        </Grid>
+                    </Border>
                 </StackPanel>
-                <TextBlock FontSize="{StaticResource TextSize}" Text="{Binding Login}" />
-            </StackPanel>
+                <StackPanel Grid.Column="1" Spacing="20" VerticalAlignment="Center">
+                    <Border  Background="{StaticResource Header2Color}" CornerRadius="5">
+                        <TextBlock
+                            FontSize="{StaticResource SubTitleTextSize}"
+                            Foreground="{StaticResource Header2TextColor}"
+                            Text="Смена пароля" />
+                    </Border>
+
+                    <TextBox
+                        Text="{Binding OldPassword, Mode=TwoWay}"
+                        Watermark="Введите старый пароль"
+                        FontSize="{StaticResource TextSize}" />
+                    <TextBox
+                        Text="{Binding NewPassword, Mode=TwoWay}"
+                        Watermark="Введите новый пароль"
+                        FontSize="{StaticResource TextSize}" />
+                    
+                    <Button Command="{Binding ChangePassword}"
+                            HorizontalAlignment="Center"
+                            FontSize="{StaticResource TextSize}"
+                            Content="Изменить пароль" />
+                    
+                    <Border 
+                        VerticalAlignment="Center" 
+                        IsVisible="{Binding IsActionOn}"  
+                        Background="{StaticResource Header3Color}" 
+                        CornerRadius="5">
+                        <Grid>
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                Foreground="Red"
+                                IsVisible="{Binding IsDataInvalid}"
+                                Text="{Binding ErrorMessage}"
+                                FontSize="{StaticResource TextSize}" />
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                Foreground="Green"
+                                IsVisible="{Binding IsPasswordChanged}"
+                                Text="Пароль был успешно изменен"
+                                FontSize="{StaticResource TextSize}" />
+                        </Grid>
+                    </Border>
+                </StackPanel>
+                
+            </Grid>
+
         </StackPanel>
         <!--    -->
     </Grid>

@@ -1,4 +1,4 @@
-using System.Xml.Serialization;
+using System.Text.Json.Serialization;
 using Domain.Entities.Roles;
 
 namespace Domain.Entities.People;
@@ -12,7 +12,7 @@ public class UserEmployee
     public string Login { get; set; }
     public string Password { get; set; }
 
-    [field: NonSerialized] public IEnumerable<JobTitle> JobTitles { get; set; }
+    [JsonIgnore] public IEnumerable<JobTitle> JobTitles { get; set; }
 
     public UserEmployee(string name, string surname, string login, string password, IEnumerable<JobTitle> jobTitles, DateTime dateOfBirth) 
     {
@@ -55,7 +55,7 @@ public class UserEmployee
         JobTitles = new List<JobTitle>();
     }
     
-    public override string ToString() => string.Join(" ", Name, Surname, Login);
+    public override string ToString() => string.Join("\n", Name, Surname, Login);
 
 
 }

@@ -70,15 +70,13 @@ public class UserEmployeeInteractor
         {
             throw new UserEmployeeException(UserEmployeeException.OldPasswordErrror);
         }
-        if (newPassword.Length > 5)
-        {
-            userEmployee.Password = newPassword;
-            _userRepository.Update(userEmployee);
-        }
-        else
+
+        if (newPassword.Length <= 5)
         {
             throw new UserEmployeeException(UserEmployeeException.ShortPasswordException);
         }
+        userEmployee.Password = newPassword;
+        _userRepository.Update(userEmployee);
     }
     
 
@@ -110,6 +108,6 @@ public class UserEmployeeException : Exception
     public static string Authorization => "Авторизация не была пройдена";
     public static string LoginNotFound => "Пользователь с таким логином не найдем";
     public static string ShortPasswordException => "Пароль слишком короткий";
-    public static string OldPasswordErrror => "Введено некорректный пароль";
+    public static string OldPasswordErrror => "Введен некорректный старый пароль";
 
 }

@@ -23,12 +23,25 @@
         </Border>
         <Grid Margin="15" ColumnDefinitions="*, *, *">
             <StackPanel Spacing="5" Grid.Column="0">
-                <Border Background="{StaticResource Header2Color}" CornerRadius="5">
-                    <TextBlock
-                        FontSize="{StaticResource SubTitleTextSize}"
-                        Foreground="{StaticResource Header2TextColor}"
-                        Text="Список пациентов, записанных к вам" />
+                <Border Grid.Column="0" Background="{StaticResource Header2Color}" CornerRadius="5">
+                    <StackPanel Orientation="Horizontal" Spacing="5">
+                        <TextBlock
+                            FontSize="{StaticResource SubTitleTextSize}"
+                            Foreground="{StaticResource Header2TextColor}"
+                            Text="Список пациентов, записанных к вам" />
+                        <RadioButton
+                            Command="{Binding ShowTodayClients}"
+                            FontWeight="Heavy"
+                            Foreground="{StaticResource CardColor}"
+                            Content="Сегодня" />
+                        <RadioButton
+                            Foreground="{StaticResource CardColor}"
+                            Command="{Binding ShowAllClients}"
+                            FontWeight="Heavy"
+                            Content="Все" />
+                    </StackPanel>
                 </Border>
+
                 <ListBox
                     HorizontalAlignment="Stretch"
                     Height="500"
@@ -38,7 +51,7 @@
                     ScrollViewer.VerticalScrollBarVisibility="Auto"
                     SelectionMode="Single"
                     SelectedItem="{Binding SelectedClient}"
-                    Items="{Binding Clients}">
+                    Items="{Binding ShowingClients}">
                 </ListBox>
 
                 <Button Command="{Binding AddPatient}" HorizontalAlignment="Center"
@@ -65,7 +78,7 @@
                         Watermark="Введите жалобы пациента, изменения с прошлого визита, самочуствие"
                         FontSize="{StaticResource TextSize}" />
 
-                    <Border  Background="{StaticResource Header2Color}" CornerRadius="5">
+                    <Border Background="{StaticResource Header2Color}" CornerRadius="5">
                         <TextBlock
                             FontSize="{StaticResource SubTitleTextSize}"
                             Foreground="{StaticResource Header2TextColor}"

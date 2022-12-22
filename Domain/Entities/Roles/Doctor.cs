@@ -1,10 +1,12 @@
+using System.Text.Json.Serialization;
+
 namespace Domain.Entities.Roles;
 [Serializable]
 public class Doctor : JobTitle
 {
     public Qualifications Category { get; set; }
     public IEnumerable<string> Speciality { get; set; }
-    [field: NonSerialized] public IEnumerable<Appointment> Appointments { get; set; }
+    [JsonIgnore] public IEnumerable<Appointment> Appointments { get; set; }
 
     public Doctor(Qualifications category,IEnumerable<string> speciality, IEnumerable<Appointment> appointments, string userLogin) : base(userLogin)
     {
