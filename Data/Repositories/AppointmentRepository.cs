@@ -1,4 +1,3 @@
-using System.Reactive.Linq;
 using Domain.Entities;
 using Domain.Entities.People;
 using Domain.Entities.Roles;
@@ -8,14 +7,10 @@ namespace Data.Repositories;
 
 public class AppointmentRepository : BaseRepository<Appointment>, IAppointmentRepository
 {
-    private AppointmentRepository(string path) : base(path) { }
-
     private static AppointmentRepository? _globalRepositoryInstance;
 
-    public static AppointmentRepository GetInstance()
+    private AppointmentRepository(string path) : base(path)
     {
-        return _globalRepositoryInstance ??= new AppointmentRepository(
-            "../../../../Data/DataSets/Appointment.json");
     }
 
     public void Update(Appointment nextAppointment)
@@ -66,13 +61,9 @@ public class AppointmentRepository : BaseRepository<Appointment>, IAppointmentRe
         return Read().Where(appointment => doctorLogin.Equals(appointment.DoctorLogin));
     }
 
-    public IObservable<IEnumerable<Appointment>> ObserveByDoctor(string login)
+    public static AppointmentRepository GetInstance()
     {
-        return AsObservable.Select(d => d.Where(h => h.DoctorLogin.Equals(login)));
-    }
-
-    public IObservable<IEnumerable<Appointment>> ObserveByDoctor(Doctor doctor)
-    {
-        return ObserveByDoctor(doctor.Login);
+        return _globalRepositoryInstance ??= new AppointmentRepository(
+            "../../../../Data/DataSets/Appointment.json");
     }
 }

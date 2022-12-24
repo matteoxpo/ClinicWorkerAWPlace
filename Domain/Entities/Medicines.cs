@@ -3,12 +3,6 @@ namespace Domain.Entities;
 [Serializable]
 public class Medicines
 {
-    public string Title { get; set; }
-    public string IndicationsForUse{ get; set; }
-    public string Manufacturer{ get; set; }
-    public bool CanBeSoldWithoutPrescription{ get; set; }
-
-
     public Medicines(string title, string indicationsForUse, string manufacturer, bool canBeSoldWithoutPrescription)
     {
         Title = title;
@@ -23,12 +17,18 @@ public class Medicines
         IndicationsForUse = new string("indications");
         Manufacturer = new string("manuf");
     }
-    
-    public override string ToString() => string.Join("\n", 
-        "Название: " + Title,
-        "Применятеся при:\n" + IndicationsForUse,
-        CanBeSoldWithoutPrescription ? "Продается без рецепта" : "Без рецепта не продается",
-        "Производитель " + Manufacturer);
 
-    
+    public string Title { get; set; }
+    public string IndicationsForUse { get; set; }
+    public string Manufacturer { get; set; }
+    public bool CanBeSoldWithoutPrescription { get; set; }
+
+    public override string ToString()
+    {
+        return string.Join("\n",
+            "Название: " + Title,
+            "Применятеся при:\n" + IndicationsForUse,
+            CanBeSoldWithoutPrescription ? "Продается без рецепта" : "Без рецепта не продается",
+            "Производитель " + Manufacturer);
+    }
 }

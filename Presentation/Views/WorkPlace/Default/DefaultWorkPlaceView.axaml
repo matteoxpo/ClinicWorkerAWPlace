@@ -21,24 +21,27 @@
                 Text="Рабочее пространство"
                 VerticalAlignment="Top" />
         </Border>
-        <Grid Margin="15" ColumnDefinitions="*, *, *">
+        <Grid Margin="15" ColumnDefinitions="*, 2*, 2*">
             <StackPanel Spacing="5" Grid.Column="0">
-                <Border Grid.Column="0" Background="{StaticResource Header2Color}" CornerRadius="5">
-                    <StackPanel Orientation="Horizontal" Spacing="5">
+                <Border Background="{StaticResource Header2Color}" CornerRadius="5">
+                    <StackPanel Orientation="Vertical">
                         <TextBlock
                             FontSize="{StaticResource SubTitleTextSize}"
                             Foreground="{StaticResource Header2TextColor}"
-                            Text="Список пациентов, записанных к вам" />
-                        <RadioButton
-                            Command="{Binding ShowTodayClients}"
-                            FontWeight="Heavy"
-                            Foreground="{StaticResource CardColor}"
-                            Content="Сегодня" />
-                        <RadioButton
-                            Foreground="{StaticResource CardColor}"
-                            Command="{Binding ShowAllClients}"
-                            FontWeight="Heavy"
-                            Content="Все" />
+                            Text="Список пациентов" />
+                        <StackPanel Orientation="Horizontal" Spacing="5">
+                            <RadioButton
+                                Command="{Binding ShowTodayClients}"
+                                FontWeight="Heavy"
+                                IsChecked="{Binding IsCheckedToday}"
+                                Foreground="{StaticResource CardColor}"
+                                Content="Сегодня" />
+                            <RadioButton
+                                Foreground="{StaticResource CardColor}"
+                                Command="{Binding ShowAllClients}"
+                                FontWeight="Heavy"
+                                Content="Все" />
+                        </StackPanel>
                     </StackPanel>
                 </Border>
 
@@ -49,14 +52,13 @@
                     FontSize="{StaticResource TextSize}"
                     ScrollViewer.HorizontalScrollBarVisibility="Auto"
                     ScrollViewer.VerticalScrollBarVisibility="Auto"
-                    SelectionMode="Single"
+                    SelectionMode="AlwaysSelected"
                     SelectedItem="{Binding SelectedClient}"
-                    Items="{Binding ShowingClients}">
-                </ListBox>
+                    Items="{Binding ShowingClients}" />
 
                 <Button Command="{Binding AddPatient}" HorizontalAlignment="Center"
                         FontSize="{StaticResource TextSize}"
-                        Content="Добавить человека из 'живой очереди'" />
+                        Content="Из 'живой очереди'" />
             </StackPanel>
             <defaultViews:ClientData Grid.Column="1" DataContext="{Binding}" />
             <Border Grid.Column="2" Background="{StaticResource CardColor}" CornerRadius="5">
@@ -74,7 +76,8 @@
 
                     <TextBox
                         Height="120"
-                        Text="{Binding SelectedClientNewAppointmentComplaints, Mode=TwoWay}"
+                        AcceptsReturn="True"
+                        Text="{Binding SelectedClientNewComplaints, Mode=TwoWay}"
                         Watermark="Введите жалобы пациента, изменения с прошлого визита, самочуствие"
                         FontSize="{StaticResource TextSize}" />
 
@@ -82,12 +85,12 @@
                         <TextBlock
                             FontSize="{StaticResource SubTitleTextSize}"
                             Foreground="{StaticResource Header2TextColor}"
-                            Text="Введите дату следующего визита в формате ГГ:ММ:ДД:чч:мм" />
+                            Text="Введите дату следующего визита в формате часы:минуты число.номермесяца.год" />
                     </Border>
 
                     <TextBox
                         Text="{Binding SelectedClientNewAppointmentTime, Mode=TwoWay}"
-                        Watermark="Введите дату"
+                        Watermark="ЧЧ:мм дд.ММ.гггг"
                         FontSize="{StaticResource TextSize}" />
 
                     <Button Command="{Binding AddAppointment}"
@@ -96,6 +99,61 @@
                             Content="Записать пациента" />
 
 
+                    <Grid ColumnDefinitions="2*,3*">
+                        <StackPanel Grid.Column="0" Spacing="3">
+                            <Border Background="{StaticResource Header2Color}" CornerRadius="5">
+                                <TextBlock
+                                    FontSize="{StaticResource SubTitleTextSize}"
+                                    Foreground="{StaticResource Header2TextColor}"
+                                    Text="Список анализов" />
+                            </Border>
+                            <ListBox
+                                HorizontalAlignment="Stretch"
+                                Height="400"
+                                CornerRadius="5"
+                                FontSize="{StaticResource TextSize}"
+                                ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                                ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                SelectionMode="AlwaysSelected"
+                                SelectedItem="{Binding SelectedAnalyses}"
+                                Items="{Binding Analyses}" />
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Orientation="Vertical" Spacing="10">
+                            <Border Background="{StaticResource Header2Color}" CornerRadius="5">
+                                <TextBlock
+                                    FontSize="{StaticResource SubTitleTextSize}"
+                                    Foreground="{StaticResource Header2TextColor}"
+                                    Text="Введите дату сдачи анализа в формате&#x0d;&#x0a;часы:минуты число.номермесяца.год" />
+                            </Border>
+
+                            <TextBox
+                                Text="{Binding SelectedAnalysesTime, Mode=TwoWay}"
+                                Watermark="ЧЧ:мм дд.ММ.гггг"
+                                FontSize="{StaticResource TextSize}" />
+
+                            <Border Background="{StaticResource Header2Color}" CornerRadius="5">
+                                <TextBlock
+                                    FontSize="{StaticResource SubTitleTextSize}"
+                                    Foreground="{StaticResource Header2TextColor}"
+                                    Text="Занятое время записи на анлиз" />
+                            </Border>
+
+                            <ListBox
+                                HorizontalAlignment="Stretch"
+                                Height="300"
+                                CornerRadius="5"
+                                FontSize="{StaticResource TextSize}"
+                                ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                                ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                Items="{Binding SelectedAnalysisTimetable}" />
+
+                            <Button
+                                HorizontalAlignment="Center"
+                                Command="{Binding AddAnalysis}"
+                                FontSize="{StaticResource TextSize}"
+                                Content="Направить на анализ" />
+                        </StackPanel>
+                    </Grid>
                 </StackPanel>
             </Border>
 

@@ -16,36 +16,69 @@
     <Design.DataContext>
         <vmwp:WorkPlaceViewModel />
     </Design.DataContext>
-    <Grid Margin="30">
-        <!--    -->
-        <StackPanel Orientation="Vertical">
-            <Border Background="{StaticResource Header1Color}" CornerRadius="5">
-                <TextBlock
-                    FontSize="{StaticResource HeaderTextSize}"
-                    Foreground="{StaticResource Header1TextColor}"
-                    HorizontalAlignment="Center"
-                    Text="О программе"
-                    VerticalAlignment="Top" />
-            </Border>
-            <Image
-                Height="100"
-                Source="{SvgImage /Assets/logo_colorfully.svg}"
-                Width="100" />
+    <StackPanel Margin="30 " Spacing="10">
 
-            <StackPanel
-                HorizontalAlignment="Left"
-                Margin="0,20,0,0"
-                Orientation="Horizontal"
-                Spacing="5">
-                <StackPanel Orientation="Vertical">
-                    <TextBlock FontSize="{StaticResource TextSize}" Text="Рабочее пространство" />
+        <Border VerticalAlignment="Center" Background="{StaticResource Header1Color}" CornerRadius="5">
+            <TextBlock
+                FontSize="{StaticResource HeaderTextSize}"
+                Foreground="{StaticResource Header1TextColor}"
+                HorizontalAlignment="Center"
+                Text="О программе"
+                VerticalAlignment="Top" />
+        </Border>
+
+        <Image
+            VerticalAlignment="Center"
+            Height="300"
+            Source="{SvgImage /Assets/logo_empty.svg}"
+            Width="300" />
+        <ScrollViewer Height="400" Background="White">
+            <StackPanel>
+                <Border Background="{StaticResource Header2Color}" CornerRadius="5">
                     <TextBlock
-                        FontSize="{StaticResource SmallTextSize}"
-                        HorizontalAlignment="Center"
-                        Text="{StaticResource AboutWorkPlaceHelpText}" />
-                </StackPanel>
+                        Foreground="{StaticResource Header2TextColor}"
+                        FontSize="{StaticResource SubTitleTextSize}"
+                        Text="Рабочее пространство" />
+                </Border>
+                <TextBlock
+                    FontSize="{StaticResource SmallTextSize}"
+                    HorizontalAlignment="Left"
+                    Text="{StaticResource AboutWorkPlaceHelpText}" />
 
+                <Border Background="{StaticResource Header2Color}" CornerRadius="5">
+                    <TextBlock
+                        Foreground="{StaticResource Header2TextColor}"
+                        FontSize="{StaticResource SubTitleTextSize}"
+                        Text="Список медикаментов" />
+                </Border>
+                <TextBlock
+                    FontSize="{StaticResource SmallTextSize}"
+                    HorizontalAlignment="Left"
+                    Text="{StaticResource AboutListOfMedicinesHelpText}" />
+                <Border Background="{StaticResource Header2Color}" CornerRadius="5">
+                    <TextBlock
+                        Foreground="{StaticResource Header2TextColor}"
+                        FontSize="{StaticResource SubTitleTextSize}"
+                        Text="Поддержка" />
+                </Border>
+                <TextBlock
+                    FontSize="{StaticResource SmallTextSize}"
+                    HorizontalAlignment="Left"
+                    Text="{StaticResource AboutHelpTeamText}" />
+                <Border Background="{StaticResource Header2Color}" CornerRadius="5">
+                    <TextBlock
+                        Foreground="{StaticResource Header2TextColor}"
+                        FontSize="{StaticResource SubTitleTextSize}"
+                        Text="Профиль" />
+                </Border>
+                <TextBlock
+                    FontSize="{StaticResource SmallTextSize}"
+                    HorizontalAlignment="Left"
+                    Text="{StaticResource AboutProfileHelpText}" />
+                
             </StackPanel>
-        </StackPanel>
-    </Grid>
+        </ScrollViewer>
+    </StackPanel>
+
+
 </UserControl>

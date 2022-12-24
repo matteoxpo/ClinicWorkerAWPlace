@@ -1,71 +1,66 @@
 using System;
 using System.Reactive;
 using System.Reactive.Linq;
-using ReactiveUI;
 using System.Threading.Tasks;
-using Avalonia.Controls;
 using Data.Repositories;
 using Domain.UseCases;
+using MessageBox.Avalonia;
 using MessageBox.Avalonia.DTO;
 using Presentation.ViewModels.WorkPlace;
-using Presentation.ViewModels.WorkPlace.Default;
+using ReactiveUI;
 
-namespace Presentation.ViewModels.Login
+namespace Presentation.ViewModels.Login;
+
+public class LoginViewModel : ReactiveObject, IRoutableViewModel
 {
-    public class LoginViewModel : ReactiveObject, IRoutableViewModel
+    private readonly UserEmployeeInteractor _userEmployeeInteractor;
+    private string? _userLogin;
+    private string? _userPassword;
+
+    public LoginViewModel(IScreen hostScreen)
     {
-        private string? _userLogin;
-        private string? _userPassword;
-        public ReactiveCommand<Unit, Unit> GoToWorkPlace { get; }
+        HostScreen = hostScreen;
 
-        private readonly UserEmployeeInteractor _userEmployeeInteractor;
-        
-        public LoginViewModel(IScreen hostScreen)
+        GoToWorkPlace = ReactiveCommand.CreateFromTask(TryAuthorize);
+
+        _userEmployeeInteractor =
+            new UserEmployeeInteractor(UserEmployeeRepository.GetInstance());
+    }
+
+    public ReactiveCommand<Unit, Unit> GoToWorkPlace { get; }
+
+    public string? UserLogin
+    {
+        get => _userLogin;
+        set => this.RaiseAndSetIfChanged(ref _userLogin, value);
+    }
+
+    public string? UserPassword
+    {
+        get => _userPassword;
+        set => this.RaiseAndSetIfChanged(ref _userPassword, value);
+    }
+
+
+    public string? UrlPathSegment { get; }
+    public IScreen HostScreen { get; }
+
+    private async Task TryAuthorize()
+    {
+        try
         {
-            HostScreen = hostScreen;
-            
-            GoToWorkPlace = ReactiveCommand.CreateFromTask(TryAuthorize);
-
-            _userEmployeeInteractor =
-                new UserEmployeeInteractor(UserEmployeeRepository.GetInstance());
+            if (_userEmployeeInteractor.Authorization(UserLogin!, UserPassword!))
+                await HostScreen.Router.Navigate.Execute(new WorkPlaceViewModel(HostScreen, UserLogin!));
         }
-
-
-        public string? UrlPathSegment { get; }
-        public IScreen HostScreen { get; }
-
-        private async Task TryAuthorize()
+        catch (Exception e)
         {
-            try
-            {
-                if ( _userEmployeeInteractor.Authorization(UserLogin!, UserPassword!))
+            var messageBoxStandardWindow = MessageBoxManager.GetMessageBoxStandardWindow(
+                new MessageBoxStandardParams
                 {
-                    await HostScreen.Router.Navigate.Execute(new WorkPlaceViewModel(HostScreen, UserLogin!));
-                }
-            }
-            catch (Exception e)
-            {
-               var messageBoxStandardWindow = MessageBox.Avalonia.MessageBoxManager.GetMessageBoxStandardWindow(
-                    new MessageBoxStandardParams
-                    {
-                        ContentTitle = "Ошибка авторизации",
-                        ContentMessage = e.Message,
-                    });
+                    ContentTitle = "Ошибка авторизации",
+                    ContentMessage = e.Message
+                });
             await messageBoxStandardWindow.Show();
-                
-            }
-
-        }
-
-        public string? UserLogin
-        {
-            get => _userLogin;
-            set => this.RaiseAndSetIfChanged(ref _userLogin, value);
-        }
-        public string? UserPassword
-        {
-            get => _userPassword;
-            set => this.RaiseAndSetIfChanged(ref _userPassword, value);
         }
     }
 }

@@ -1,11 +1,10 @@
-
 <!--  xmlns:viewmodels="clr-namespace:Presentation.ViewModels"  -->
 <Window
     Background="{StaticResource BackGroundColor}"
     Icon="/Assets/logo_empty.ico"
     MinHeight="450"
     MinWidth="800"
-    Title=""
+    Title="Здоровый - счастливый!"
     WindowState="Maximized"
     mc:Ignorable="d"
     x:Class="Presentation.Views.MainWindow"

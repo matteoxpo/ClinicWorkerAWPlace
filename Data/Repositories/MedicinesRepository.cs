@@ -5,14 +5,10 @@ namespace Data.Repositories;
 
 public class MedicinesRepository : BaseRepository<Medicines>, IMedicinesRepository
 {
-    public MedicinesRepository(string path) : base(path) { }
-    
     private static MedicinesRepository? _globalRepositoryInstance;
 
-    public static MedicinesRepository GetInstance()
+    public MedicinesRepository(string path) : base(path)
     {
-        return _globalRepositoryInstance ??= new MedicinesRepository(
-            "../../../../Data/DataSets/Medicines.json");
     }
 
     public void Update(Medicines nextEntity)
@@ -38,5 +34,11 @@ public class MedicinesRepository : BaseRepository<Medicines>, IMedicinesReposito
     public override bool CompareEntities(Medicines entity1, Medicines entity2)
     {
         return entity1.Title.Equals(entity2.Title) && entity1.Manufacturer.Equals(entity2.Manufacturer);
+    }
+
+    public static MedicinesRepository GetInstance()
+    {
+        return _globalRepositoryInstance ??= new MedicinesRepository(
+            "../../../../Data/DataSets/Medicines.json");
     }
 }

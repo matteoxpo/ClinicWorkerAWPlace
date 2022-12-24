@@ -25,21 +25,21 @@
             </Border>
             <Grid ColumnDefinitions="*,*">
                 <StackPanel Orientation="Vertical" Grid.Column="0">
-                    <Image
-                        Height="170"
-                        Source="{SvgImage /Assets/account.svg}"
-                        Width="170" />
+                    <Border Background="White" CornerRadius="5">
+                        <Image
+                            Height="170"
+                            Source="{SvgImage /Assets/account.svg}"
+                            Width="170" />
+                    </Border>
                     <Border Background="{StaticResource Header2Color}" CornerRadius="5">
-                        <Grid>
                             <TextBlock
                                 FontSize="{StaticResource SubTitleTextSize}"
                                 Foreground="{StaticResource Header2TextColor}"
                                 Text="{Binding UserEmployee}" />
-                        </Grid>
                     </Border>
                 </StackPanel>
                 <StackPanel Grid.Column="1" Spacing="20" VerticalAlignment="Center">
-                    <Border  Background="{StaticResource Header2Color}" CornerRadius="5">
+                    <Border Background="{StaticResource Header2Color}" CornerRadius="5">
                         <TextBlock
                             FontSize="{StaticResource SubTitleTextSize}"
                             Foreground="{StaticResource Header2TextColor}"
@@ -54,16 +54,16 @@
                         Text="{Binding NewPassword, Mode=TwoWay}"
                         Watermark="Введите новый пароль"
                         FontSize="{StaticResource TextSize}" />
-                    
+
                     <Button Command="{Binding ChangePassword}"
                             HorizontalAlignment="Center"
                             FontSize="{StaticResource TextSize}"
                             Content="Изменить пароль" />
-                    
-                    <Border 
-                        VerticalAlignment="Center" 
-                        IsVisible="{Binding IsActionOn}"  
-                        Background="{StaticResource Header3Color}" 
+
+                    <Border
+                        VerticalAlignment="Center"
+                        IsVisible="{Binding IsActionOn}"
+                        Background="{StaticResource Header3Color}"
                         CornerRadius="5">
                         <Grid>
                             <TextBlock
@@ -81,7 +81,7 @@
                         </Grid>
                     </Border>
                 </StackPanel>
-                
+
             </Grid>
 
         </StackPanel>

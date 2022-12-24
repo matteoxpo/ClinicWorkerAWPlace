@@ -1,29 +1,24 @@
-using System.Net;
 using System.Reactive.Linq;
 using Domain.Entities.People;
 using Domain.Entities.Roles;
 using Domain.Repositories;
 
 namespace Data.Repositories;
+
 public class UserEmployeeRepository : BaseRepository<UserEmployee>, IUserEmployeeRepository
 {
-    private UserEmployeeRepository(string pathToFile, IAdminRepository adminRepository, IDoctorRepository doctorRepository) : base(pathToFile)
+    private static UserEmployeeRepository? _globalRepositoryInstance;
+
+    private readonly IAdminRepository _adminRepository;
+    private readonly IDoctorRepository _doctorRepository;
+
+    private UserEmployeeRepository(string pathToFile, IAdminRepository adminRepository,
+        IDoctorRepository doctorRepository) : base(pathToFile)
     {
         _adminRepository = adminRepository;
         _doctorRepository = doctorRepository;
     }
 
-    
-    private static UserEmployeeRepository? _globalRepositoryInstance;
-
-    private IAdminRepository _adminRepository;
-    private IDoctorRepository _doctorRepository;
-    public static UserEmployeeRepository GetInstance()
-    { 
-        return _globalRepositoryInstance ??= new UserEmployeeRepository(
-            "../../../../Data/DataSets/UserEmployee.json", AdminRepository.GetInstance(), DoctorRepository.GetInstance());
-    }
-    
 
     public override bool CompareEntities(UserEmployee entity1, UserEmployee entity2)
     {
@@ -52,7 +47,7 @@ public class UserEmployeeRepository : BaseRepository<UserEmployee>, IUserEmploye
 
     public IEnumerable<UserEmployee> Read()
     {
-        var employees =  new List<UserEmployee>(DeserializationJson());
+        var employees = new List<UserEmployee>(DeserializationJson());
         var dJobs = new List<Doctor>(_doctorRepository.Read());
         var aJobs = new List<Admin>(_adminRepository.Read());
 
@@ -64,7 +59,7 @@ public class UserEmployeeRepository : BaseRepository<UserEmployee>, IUserEmploye
             jobs.AddRange(aJobs.Where(d => d.Login.Equals(employee.Login)));
             employee.JobTitles = jobs;
         }
-        
+
 
         return employees;
     }
@@ -72,11 +67,14 @@ public class UserEmployeeRepository : BaseRepository<UserEmployee>, IUserEmploye
     public IObservable<UserEmployee> ObserveByLogin(string login)
     {
         return AsObservable.Select(
-            (empl) =>
-            {
-                return empl.FirstOrDefault((emp) => emp.Login.Equals(login));
-            }
-        )!.Where<UserEmployee>((d) => true);
+            empl => { return empl.FirstOrDefault(emp => emp.Login.Equals(login)); }
+        )!.Where<UserEmployee>(d => true);
     }
-   
+
+    public static UserEmployeeRepository GetInstance()
+    {
+        return _globalRepositoryInstance ??= new UserEmployeeRepository(
+            "../../../../Data/DataSets/UserEmployee.json", AdminRepository.GetInstance(),
+            DoctorRepository.GetInstance());
+    }
 }

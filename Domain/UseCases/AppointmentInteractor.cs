@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Security.Cryptography;
 using Domain.Entities;
 using Domain.Entities.People;
 using Domain.Entities.Roles;
@@ -7,7 +5,7 @@ using Domain.Repositories;
 
 namespace Domain.UseCases;
 
-class AppointmentInteractor
+internal class AppointmentInteractor
 {
     private readonly IAppointmentRepository _appointmentRepository;
 
@@ -27,7 +25,8 @@ class AppointmentInteractor
         Add(new Appointment(doctor.Login, client.Id, meetTime, clientComplaints));
     }
 
-    public void Add(Doctor doctor, Client client, DateTime meetTime, string clientComplaints, bool unconditionedAppointmentToken)
+    public void Add(Doctor doctor, Client client, DateTime meetTime, string clientComplaints,
+        bool unconditionedAppointmentToken)
     {
         Add(new Appointment(doctor.Login, client.Id, meetTime, clientComplaints), unconditionedAppointmentToken);
     }
@@ -38,14 +37,10 @@ class AppointmentInteractor
         if (!unconditionedAppointmentToken)
         {
             if (GetDoctorsAppointments(appointment.DoctorLogin).Any(meet => meet.MeetTime.Equals(appointment.MeetTime)))
-            {
                 throw new AppointmentException(AppointmentException.AddingToTheSameTime);
-            }
 
             if (GetClientsAppointments(appointment.ClientId).Any(meet => meet.MeetTime.Equals(appointment.MeetTime)))
-            {
                 throw new AppointmentException(AppointmentException.BusyClientTime);
-            }
         }
 
         _appointmentRepository.Add(appointment);
@@ -66,31 +61,21 @@ class AppointmentInteractor
     {
         var appointments = new List<Appointment>();
         foreach (var appointment in GetAllAppointments())
-        {
             if (appointment.DoctorLogin.Equals(doctorsLogin))
-            {
                 appointments.Add(appointment);
-            }
-        }
 
         return appointments;
     }
 
-    public  IEnumerable<Appointment> GetClientsAppointments(string passportSerial)
+    public IEnumerable<Appointment> GetClientsAppointments(string passportSerial)
     {
         return _appointmentRepository.ReadByClient(passportSerial);
     }
-    
+
     public void Delete(Appointment appointment)
     {
         _appointmentRepository.Delete(appointment);
     }
-
-    public IObservable<IEnumerable<Appointment>> ObserveByDoctorLogin(string login)
-    {
-        return _appointmentRepository.ObserveByDoctor(login);
-    }
-    
 }
 
 public class AppointmentException : Exception

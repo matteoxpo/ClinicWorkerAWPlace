@@ -2,11 +2,6 @@ namespace Domain.Entities;
 
 public class Appointment
 {
-    public string ClientId { get; set; }
-    public string DoctorLogin { get; set; }
-    public DateTime MeetTime{ get; set; }
-    public string ClientComplaints { get; set; }
-
     public Appointment(string doctorLogin, string clientId, DateTime meetTime, string clientComplaints)
     {
         DoctorLogin = new string(doctorLogin);
@@ -14,7 +9,7 @@ public class Appointment
         MeetTime = meetTime;
         ClientComplaints = new string(clientComplaints);
     }
-    
+
     public Appointment()
     {
         DoctorLogin = new string("doctorLogin");
@@ -22,7 +17,14 @@ public class Appointment
         MeetTime = new DateTime(0);
         ClientComplaints = new string("ClientComplaints");
     }
-    
-    public override string ToString() => string.Join(" ", DoctorLogin, MeetTime.ToString("MM/dd/yyyy"));
-    
+
+    public string ClientId { get; set; }
+    public string DoctorLogin { get; set; }
+    public DateTime MeetTime { get; set; }
+    public string ClientComplaints { get; set; }
+
+    public override string ToString()
+    {
+        return string.Join(" ", DoctorLogin, MeetTime.ToString("HH:mm dd.MM.yyyy"));
+    }
 }

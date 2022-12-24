@@ -1,5 +1,4 @@
-﻿using System.Reactive.Linq;
-using Domain.Entities;
+﻿using Domain.Entities;
 using Domain.Entities.People;
 using Domain.Entities.Roles;
 using Domain.Repositories;
@@ -8,15 +7,18 @@ namespace Domain.UseCases;
 
 public class DoctorInteractor
 {
+    private readonly AppointmentInteractor _appointmentInteractor;
     private readonly ClientInteractor _clientInteractor;
     private readonly IDoctorRepository _doctorRepository;
-    private readonly AppointmentInteractor _appointmentInteractor;
+    private readonly ReferenceForAnalysisInteractor _referenceForAnalysisInteractor;
 
 
     public DoctorInteractor(IClientRepository clientRepository, IAppointmentRepository appointmentRepository,
+        IReferenceForAnalysisRepository referenceForAnalysisRepository,
         IDoctorRepository doctorRepository)
     {
         _doctorRepository = doctorRepository;
+        _referenceForAnalysisInteractor = new ReferenceForAnalysisInteractor(referenceForAnalysisRepository);
         _clientInteractor = new ClientInteractor(clientRepository);
         _appointmentInteractor = new AppointmentInteractor(appointmentRepository);
     }
@@ -31,8 +33,6 @@ public class DoctorInteractor
             client.MeetTime = appointment.MeetTime;
             clients.Add(client);
         }
-
-        var t = clients.OrderBy(client => client.MeetTime);
 
         return clients;
     }
@@ -54,6 +54,12 @@ public class DoctorInteractor
         throw new DoctorEmployeeException(DoctorEmployeeException.NotFound);
     }
 
+    public void AddAnalysis(ReferenceForAnalysis referenceForAnalysis, string doctorLogin)
+    {
+        _referenceForAnalysisInteractor.Add(referenceForAnalysis);
+        _doctorRepository.Update(Get(doctorLogin));
+    }
+
     public void AddAppointmnet(Appointment appointment, bool unconditionedAppointmentToken = false)
     {
         _appointmentInteractor.Add(appointment, unconditionedAppointmentToken);
@@ -65,7 +71,10 @@ public class DoctorInteractor
         return _clientInteractor.GetDoctorsPatients(doctor);
     }
 
-    public IEnumerable<Client> GetClients(string doctorLogin) => GetClients(Get(doctorLogin));
+    public IEnumerable<Client> GetClients(string doctorLogin)
+    {
+        return GetClients(Get(doctorLogin));
+    }
 
     public IObservable<Doctor> Observe(string login)
     {

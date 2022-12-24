@@ -3,15 +3,14 @@ using Domain.Repositories;
 
 namespace Data.Repositories;
 
-public class AnalysisRepository : BaseRepository<Analysis>,IAnalysisRepository
+public class AnalysisRepository : BaseRepository<Analysis>, IAnalysisRepository
 {
     private static AnalysisRepository? _globalRepositoryInstance;
 
-    public static AnalysisRepository GetInstance()
-    { 
-        return _globalRepositoryInstance ??= new AnalysisRepository(
-            "../../../../Data/DataSets/Analysis.json");
+    public AnalysisRepository(string path) : base(path)
+    {
     }
+
     public void Update(Analysis nextEntity)
     {
         Change(nextEntity);
@@ -37,5 +36,9 @@ public class AnalysisRepository : BaseRepository<Analysis>,IAnalysisRepository
         return entity1.Title.Equals(entity2.Title) && entity1.TimeForPrepearing.Equals(entity2.TimeForPrepearing);
     }
 
-    public AnalysisRepository(string path) : base(path) { }
+    public static AnalysisRepository GetInstance()
+    {
+        return _globalRepositoryInstance ??= new AnalysisRepository(
+            "../../../../Data/DataSets/Analysis.json");
+    }
 }

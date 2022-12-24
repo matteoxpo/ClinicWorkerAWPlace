@@ -5,15 +5,7 @@ namespace Domain.Entities.People;
 [Serializable]
 public class Client
 {
-    public string Name { get; set; }
-    public string Surname { get ; set; }
-    public  DateTime DateOfBirth { get; set; }
-    [field: NonSerialized] [JsonIgnore] public DateTime MeetTime;
-    [field: NonSerialized] [JsonIgnore] public string Complaints { get; set; }
-    public IEnumerable<ReferenceForAnalysis> Analyzes { get; set; }
-    public string Id { get; set;}
-    
-    [field: NonSerialized] [JsonIgnore] public IEnumerable<Appointment> Appointments { get; set; }
+    [JsonIgnore] public DateTime MeetTime;
 
     public Client()
     {
@@ -26,7 +18,8 @@ public class Client
         MeetTime = new DateTime(0);
     }
 
-    public Client(string name, string surname, DateTime birthTime, IEnumerable<ReferenceForAnalysis> analyses, List<Appointment> appointments, string id, string complaints, DateTime meetTime)
+    public Client(string name, string surname, DateTime birthTime, IEnumerable<ReferenceForAnalysis> analyses,
+        List<Appointment> appointments, string id, string complaints, DateTime meetTime)
     {
         MeetTime = meetTime;
         Name = new string(name);
@@ -37,7 +30,9 @@ public class Client
         Id = id;
         Complaints = complaints;
     }
-    public Client(string name, string surname, DateTime birthTime, IEnumerable<ReferenceForAnalysis> analyses, string id) 
+
+    public Client(string name, string surname, DateTime birthTime, IEnumerable<ReferenceForAnalysis> analyses,
+        string id)
     {
         Name = new string(name);
         Surname = new string(surname);
@@ -49,12 +44,22 @@ public class Client
         Id = id;
     }
 
-    public override string ToString() => string.Join(" ", 
-        Name,
-        Surname,
-        MeetTime.Equals(new DateTime(0)) ? 
-            "\nДата рождения: " + DateOfBirth.ToString("MM/dd/yyyy") :
-            "\nВремя записи: " + MeetTime );
-    
-    
+    public string Name { get; set; }
+    public string Surname { get; set; }
+    public DateTime DateOfBirth { get; set; }
+    [JsonIgnore] public string Complaints { get; set; }
+    [JsonIgnore] public IEnumerable<ReferenceForAnalysis> Analyzes { get; set; }
+    public string Id { get; set; }
+
+    [field: NonSerialized] [JsonIgnore] public IEnumerable<Appointment> Appointments { get; set; }
+
+    public override string ToString()
+    {
+        return string.Join(" ",
+            Name,
+            Surname,
+            MeetTime.Equals(new DateTime(0))
+                ? "\nДата рождения: " + DateOfBirth.ToString("MM/dd/yyyy")
+                : "\nВремя записи: " + MeetTime);
+    }
 }

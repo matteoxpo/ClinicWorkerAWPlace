@@ -3,7 +3,6 @@
     xmlns="https://github.com/avaloniaui"
     xmlns:local="using:Presentation"
     xmlns:system="clr-namespace:System;assembly=mscorlib"
-    xmlns:system1="clr-namespace:System;assembly=System.Runtime"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Application.DataTemplates>
         <local:ViewLocator />
@@ -11,15 +10,15 @@
     <Application.Styles>
         <FluentTheme Mode="Light" />
         <Style Selector="TextBlock">
-            <Setter Property="FontFamily" Value="Rubik"/>
-            <Setter Property="Padding" Value="3"/>
+            <Setter Property="FontFamily" Value="Rubik" />
+            <Setter Property="Padding" Value="3" />
         </Style>
         <Style Selector="TextBox">
-            <Setter Property="FontFamily" Value="Rubik"/>
-            <Setter Property="Padding" Value="3"/>
-            <Setter Property="Height" Value="35"/>
+            <Setter Property="FontFamily" Value="Rubik" />
+            <Setter Property="Padding" Value="3" />
+            <Setter Property="Height" Value="35" />
         </Style>
-        
+
 
     </Application.Styles>
     <Application.Resources>
@@ -32,11 +31,11 @@
             <system:Double x:Key="SmallTextSize">16</system:Double>
 
             <Color x:Key="MenuBarColor">#b7c5b1</Color>
-            
+
             <Color x:Key="BackGroundColor">#d5e9cd</Color>
             <Color x:Key="CardColor">#ebf8e6</Color>
             <Color x:Key="CardTitleColor">#68875b</Color>
-            
+
             <Color x:Key="Header1Color">#a6cc96</Color>
             <Color x:Key="Header1TextColor">White</Color>
 
@@ -45,18 +44,47 @@
 
             <Color x:Key="Header3TextColor">White</Color>
             <Color x:Key="Header3Color">#dff2d8</Color>
-            
+
             <system:String x:Key="AboutWorkPlaceHelpText">
-В панели рабочее пространство находится основная часть - список вам пациентов.
-Когда человек пришел на прием - нажмите на него в списке и заполните необходимую информацию.
-Елси человек пришел 'из живой очереди', то выбирите соответвующюю кнопку в панели
+Вся панель состоит из 3 колонн:
+1 - Список записанных к вам пациентов
+При нажатии кнопки "Сегодня" - показываются записи на сегодня. 
+При нажатии кнопки "Все" - показываются все записи.
+При первичной записи пациента необходимо направить пациента в регистратуру, за исключением экстренных ситуаций.
+Кнопка "добавить 'из живой очереди'" позволяет добавить пациента без ограничений.
+2 - Информация о пациенте
+При нажатии на пациента из списка в 1 колонне показывается подоробная информация о записи
+Имя, фамилия пациента, его дата рождения, а также запись о состоянии на момент создания записи
+Ниже всей информации показываются записи пациента к другим специалистам в виде:
+логин сотрудника - время записи
+3 - Создание следующей записи и направление на анализы
+Запись на прием:
+При создании следующей записи заполните поле о самочуствии клиента на данный момент,
+затем запишите время, в которое ни у пациента, ни у вас нет записи.
+В конечном итоге нажмите кнопку "записать пациента". 
+Направление на анализы:
+Выбирите анализ из предложенного списка, правее запишите время сдачи анализа.
+Обратите внимание на расписание всех запией на сдачу выбранного анализа:
+нельзя записать двух людей на одно и то же время
             </system:String>
-            
-            <system:String x:Key="StartPageQuote">
- Ничто так не обязательно всему роду человеческому, как медицина - М.Ф.Квинтилиан
+            <system:String x:Key="AboutListOfMedicinesHelpText">
+В этой вкладке находится список актуальных на данный момент медикаментов.
+Если вы нашли устаревшую или недостоверную информацию просим обратиться в поддержку.
+            </system:String>
+            <system:String x:Key="AboutHelpTeamText">
+По всем вопросам обращаться на почту: doc.crm.help@awp.com
+            </system:String>
+            <system:String x:Key="AboutProfileHelpText">
+Во вкладке профиль отображается информация о вас: ФИО
+Также можно изменить пароль от учетной записи. 
+Обратите внимание, что новый пароль должен быть длины не менее 5 символов.
             </system:String>
 
-            
+            <system:String x:Key="StartPageQuote">
+Ничто так не обязательно всему роду человеческому, как медицина - М.Ф.Квинтилиан
+            </system:String>
+
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>

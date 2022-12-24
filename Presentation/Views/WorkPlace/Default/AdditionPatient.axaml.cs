@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Reactive.Disposables;
-using Avalonia;
-using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using Avalonia.ReactiveUI;
-using System;
 using Presentation.ViewModels.WorkPlace.Default;
 using ReactiveUI;
 
@@ -14,11 +11,8 @@ public partial class AdditionPatientWindow : ReactiveWindow<AdditionPatientViewM
 {
     public AdditionPatientWindow()
     {
-        this.WhenActivated(d =>
-        {
-            ViewModel!.AddPatient.Subscribe(Close).DisposeWith(d);
-        });
-        
+        this.WhenActivated(d => { ViewModel!.AddPatient.Subscribe(Close).DisposeWith(d); });
+
         InitializeComponent();
     }
 

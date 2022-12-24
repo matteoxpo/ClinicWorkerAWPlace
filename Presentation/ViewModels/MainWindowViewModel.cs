@@ -1,22 +1,16 @@
-﻿using System.Reactive;
-using System.Windows.Input;
-using Avalonia.Controls;
-using Avalonia.Input;
+﻿using Presentation.ViewModels.Login;
 using ReactiveUI;
-using System;
-using Presentation.ViewModels.Login;
 
-namespace Presentation.ViewModels
+namespace Presentation.ViewModels;
+
+public class MainWindowViewModel : ReactiveObject, IScreen
 {
-    public class MainWindowViewModel : ReactiveObject, IScreen
+    public MainWindowViewModel()
     {
-        public RoutingState Router { get; }
-        public LoginViewModel LoginViewModel { get; }
-
-        public MainWindowViewModel()
-        {
-            Router = new RoutingState();
-            LoginViewModel = new LoginViewModel(this);
-        }
+        Router = new RoutingState();
+        LoginViewModel = new LoginViewModel(this);
     }
+
+    public LoginViewModel LoginViewModel { get; }
+    public RoutingState Router { get; }
 }

@@ -1,21 +1,23 @@
 using System;
-using Presentation.ViewModels.WorkPlace;
 using Presentation.ViewModels.Login;
+using Presentation.ViewModels.WorkPlace;
 using Presentation.ViewModels.WorkPlace.Default;
+using Presentation.Views.Login;
 using Presentation.Views.WorkPlace;
 using Presentation.Views.WorkPlace.Default;
 using Presentation.Views.WorkPlace.Help;
-using Presentation.Views.WorkPlace.Profile;
-using Presentation.Views.Login;
 using Presentation.Views.WorkPlace.ListOfMedecines;
+using Presentation.Views.WorkPlace.Profile;
 using ReactiveUI;
 
-namespace Presentation
+namespace Presentation;
+
+public class AppViewLocator : IViewLocator
+
 {
-    public class AppViewLocator : IViewLocator
-    
+    public IViewFor ResolveView<T>(T viewModel, string contract = null)
     {
-        public IViewFor ResolveView<T>(T viewModel, string contract = null) => viewModel switch
+        return viewModel switch
         {
             LoginViewModel context => new LoginView { DataContext = context },
 
@@ -26,11 +28,10 @@ namespace Presentation
             WorkPlaceProfileViewModel context => new WorkPlaceProfileView { DataContext = context },
 
             WorkPlaceHelpViewModel context => new WorkPlaceHelpView { DataContext = context },
-            
-            ListOfMedicinesViewModel context => new ListOfMedicinesView { DataContext = context},
+
+            ListOfMedicinesViewModel context => new ListOfMedicinesView { DataContext = context },
 
             _ => throw new ArgumentOutOfRangeException(nameof(viewModel))
         };
     }
 }
-

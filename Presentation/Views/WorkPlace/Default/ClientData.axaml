@@ -77,8 +77,7 @@
             ScrollViewer.HorizontalScrollBarVisibility="Auto"
             ScrollViewer.VerticalScrollBarVisibility="Auto"
             SelectionMode="Single"
-            Items="{Binding SelectedClient.Analyzes}">
-        </ListBox>
+            Items="{Binding SelectedClient.Analyzes}" />
 
         <Border Background="{StaticResource Header2Color}" CornerRadius="5">
             <TextBlock FontSize="{StaticResource SubTitleTextSize}"
@@ -92,8 +91,7 @@
             CornerRadius="5"
             ScrollViewer.HorizontalScrollBarVisibility="Auto"
             ScrollViewer.VerticalScrollBarVisibility="Auto"
-            Items="{Binding SelectedClient.Appointments}">
-        </ListBox>
+            Items="{Binding SelectedClient.Appointments}" />
 
 
     </StackPanel>

@@ -6,10 +6,10 @@
         <RootNamespace>Data</RootNamespace>
     </PropertyGroup>
     <ItemGroup>
-      <PackageReference Include="System.Reactive" Version="5.0.0" />
+        <PackageReference Include="System.Reactive" Version="5.0.0"/>
     </ItemGroup>
     <ItemGroup>
-        <ProjectReference Include="..\Domain\Domain.csproj" />
+        <ProjectReference Include="..\Domain\Domain.csproj"/>
     </ItemGroup>
 
 </Project>

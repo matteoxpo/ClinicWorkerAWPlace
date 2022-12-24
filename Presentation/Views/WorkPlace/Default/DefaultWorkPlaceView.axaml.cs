@@ -8,43 +8,45 @@ using Domain.Entities;
 using Presentation.ViewModels.WorkPlace.Default;
 using ReactiveUI;
 
-namespace Presentation.Views.WorkPlace.Default
-{
-    public partial class DefaultWorkPlaceView : ReactiveUserControl<DefaultWorkPlaceViewModel>
-    {
-        public DefaultWorkPlaceView()
-        {
-            this.WhenActivated(d =>
-            {
-                ViewModel!.ShowAdditionPatient
-                    .RegisterHandler(DoShowAdditionPatient)
-                    .DisposeWith(d);
-            });
-            InitializeComponent();
-        }
+namespace Presentation.Views.WorkPlace.Default;
 
-        private async Task DoShowAdditionPatient(InteractionContext<AdditionPatientViewModel, Appointment> interactionContext)
+public partial class DefaultWorkPlaceView : ReactiveUserControl<DefaultWorkPlaceViewModel>
+{
+    public DefaultWorkPlaceView()
+    {
+        this.WhenActivated(d =>
         {
-            var dialog = new AdditionPatientWindow()
-            {
-                DataContext = interactionContext.Input
-            };
-            
-            if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+            ViewModel!.ShowAdditionPatient
+                .RegisterHandler(DoShowAdditionPatient)
+                .DisposeWith(d);
+        });
+        InitializeComponent();
+    }
+
+    private async Task DoShowAdditionPatient(
+        InteractionContext<AdditionPatientViewModel, Appointment?> interactionContext)
+    {
+        var dialog = new AdditionPatientWindow
+        {
+            DataContext = interactionContext.Input
+        };
+
+        if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+        {
+            if (desktop.MainWindow != null)
             {
                 var newAppoitment = await dialog.ShowDialog<Appointment>(desktop.MainWindow);
                 interactionContext.SetOutput(newAppoitment);
             }
-            else
-            {
-                interactionContext.SetOutput(null); 
-            }
         }
-
-        public void InitializeComponent()
+        else
         {
-            AvaloniaXamlLoader.Load(this);
+            interactionContext.SetOutput(null);
         }
- 
+    }
+
+    public void InitializeComponent()
+    {
+        AvaloniaXamlLoader.Load(this);
     }
 }

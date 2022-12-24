@@ -13,26 +13,24 @@
     </Design.DataContext>
     <Grid VerticalAlignment="Center">
         <StackPanel Orientation="Vertical" Spacing="13">
-            <Border CornerRadius="5" Background="#c1dbb5" Width="170" Height="170">
             <Image
                 Height="170"
-                Source="{SvgImage /Assets/logo.svg}"
+                Source="{SvgImage /Assets/logo_empty.svg}"
                 Width="170" />
-            </Border>
             <Border Background="{StaticResource Header1Color}" CornerRadius="5">
                 <TextBlock
                     FontSize="{StaticResource HeaderTextSize}"
                     Foreground="{StaticResource Header1TextColor}"
                     TextAlignment="Center"
-                    Text="Рады снова вас видеть"/>
+                    Text="Рады снова вас видеть" />
             </Border>
 
             <Border Width="700" Background="{StaticResource Header2Color}" CornerRadius="5">
-            <TextBlock
-                Foreground="{StaticResource Header2TextColor}"
-                FontSize="{StaticResource SubTitleTextSize}"
-                Text="Для использования сервиса необходимо авторизоваться"
-                TextAlignment="Center" />
+                <TextBlock
+                    Foreground="{StaticResource Header2TextColor}"
+                    FontSize="{StaticResource SubTitleTextSize}"
+                    Text="Для использования сервиса необходимо авторизоваться"
+                    TextAlignment="Center" />
             </Border>
 
             <TextBox
@@ -50,7 +48,7 @@
                 FontSize="{StaticResource TextSize}"
                 Command="{Binding GoToWorkPlace}"
                 HorizontalAlignment="Center"
-                Width="160" Content="Войти"/>
+                Width="160" Content="Войти" />
         </StackPanel>
     </Grid>
 </UserControl>

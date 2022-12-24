@@ -2,4 +2,6 @@ using Domain.Entities.Roles;
 
 namespace Domain.Repositories;
 
-public interface IAdminRepository : IBasePerository<Admin> { }
+public interface IAdminRepository : IBasePerository<Admin>
+{
+}

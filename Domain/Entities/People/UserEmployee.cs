@@ -4,17 +4,10 @@ using Domain.Entities.Roles;
 namespace Domain.Entities.People;
 
 [Serializable]
-public class UserEmployee 
+public class UserEmployee
 {
-    public string Name { get; set; }
-    public string Surname { get ; set; }
-    public DateTime DateOfBirth { get; }
-    public string Login { get; set; }
-    public string Password { get; set; }
-
-    [JsonIgnore] public IEnumerable<JobTitle> JobTitles { get; set; }
-
-    public UserEmployee(string name, string surname, string login, string password, IEnumerable<JobTitle> jobTitles, DateTime dateOfBirth) 
+    public UserEmployee(string name, string surname, string login, string password, IEnumerable<JobTitle> jobTitles,
+        DateTime dateOfBirth)
     {
         Name = new string(name);
         Surname = new string(surname);
@@ -23,7 +16,8 @@ public class UserEmployee
         Password = new string(password);
         JobTitles = new List<JobTitle>(jobTitles);
     }
-    public UserEmployee(string name, string surname,  string login, string password, DateTime dateOfBirth) 
+
+    public UserEmployee(string name, string surname, string login, string password, DateTime dateOfBirth)
     {
         Name = new string(name);
         Surname = new string(surname);
@@ -32,8 +26,7 @@ public class UserEmployee
         Password = new string(password);
         JobTitles = new List<JobTitle>();
     }
-    
-    
+
 
     public UserEmployee(UserEmployee employee)
     {
@@ -45,7 +38,7 @@ public class UserEmployee
         JobTitles = new List<JobTitle>(employee.JobTitles);
     }
 
-    public UserEmployee() 
+    public UserEmployee()
     {
         Name = new string("name");
         Surname = new string("surname");
@@ -54,8 +47,17 @@ public class UserEmployee
         Password = new string("password");
         JobTitles = new List<JobTitle>();
     }
-    
-    public override string ToString() => string.Join("\n", Name, Surname, Login);
 
+    public string Name { get; set; }
+    public string Surname { get; set; }
+    public DateTime DateOfBirth { get; }
+    public string Login { get; set; }
+    public string Password { get; set; }
 
+    [JsonIgnore] public IEnumerable<JobTitle> JobTitles { get; set; }
+
+    public override string ToString()
+    {
+        return string.Join("\n", Name, Surname, Login);
+    }
 }

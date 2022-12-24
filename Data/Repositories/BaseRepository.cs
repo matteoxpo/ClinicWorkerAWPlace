@@ -4,36 +4,31 @@ using System.Text.Json;
 
 namespace Data.Repositories;
 
-
-abstract public class BaseRepository<T>
+public abstract class BaseRepository<T>
 {
-    private Stream? _fs;
+    private readonly JsonSerializerOptions _options = new()
+    {
+        WriteIndented = true
+    };
 
     private readonly string _path;
-    protected IObservable<List<T>> AsObservable { get; }
-    private BehaviorSubject <List<T>> EntitiesSubject { get; }
+    private Stream? _fs;
 
- 
-    
+
     protected BaseRepository(string path)
     {
         _path = path;
         EntitiesSubject = new BehaviorSubject<List<T>>(new List<T>());
         EntitiesSubject.OnNext(DeserializationJson());
-
-        // SetOnNext(DeserializationJson());
         AsObservable = EntitiesSubject.AsObservable();
     }
 
-    private void SetOnNext(List<T> entities)
-    {
-        if (entities.Count != 0)
-        {
-            EntitiesSubject.OnNext(entities);
-        }
-    }
-    
+    protected IObservable<List<T>> AsObservable { get; }
+    private BehaviorSubject<List<T>> EntitiesSubject { get; }
+
+
     public abstract bool CompareEntities(T entity1, T entity2);
+
     protected void Change(T changedEntity)
     {
         var newEntities = new List<T>(EntitiesSubject.Value);
@@ -46,13 +41,13 @@ abstract public class BaseRepository<T>
             break;
         }
     }
-    
+
     protected void Remove(T delitingEmtity)
     {
         var newEntities = new List<T>(EntitiesSubject.Value);
         foreach (var entity in EntitiesSubject.Value)
         {
-            if (!CompareEntities(delitingEmtity,entity)) continue;
+            if (!CompareEntities(delitingEmtity, entity)) continue;
             newEntities.Remove(entity);
             EntitiesSubject.OnNext(newEntities);
             SerializationJson(newEntities);
@@ -63,13 +58,13 @@ abstract public class BaseRepository<T>
     private void SerializationJson(List<T>? entities)
     {
         if (entities is null) return;
-        
+
         _fs = GetStream();
-        JsonSerializer.SerializeAsync(_fs, entities, _options);
+        JsonSerializer.Serialize(_fs, entities, _options);
         _fs.Close();
         EntitiesSubject.OnNext(entities);
     }
-    
+
     protected void Append(T entity)
     {
         var newEntities = new List<T>(EntitiesSubject.Value);
@@ -77,13 +72,10 @@ abstract public class BaseRepository<T>
         SerializationJson(newEntities);
     }
 
-    private readonly JsonSerializerOptions _options = new ()
+    protected List<T> DeserializationJson()
     {
-        WriteIndented = true,
-    };
+        if (EntitiesSubject.Value.Count != 0) return EntitiesSubject.Value;
 
-    protected  List<T> DeserializationJson()
-    {
         List<T>? deserialized = null;
         try
         {
@@ -99,10 +91,13 @@ abstract public class BaseRepository<T>
             _fs?.Close();
             deserialized ??= new List<T>();
         }
+
         return deserialized;
     }
-    
-    private Stream GetStream()=> new FileStream
+
+    private Stream GetStream()
+    {
+        return new FileStream
         (
             _path,
             FileMode.OpenOrCreate,
@@ -111,7 +106,5 @@ abstract public class BaseRepository<T>
             4096,
             FileOptions.None
         );
-   
-
-
+    }
 }

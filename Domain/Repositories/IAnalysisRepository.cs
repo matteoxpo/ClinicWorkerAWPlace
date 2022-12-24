@@ -2,4 +2,6 @@ using Domain.Entities;
 
 namespace Domain.Repositories;
 
-public interface IAnalysisRepository : IBasePerository<Analysis> { }
+public interface IAnalysisRepository : IBasePerository<Analysis>
+{
+}

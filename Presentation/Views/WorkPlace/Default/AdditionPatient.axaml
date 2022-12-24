@@ -64,8 +64,7 @@
                 ScrollViewer.HorizontalScrollBarVisibility="Visible"
                 SelectionMode="Single"
                 SelectedItem="{Binding SelectedClient}"
-                Items="{Binding Clients}">
-            </ListBox>
+                Items="{Binding Clients}" />
 
             <TextBox
                 Text="{Binding ClientComplaints, Mode=TwoWay}"
