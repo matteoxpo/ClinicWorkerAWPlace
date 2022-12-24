@@ -1,14 +1,13 @@
+using Data.Models.People;
 using Domain.Entities;
 using Domain.Entities.People;
 using Domain.Repositories;
 
 namespace Data.Repositories;
 
-public class ClientRepository : BaseRepository<Client>, IClientRepository
+public class ClientRepository : BaseRepository<Client, ClientStorageModel>, IClientRepository
 {
     private static ClientRepository? _globalRepositoryInstance;
-    // сделать приватным!
-
     private readonly IAppointmentRepository _appointmentRepository;
     private readonly IReferenceForAnalysisRepository _referenceForAnalysisRepository;
 

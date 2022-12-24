@@ -1,10 +1,11 @@
 using System.Reactive.Linq;
+using Data.Models.Roles;
 using Domain.Entities.Roles;
 using Domain.Repositories;
 
 namespace Data.Repositories;
 
-public class DoctorRepository : BaseRepository<Doctor>, IDoctorRepository
+public class DoctorRepository : BaseRepository<Doctor, DoctorStorageModel>, IDoctorRepository
 {
     private static DoctorRepository? _globalRepositoryInstance;
     private readonly IAppointmentRepository _appointmentRepository;

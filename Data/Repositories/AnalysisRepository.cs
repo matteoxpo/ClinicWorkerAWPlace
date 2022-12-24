@@ -1,9 +1,10 @@
+using Data.Models;
 using Domain.Entities;
 using Domain.Repositories;
 
 namespace Data.Repositories;
 
-public class AnalysisRepository : BaseRepository<Analysis>, IAnalysisRepository
+public class AnalysisRepository : BaseRepository<Analysis, AnalysisStorageModel>, IAnalysisRepository
 {
     private static AnalysisRepository? _globalRepositoryInstance;
 

@@ -9,9 +9,8 @@
         <default:DefaultWorkPlaceViewModel />
     </Design.DataContext>
 
-    <StackPanel
+    <StackPanel HorizontalAlignment="Stretch"
         Spacing="5"
-        Width="500"
         Background="White">
         <Border
             Background="{StaticResource Header2Color}"

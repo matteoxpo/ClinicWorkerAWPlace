@@ -3,7 +3,7 @@ using Domain.Repositories;
 
 namespace Data.Repositories;
 
-public class MedicinesRepository : BaseRepository<Medicines>, IMedicinesRepository
+public class MedicinesRepository : BaseRepository<Medicines, MedicinesStorageModel>, IMedicinesRepository
 {
     private static MedicinesRepository? _globalRepositoryInstance;
 

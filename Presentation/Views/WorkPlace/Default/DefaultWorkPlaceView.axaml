@@ -60,7 +60,7 @@
                         FontSize="{StaticResource TextSize}"
                         Content="Из 'живой очереди'" />
             </StackPanel>
-            <defaultViews:ClientData Grid.Column="1" DataContext="{Binding}" />
+            <defaultViews:ClientData HorizontalAlignment="Stretch" Grid.Column="1" DataContext="{Binding}" />
             <Border Grid.Column="2" Background="{StaticResource CardColor}" CornerRadius="5">
                 <StackPanel Spacing="5">
                     <TextBlock

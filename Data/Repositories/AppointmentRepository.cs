@@ -1,3 +1,5 @@
+using Data.Models.People;
+using Data.Models.Roles;
 using Domain.Entities;
 using Domain.Entities.People;
 using Domain.Entities.Roles;
@@ -5,7 +7,7 @@ using Domain.Repositories;
 
 namespace Data.Repositories;
 
-public class AppointmentRepository : BaseRepository<Appointment>, IAppointmentRepository
+public class AppointmentRepository : BaseRepository<Appointment, AppointmentStorageModel>, IAppointmentRepository
 {
     private static AppointmentRepository? _globalRepositoryInstance;
 
@@ -51,9 +53,9 @@ public class AppointmentRepository : BaseRepository<Appointment>, IAppointmentRe
         return Read().Where(appointment => appointment.ClientId.Equals(passportSerial));
     }
 
-    public IEnumerable<Appointment> ReadByDoctor(Doctor doctor)
+    public IEnumerable<Appointment> ReadByDoctor(Doctor doctorStorageModel)
     {
-        return ReadByDoctor(doctor.Login);
+        return ReadByDoctor(doctorStorageModel.Login);
     }
 
     public IEnumerable<Appointment> ReadByDoctor(string doctorLogin)

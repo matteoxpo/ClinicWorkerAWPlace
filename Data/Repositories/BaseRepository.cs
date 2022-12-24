@@ -1,10 +1,11 @@
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Text.Json;
+using Data.Models;
 
 namespace Data.Repositories;
 
-public abstract class BaseRepository<T>
+public abstract class BaseRepository<TEntity, TStorageEntity> where TStorageEntity : IConverter<TEntity, TStorageEntity>, new()
 {
     private readonly JsonSerializerOptions _options = new()
     {
@@ -14,24 +15,25 @@ public abstract class BaseRepository<T>
     private readonly string _path;
     private Stream? _fs;
 
+    private static TStorageEntity _storageEntity = new TStorageEntity();
+
 
     protected BaseRepository(string path)
     {
         _path = path;
-        EntitiesSubject = new BehaviorSubject<List<T>>(new List<T>());
-        EntitiesSubject.OnNext(DeserializationJson());
+        EntitiesSubject = new BehaviorSubject<List<TEntity>>(new List<TEntity>());
         AsObservable = EntitiesSubject.AsObservable();
     }
 
-    protected IObservable<List<T>> AsObservable { get; }
-    private BehaviorSubject<List<T>> EntitiesSubject { get; }
+    protected IObservable<List<TEntity>> AsObservable { get; }
+    private BehaviorSubject<List<TEntity>> EntitiesSubject { get; }
 
 
-    public abstract bool CompareEntities(T entity1, T entity2);
+    public abstract bool CompareEntities(TEntity entity1, TEntity entity2);
 
-    protected void Change(T changedEntity)
+    protected void Change(TEntity changedEntity)
     {
-        var newEntities = new List<T>(EntitiesSubject.Value);
+        var newEntities = new List<TEntity>(EntitiesSubject.Value);
         foreach (var entity in EntitiesSubject.Value)
         {
             if (!CompareEntities(changedEntity, entity)) continue;
@@ -42,12 +44,11 @@ public abstract class BaseRepository<T>
         }
     }
 
-    protected void Remove(T delitingEmtity)
+    protected void Remove(TEntity delitingEmtity)
     {
-        var newEntities = new List<T>(EntitiesSubject.Value);
-        foreach (var entity in EntitiesSubject.Value)
+        var newEntities = new List<TEntity>(EntitiesSubject.Value);
+        foreach (var entity in EntitiesSubject.Value.Where(entity => CompareEntities(delitingEmtity, entity)))
         {
-            if (!CompareEntities(delitingEmtity, entity)) continue;
             newEntities.Remove(entity);
             EntitiesSubject.OnNext(newEntities);
             SerializationJson(newEntities);
@@ -55,32 +56,32 @@ public abstract class BaseRepository<T>
         }
     }
 
-    private void SerializationJson(List<T>? entities)
+    private void SerializationJson(List<TEntity>? entities)
     {
         if (entities is null) return;
 
         _fs = GetStream();
-        JsonSerializer.Serialize(_fs, entities, _options);
+        JsonSerializer.Serialize(_fs, _storageEntity.ConvertToStorageEntity(entities), _options);
         _fs.Close();
         EntitiesSubject.OnNext(entities);
     }
 
-    protected void Append(T entity)
+    protected void Append(TEntity entity)
     {
-        var newEntities = new List<T>(EntitiesSubject.Value);
+        var newEntities = new List<TEntity>(EntitiesSubject.Value);
         newEntities.Add(entity);
         SerializationJson(newEntities);
     }
 
-    protected List<T> DeserializationJson()
+    protected IEnumerable<TEntity> DeserializationJson()
     {
-        if (EntitiesSubject.Value.Count != 0) return EntitiesSubject.Value;
+        if (EntitiesSubject.Value.Count > 0) return EntitiesSubject.Value;
 
-        List<T>? deserialized = null;
+        List<TStorageEntity>? deserialized = null;
         try
         {
             _fs = GetStream();
-            deserialized = JsonSerializer.Deserialize<List<T>>(_fs, _options);
+            deserialized = JsonSerializer.Deserialize<List<TStorageEntity>>(_fs, _options);
         }
         catch (Exception)
         {
@@ -89,10 +90,10 @@ public abstract class BaseRepository<T>
         finally
         {
             _fs?.Close();
-            deserialized ??= new List<T>();
+            deserialized ??= new List<TStorageEntity>();
         }
-
-        return deserialized;
+        EntitiesSubject.OnNext(new List<TEntity>(_storageEntity.ConvertToEntity(deserialized)));
+        return _storageEntity.ConvertToEntity(deserialized);
     }
 
     private Stream GetStream()

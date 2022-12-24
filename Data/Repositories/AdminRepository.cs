@@ -3,7 +3,7 @@ using Domain.Repositories;
 
 namespace Data.Repositories;
 
-public class AdminRepository : BaseRepository<Admin>, IAdminRepository
+public class AdminRepository : BaseRepository<Admin, AdminStorageModel>, IAdminRepository
 {
     private static AdminRepository? _globalRepositoryInstance;
 

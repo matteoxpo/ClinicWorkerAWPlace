@@ -3,7 +3,7 @@ using Domain.Repositories;
 
 namespace Data.Repositories;
 
-public class ReferenceForAnalysisRepository : BaseRepository<ReferenceForAnalysis>, IReferenceForAnalysisRepository
+public class ReferenceForAnalysisRepository : BaseRepository<ReferenceForAnalysis, ReferenceForAnalysisStorageModel>, IReferenceForAnalysisRepository
 {
     private static ReferenceForAnalysisRepository? _globalRepositoryInstance;
 

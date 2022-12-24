@@ -19,7 +19,7 @@ public class Client
     }
 
     public Client(string name, string surname, DateTime birthTime, IEnumerable<ReferenceForAnalysis> analyses,
-        List<Appointment> appointments, string id, string complaints, DateTime meetTime)
+        IEnumerable<Appointment> appointments, string id, string complaints, DateTime meetTime)
     {
         MeetTime = meetTime;
         Name = new string(name);

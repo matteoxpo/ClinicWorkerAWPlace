@@ -598,5 +598,17 @@
     "DoctorLogin": "log99",
     "MeetTime": "2023-12-01T12:20:00",
     "ClientComplaints": "complaints99"
+  },
+  {
+    "ClientId": "50",
+    "DoctorLogin": "log0",
+    "MeetTime": "2022-12-24T22:32:11.92725+07:00",
+    "ClientComplaints": "\u043E\u0447\u0435\u043D\u044C \u0431\u043E\u043B\u0438\u0442 \u0436\u0438\u0432\u043E\u0442 \u0441\u0440\u043E\u0447\u043D\u043E!!!!))"
+  },
+  {
+    "ClientId": "0",
+    "DoctorLogin": "log0",
+    "MeetTime": "2023-12-30T12:12:00",
+    "ClientComplaints": "\u041D\u0430 \u0434\u0430\u043D\u043D\u044B\u0439 \u043C\u043E\u043C\u0435\u043D\u0442 \u0431\u043E\u043B\u0438\u0442 \u043F\u0440\u0430\u0432\u043E\u0435 \u043F\u043E\u0434\u0440\u0435\u0431\u0435\u0440\u044C\u0432\u0435\n\u0442\u0430\u043A\u0436\u0435 \u0445\u0443\u0441\u0442\u0432\u0443\u0435\u0442\u0441\u044F \u0432\u0430\u044B\u0432\u0430\u0437\u044B\u0432\u0430\u044C\u0432\u044B\u0430\u043C\u0442\u044B\u0432\u0430"
   }
 ]

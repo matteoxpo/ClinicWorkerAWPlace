@@ -1,11 +1,13 @@
 using System.Reactive.Linq;
+using Data.Models.People;
+using Data.Models.Roles;
 using Domain.Entities.People;
 using Domain.Entities.Roles;
 using Domain.Repositories;
 
 namespace Data.Repositories;
 
-public class UserEmployeeRepository : BaseRepository<UserEmployee>, IUserEmployeeRepository
+public class UserEmployeeRepository : BaseRepository<UserEmployee, UserEmployeeStorageModel>, IUserEmployeeRepository
 {
     private static UserEmployeeRepository? _globalRepositoryInstance;
 
