@@ -26,8 +26,6 @@ public class UserEmployee
         Password = new string(password);
         JobTitles = new List<JobTitle>();
     }
-    
-
     public UserEmployee(UserEmployee employee)
     {
         Name = new string(employee.Name);
@@ -37,8 +35,7 @@ public class UserEmployee
         Password = new string(employee.Password);
         JobTitles = new List<JobTitle>(employee.JobTitles);
     }
-
-
+    
     public string Name { get; }
     public string Surname { get; }
     public DateTime DateOfBirth { get; }

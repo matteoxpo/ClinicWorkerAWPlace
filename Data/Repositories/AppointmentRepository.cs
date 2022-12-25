@@ -46,9 +46,9 @@ public class AppointmentRepository : BaseRepository<Appointment, AppointmentStor
         return ReadByClient(client.Id);
     }
 
-    public IEnumerable<Appointment> ReadByClient(string passportSerial)
+    public IEnumerable<Appointment> ReadByClient(string Id)
     {
-        return Read().Where(appointment => appointment.ClientId.Equals(passportSerial));
+        return Read().Where(appointment => appointment.ClientId.Equals(Id));
     }
 
     public IEnumerable<Appointment> ReadByDoctor(Doctor doctorStorageModel)
