@@ -18,10 +18,10 @@ public class Appointment
         ClientComplaints = new string("ClientComplaints");
     }
 
-    public string ClientId { get; set; }
-    public string DoctorLogin { get; set; }
-    public DateTime MeetTime { get; set; }
-    public string ClientComplaints { get; set; }
+    public string ClientId { get; }
+    public string DoctorLogin { get; }
+    public DateTime MeetTime { get; }
+    public string ClientComplaints { get; }
 
     public override string ToString()
     {

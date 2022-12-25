@@ -17,9 +17,9 @@ public class ReferenceForAnalysis
         ClientId = new string("0");
     }
 
-    public Analysis Analysis { get; set; }
-    public DateTime AnalysisTime { get; set; }
-    public string ClientId { get; set; }
+    public Analysis Analysis { get; }
+    public DateTime AnalysisTime { get; }
+    public string ClientId { get; }
 
     public override string ToString()
     {

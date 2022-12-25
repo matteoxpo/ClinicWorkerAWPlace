@@ -1,4 +1,5 @@
 using System.Reactive.Linq;
+using System.Reflection.Metadata;
 using Data.Models.People;
 using Data.Models.Roles;
 using Domain.Entities.People;
@@ -50,20 +51,25 @@ public class UserEmployeeRepository : BaseRepository<UserEmployee, UserEmployeeS
     public IEnumerable<UserEmployee> Read()
     {
         var employees = new List<UserEmployee>(DeserializationJson());
-        var dJobs = new List<Doctor>(_doctorRepository.Read());
-        var aJobs = new List<Admin>(_adminRepository.Read());
+        var userEmployees = new List<UserEmployee>();
 
         foreach (var employee in employees)
         {
             var jobs = new List<JobTitle>();
-
-            jobs.AddRange(dJobs.Where(d => d.Login.Equals(employee.Login)));
-            jobs.AddRange(aJobs.Where(d => d.Login.Equals(employee.Login)));
-            employee.JobTitles = jobs;
+            jobs.AddRange(_doctorRepository.Read().Where(d => d.Login.Equals(employee.Login)));
+            jobs.AddRange(_adminRepository.Read().Where(d => d.Login.Equals(employee.Login)));
+            userEmployees.Add(new UserEmployee(
+                employee.Name,
+                employee.Surname,
+                employee.Login,
+                employee.Password,
+                jobs,
+                employee.DateOfBirth)
+            );
         }
 
 
-        return employees;
+        return userEmployees;
     }
 
     public IObservable<UserEmployee> ObserveByLogin(string login)

@@ -41,18 +41,16 @@ public class ClientRepository : BaseRepository<Client, ClientStorageModel>, ICli
 
     public IEnumerable<Client> Read()
     {
-        var clients = DeserializationJson();
-        var refForAnalysis = new List<ReferenceForAnalysis>(_referenceForAnalysisRepository.Read());
-        var clientAnalysis = new List<ReferenceForAnalysis>();
-        foreach (var client in clients)
-        {
-            client.Appointments = _appointmentRepository.ReadByClient(client);
-            clientAnalysis.AddRange(refForAnalysis.Where(refForAnalys => refForAnalys.ClientId.Equals(client.Id)));
-            client.Analyzes = new List<ReferenceForAnalysis>(clientAnalysis);
-            clientAnalysis.Clear();
-        }
-
-        return clients;
+        return DeserializationJson()
+            .Select(client => new Client(
+                client.Name,
+                client.Surname,
+                client.DateOfBirth,
+                _referenceForAnalysisRepository.Read().Where(refForAnalys => refForAnalys.ClientId.Equals(client.Id)),
+                _appointmentRepository.ReadByClient(client),
+                client.Id,
+                client.Complaints,
+                client.MeetTime));
     }
 
     public static ClientRepository GetInstance()

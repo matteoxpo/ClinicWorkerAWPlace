@@ -18,10 +18,10 @@ public class Medicines
         Manufacturer = new string("manuf");
     }
 
-    public string Title { get; set; }
-    public string IndicationsForUse { get; set; }
-    public string Manufacturer { get; set; }
-    public bool CanBeSoldWithoutPrescription { get; set; }
+    public string Title { get;  }
+    public string IndicationsForUse { get; }
+    public string Manufacturer { get; }
+    public bool CanBeSoldWithoutPrescription { get; }
 
     public override string ToString()
     {

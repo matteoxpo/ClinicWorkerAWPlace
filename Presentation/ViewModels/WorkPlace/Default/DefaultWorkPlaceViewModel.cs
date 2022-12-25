@@ -14,25 +14,18 @@ using Domain.UseCases;
 using MessageBox.Avalonia;
 using MessageBox.Avalonia.DTO;
 using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 
 namespace Presentation.ViewModels.WorkPlace.Default;
 
-public class DefaultWorkPlaceViewModel : ReactiveObject, IRoutableViewModel, IActivatableViewModel
+public class DefaultWorkPlaceViewModel : ViewModelBase, IRoutableViewModel, IActivatableViewModel
 {
     private readonly DoctorInteractor _doctorInteractor;
     private readonly ReferenceForAnalysisInteractor _forAnalysisInteractor;
 
     private ObservableCollection<Client>? _allClients;
-    private bool _isCheckedToday;
     private Analysis _selectedAnalyses;
 
-    private string _selectedAnalysesTime;
-    private ObservableCollection<ReferenceForAnalysis> _selectedAnalysisTimetable;
-
-    private Client _selectedClient;
-    private string _selectedClientNewAppointmentTime;
-    private string _selectedClientNewComplaints;
-    private ObservableCollection<Client>? _showingClients;
     private ObservableCollection<Client>? _todaysClients;
 
 
@@ -91,6 +84,11 @@ public class DefaultWorkPlaceViewModel : ReactiveObject, IRoutableViewModel, IAc
     {
         try
         {
+            if (SelectedClient is null) throw new DefaultWorkPlaceViewModelException("Не выбран клиент");
+
+            if (SelectedAnalysesTime is null)
+                throw new DefaultWorkPlaceViewModelException("Не введно состояние пациента");
+
             _doctorInteractor.AddAnalysis(
                 new ReferenceForAnalysis(
                     SelectedAnalyses,
@@ -109,20 +107,30 @@ public class DefaultWorkPlaceViewModel : ReactiveObject, IRoutableViewModel, IAc
                 });
             await messageBoxStandardWindow.Show();
         }
+        catch (DefaultWorkPlaceViewModelException ex)
+        {
+            var messageBoxStandardWindow = MessageBoxManager.GetMessageBoxStandardWindow(
+                new MessageBoxStandardParams
+                {
+                    ContentTitle = "Ошибка",
+                    ContentMessage = ex.Message
+                });
+            await messageBoxStandardWindow.Show();
+        }
         
     }
 
     private void SetAllClientsToShow()
     {
         ShowingClients = _allClients;
-        _isCheckedToday = false;
+        IsCheckedToday = false;
     }
 
 
     private void SetTodaysClientsToShow()
     {
         ShowingClients = _todaysClients;
-        _isCheckedToday = true;
+        IsCheckedToday = true;
     }
 
     private string Login { get; }
@@ -136,19 +144,10 @@ public class DefaultWorkPlaceViewModel : ReactiveObject, IRoutableViewModel, IAc
 
     public IEnumerable<Analysis> Analyses { get; }
 
+    
+    [Reactive] public ObservableCollection<Client>? ShowingClients{ get; private set; }
 
-    public ObservableCollection<Client>? ShowingClients
-    {
-        get => _showingClients;
-        set => this.RaiseAndSetIfChanged(ref _showingClients, value);
-    }
-
-
-    public bool IsCheckedToday
-    {
-        get => _isCheckedToday;
-        set => this.RaiseAndSetIfChanged(ref _isCheckedToday, value);
-    }
+    [Reactive] public bool IsCheckedToday{ get; private set; }
 
     public Analysis SelectedAnalyses
     {
@@ -161,35 +160,15 @@ public class DefaultWorkPlaceViewModel : ReactiveObject, IRoutableViewModel, IAc
         }
     }
 
-    public string SelectedAnalysesTime
-    {
-        get => _selectedAnalysesTime;
-        set => this.RaiseAndSetIfChanged(ref _selectedAnalysesTime, value);
-    }
+    [Reactive] public string? SelectedAnalysesTime { get; set; }
 
-    public ObservableCollection<ReferenceForAnalysis> SelectedAnalysisTimetable
-    {
-        get => _selectedAnalysisTimetable;
-        set => this.RaiseAndSetIfChanged(ref _selectedAnalysisTimetable, value);
-    }
+    [Reactive] public ObservableCollection<ReferenceForAnalysis>? SelectedAnalysisTimetable  { get; private set; }
 
-    public Client SelectedClient
-    {
-        get => _selectedClient;
-        set => this.RaiseAndSetIfChanged(ref _selectedClient, value);
-    }
+    [Reactive] public Client? SelectedClient { get; set;}
 
-    public string SelectedClientNewAppointmentTime
-    {
-        get => _selectedClientNewAppointmentTime;
-        set => this.RaiseAndSetIfChanged(ref _selectedClientNewAppointmentTime, value);
-    }
+    [Reactive] public string? SelectedClientNewAppointmentTime { get; set; }
 
-    public string SelectedClientNewComplaints
-    {
-        get => _selectedClientNewComplaints;
-        set => this.RaiseAndSetIfChanged(ref _selectedClientNewComplaints, value);
-    }
+    [Reactive] public string? SelectedClientNewComplaints { get; set; }
 
     public ViewModelActivator Activator { get; }
     public IScreen HostScreen { get; }
@@ -197,36 +176,44 @@ public class DefaultWorkPlaceViewModel : ReactiveObject, IRoutableViewModel, IAc
 
     private async Task OnAddExtraAppointment()
     {
-        var newAppointment = await ShowAdditionPatient.Handle(new AdditionPatientViewModel(Login));
-        if (newAppointment is not null) _doctorInteractor.AddAppointmnet(newAppointment, true);
+        try
+        {
+            var newAppointment = await ShowAdditionPatient.Handle(new AdditionPatientViewModel(Login));
+            if (newAppointment is not null) _doctorInteractor.AddAppointmnet(newAppointment, true);
+
+        }
+        catch (AdditionPatientViewModelException ex)
+        {
+            await ShowExceptionMessageBox(ex);
+        }
+        catch (Exception ex)
+        {
+            await ShowUncatchedExceptionMessageBox(ex);
+        }
     }
 
     private async Task OnAddNextAppointment()
     {
         try
         {
-            if (SelectedClientNewAppointmentTime is null) throw new NullReferenceException();
+            if (SelectedClient is null) throw new DefaultWorkPlaceViewModelException("Не выбран клиент");
+            
+            if (SelectedClientNewAppointmentTime is null) throw new DefaultWorkPlaceViewModelException("Не введено время следующей записи");
 
-            if (SelectedClientNewComplaints is null) throw new NullReferenceException();
+            if (SelectedClientNewComplaints is null) throw new DefaultWorkPlaceViewModelException("Не введно состояние пациента");
+            
 
             _doctorInteractor.AddAppointmnet(new Appointment(
                     Login,
                     SelectedClient.Id,
-                    DateTime.ParseExact(SelectedClientNewAppointmentTime, "HH:mm dd.MM.yyyy",
-                        CultureInfo.CurrentCulture),
+                    DateTime.ParseExact(SelectedClientNewAppointmentTime, "HH:mm dd.MM.yyyy", CultureInfo.CurrentCulture),
                     SelectedClientNewComplaints
                 )
             );
         }
         catch (Exception ex)
         {
-            var messageBoxStandardWindow = MessageBoxManager.GetMessageBoxStandardWindow(
-                new MessageBoxStandardParams
-                {
-                    ContentTitle = "Ошибка",
-                    ContentMessage = ex.Message
-                });
-            await messageBoxStandardWindow.Show();
+            await ShowUncatchedExceptionMessageBox(ex);
         }
     }
 
@@ -247,4 +234,11 @@ public class DefaultWorkPlaceViewModel : ReactiveObject, IRoutableViewModel, IAc
 
         ShowingClients = _todaysClients;
     }
+    
+    
+}
+
+public class DefaultWorkPlaceViewModelException : Exception
+{
+    public DefaultWorkPlaceViewModelException(string message) : base(message) { }
 }

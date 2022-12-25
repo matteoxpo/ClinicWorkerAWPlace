@@ -5,7 +5,6 @@ namespace Domain.Entities.People;
 [Serializable]
 public class Client
 {
-    [JsonIgnore] public DateTime MeetTime;
 
     public Client()
     {
@@ -28,7 +27,7 @@ public class Client
         Analyzes = new List<ReferenceForAnalysis>(analyses);
         Appointments = new List<Appointment>(appointments);
         Id = id;
-        Complaints = complaints;
+        Complaints = new string(complaints);
     }
 
     public Client(string name, string surname, DateTime birthTime, IEnumerable<ReferenceForAnalysis> analyses,
@@ -41,17 +40,18 @@ public class Client
         Appointments = new List<Appointment>();
         Complaints = new string("complaints");
         MeetTime = new DateTime(0);
-        Id = id;
+        Id = new string(id);
     }
 
-    public string Name { get; set; }
-    public string Surname { get; set; }
-    public DateTime DateOfBirth { get; set; }
-    [JsonIgnore] public string Complaints { get; set; }
-    [JsonIgnore] public IEnumerable<ReferenceForAnalysis> Analyzes { get; set; }
-    public string Id { get; set; }
+    public string Name { get; }
+    public string Surname { get; }
+    public DateTime DateOfBirth { get; }
+    public string Id { get; }
 
-    [field: NonSerialized] [JsonIgnore] public IEnumerable<Appointment> Appointments { get; set; }
+    [JsonIgnore] public DateTime MeetTime { get; }
+    [JsonIgnore] public string Complaints { get; }
+    [JsonIgnore] public IEnumerable<ReferenceForAnalysis> Analyzes { get; }
+    [JsonIgnore] public IEnumerable<Appointment> Appointments { get; }
 
     public override string ToString()
     {

@@ -67,6 +67,8 @@
                 Items="{Binding Clients}" />
 
             <TextBox
+                AcceptsReturn="True"
+                Height="300"
                 Text="{Binding ClientComplaints, Mode=TwoWay}"
                 FontSize="{StaticResource TextSize}"
                 Watermark="Введите жалобы/причины визита"

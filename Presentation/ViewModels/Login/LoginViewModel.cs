@@ -8,14 +8,13 @@ using MessageBox.Avalonia;
 using MessageBox.Avalonia.DTO;
 using Presentation.ViewModels.WorkPlace;
 using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 
 namespace Presentation.ViewModels.Login;
 
 public class LoginViewModel : ReactiveObject, IRoutableViewModel
 {
     private readonly UserEmployeeInteractor _userEmployeeInteractor;
-    private string? _userLogin;
-    private string? _userPassword;
 
     public LoginViewModel(IScreen hostScreen)
     {
@@ -29,17 +28,9 @@ public class LoginViewModel : ReactiveObject, IRoutableViewModel
 
     public ReactiveCommand<Unit, Unit> GoToWorkPlace { get; }
 
-    public string? UserLogin
-    {
-        get => _userLogin;
-        set => this.RaiseAndSetIfChanged(ref _userLogin, value);
-    }
+    [Reactive] public string? UserLogin { get; set; }
 
-    public string? UserPassword
-    {
-        get => _userPassword;
-        set => this.RaiseAndSetIfChanged(ref _userPassword, value);
-    }
+    [Reactive] public string? UserPassword { get; set; }
 
 
     public string? UrlPathSegment { get; }
@@ -49,6 +40,10 @@ public class LoginViewModel : ReactiveObject, IRoutableViewModel
     {
         try
         {
+            if (UserLogin is null) throw new LoginViewModelException("Не введен логин");
+            if (UserPassword is null) throw new LoginViewModelException("Не пароль");
+            
+            
             if (_userEmployeeInteractor.Authorization(UserLogin!, UserPassword!))
                 await HostScreen.Router.Navigate.Execute(new WorkPlaceViewModel(HostScreen, UserLogin!));
         }
@@ -63,4 +58,9 @@ public class LoginViewModel : ReactiveObject, IRoutableViewModel
             await messageBoxStandardWindow.Show();
         }
     }
+}
+
+public class LoginViewModelException : Exception
+{
+    public LoginViewModelException(string message) : base(message) { }
 }

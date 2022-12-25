@@ -48,13 +48,13 @@ public class UserEmployee
         JobTitles = new List<JobTitle>();
     }
 
-    public string Name { get; set; }
-    public string Surname { get; set; }
+    public string Name { get; }
+    public string Surname { get; }
     public DateTime DateOfBirth { get; }
-    public string Login { get; set; }
-    public string Password { get; set; }
+    public string Login { get; }
+    public string Password { get; }
 
-    [JsonIgnore] public IEnumerable<JobTitle> JobTitles { get; set; }
+    [JsonIgnore] public IEnumerable<JobTitle> JobTitles { get; }
 
     public override string ToString()
     {

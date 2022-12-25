@@ -58,8 +58,16 @@ public class UserEmployeeInteractor
             throw new UserEmployeeException(UserEmployeeException.OldPasswordErrror);
 
         if (newPassword.Length <= 5) throw new UserEmployeeException(UserEmployeeException.ShortPasswordException);
-        userEmployee.Password = newPassword;
-        _userRepository.Update(userEmployee);
+        _userRepository.Update(
+            new UserEmployee(
+                userEmployee.Name,
+                userEmployee.Surname,
+                userEmployee.Login,
+                userEmployee.Password,
+                userEmployee.JobTitles,
+                userEmployee.DateOfBirth
+            )
+        );
     }
 
 

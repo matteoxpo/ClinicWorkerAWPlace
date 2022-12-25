@@ -6,28 +6,18 @@ using Data.Repositories;
 using Domain.Entities.People;
 using Domain.UseCases;
 using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 
 namespace Presentation.ViewModels.WorkPlace;
 
 public class WorkPlaceProfileViewModel : ReactiveObject, IRoutableViewModel, IActivatableViewModel
 {
     private readonly UserEmployeeInteractor _userEmployeeInteractor;
-    private string _errorMessage;
 
-    private bool _isActionOn;
-
-    private bool _isDataInvalid;
-
-    private bool _isPasswordChanged;
-    private readonly string _login;
-
-    private string _newPassword;
-    private string _oldPassword;
-    private UserEmployee _userEmployee;
-
+    private string Login { get; }
     public WorkPlaceProfileViewModel(IScreen hostScreen, string login)
     {
-        _login = login;
+        Login = login;
         Activator = new ViewModelActivator();
         HostScreen = hostScreen;
         _userEmployeeInteractor = new UserEmployeeInteractor(UserEmployeeRepository.GetInstance());
@@ -43,49 +33,20 @@ public class WorkPlaceProfileViewModel : ReactiveObject, IRoutableViewModel, IAc
         IsDataInvalid = false;
     }
 
-    public UserEmployee UserEmployee
-    {
-        get => _userEmployee;
-        set => this.RaiseAndSetIfChanged(ref _userEmployee, value);
-    }
+    [Reactive] public UserEmployee UserEmployee { get; set; }
 
-    public string OldPassword
-    {
-        get => _oldPassword;
-        set => this.RaiseAndSetIfChanged(ref _oldPassword, value);
-    }
+    [Reactive] public string OldPassword { get; set; }
 
-    public string NewPassword
-    {
-        get => _newPassword;
-        set => this.RaiseAndSetIfChanged(ref _newPassword, value);
-    }
-
+    [Reactive] public string NewPassword { get; set; }
     public ReactiveCommand<Unit, Unit> ChangePassword { get; }
 
-    public bool IsDataInvalid
-    {
-        get => _isDataInvalid;
-        set => this.RaiseAndSetIfChanged(ref _isDataInvalid, value);
-    }
+    [Reactive] public bool IsDataInvalid { get; set; }
 
-    public string ErrorMessage
-    {
-        get => _errorMessage;
-        set => this.RaiseAndSetIfChanged(ref _errorMessage, value);
-    }
+    [Reactive] public string ErrorMessage { get; set; }
 
-    public bool IsPasswordChanged
-    {
-        get => _isPasswordChanged;
-        set => this.RaiseAndSetIfChanged(ref _isPasswordChanged, value);
-    }
+    [Reactive] public bool IsPasswordChanged { get; set; }
 
-    public bool IsActionOn
-    {
-        get => _isActionOn;
-        set => this.RaiseAndSetIfChanged(ref _isActionOn, value);
-    }
+    [Reactive] public bool IsActionOn { get; set; }
 
     public ViewModelActivator Activator { get; }
 
@@ -96,10 +57,10 @@ public class WorkPlaceProfileViewModel : ReactiveObject, IRoutableViewModel, IAc
     {
         try
         {
-            _userEmployeeInteractor.ChangePassword(_login, OldPassword, NewPassword);
+            _userEmployeeInteractor.ChangePassword(Login, OldPassword, NewPassword);
             IsDataInvalid = false;
             IsPasswordChanged = true;
-            NewPassword = OldPassword = new string("");
+            NewPassword = OldPassword = string.Empty;
             var observable = Observable.Return(Unit.Default);
             var delay = observable.Delay(TimeSpan.FromSeconds(3));
             delay.SubscribeOn(RxApp.MainThreadScheduler);

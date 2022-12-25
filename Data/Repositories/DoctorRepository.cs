@@ -33,10 +33,13 @@ public class DoctorRepository : BaseRepository<Doctor, DoctorStorageModel>, IDoc
 
     public IEnumerable<Doctor> Read()
     {
-        var doctors = DeserializationJson();
-        foreach (var doctor in doctors) doctor.Appointments = _appointmentRepository.ReadByDoctor(doctor);
-
-        return doctors;
+        return DeserializationJson()
+            .Select(doctor => new Doctor(
+                    doctor.Category, 
+                    doctor.Speciality, 
+                    _appointmentRepository.ReadByDoctor(doctor),
+                    doctor.Login)
+            );
     }
 
     public override bool CompareEntities(Doctor entity1, Doctor entity2)

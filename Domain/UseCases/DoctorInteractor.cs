@@ -25,16 +25,19 @@ public class DoctorInteractor
 
     public IEnumerable<Client> GetDoctorClients(Doctor doctor)
     {
-        var clients = new List<Client>();
-        foreach (var appointment in doctor.Appointments)
-        {
-            var client = _clientInteractor.Get(appointment.ClientId);
-            client.Complaints = appointment.ClientComplaints;
-            client.MeetTime = appointment.MeetTime;
-            clients.Add(client);
-        }
-
-        return clients;
+        return 
+            from appointment in doctor.Appointments 
+            let client = _clientInteractor.Get(appointment.ClientId) 
+            select new Client(
+                client.Name,
+                client.Surname,
+                client.DateOfBirth,
+                client.Analyzes,
+                client.Appointments,
+                client.Id,
+                appointment.ClientComplaints,
+                appointment.MeetTime
+                );
     }
 
     public IEnumerable<Client> GetDoctorClients(string login)
@@ -47,8 +50,8 @@ public class DoctorInteractor
         foreach (var doc in _doctorRepository.Read())
         {
             if (!doc.Login.Equals(login)) continue;
-            doc.Appointments = _appointmentInteractor.GetDoctorsAppointments(doc);
-            return doc;
+            return new Doctor(doc.Category, doc.Speciality, _appointmentInteractor.GetDoctorsAppointments(doc),
+                doc.Login);
         }
 
         throw new DoctorEmployeeException(DoctorEmployeeException.NotFound);

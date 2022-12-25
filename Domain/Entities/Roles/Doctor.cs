@@ -20,7 +20,7 @@ public class Doctor : JobTitle
         Appointments = new List<Appointment>();
     }
 
-    public Qualifications Category { get; set; }
-    public IEnumerable<string> Speciality { get; set; }
-    [JsonIgnore] public IEnumerable<Appointment> Appointments { get; set; }
+    public Qualifications Category { get; }
+    public IEnumerable<string> Speciality { get; }
+    [JsonIgnore] public IEnumerable<Appointment> Appointments { get; }
 }

@@ -18,10 +18,10 @@ public class Analysis
         TimeForPrepearing = new TimeSpan(0);
     }
 
-    public string Title { get; set; }
-    public TimeSpan TimeForPrepearing { get; set; }
-    public TimeSpan TimeForTaking { get; set; }
-    public string Id { get; set; }
+    public string Title { get; }
+    public TimeSpan TimeForPrepearing { get; }
+    public TimeSpan TimeForTaking { get; }
+    public string Id { get; }
 
     public override string ToString()
     {
