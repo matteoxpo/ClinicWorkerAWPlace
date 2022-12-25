@@ -3,6 +3,7 @@ using Data.Repositories;
 using Domain.Entities;
 using Domain.UseCases;
 using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 
 namespace Presentation.ViewModels.WorkPlace;
 
@@ -20,4 +21,5 @@ public class ListOfMedicinesViewModel : ReactiveObject, IRoutableViewModel
     public IEnumerable<Medicines> Medicines { get; }
     public string? UrlPathSegment { get; }
     public IScreen HostScreen { get; }
+    [Reactive] public Medicines SelectedDrug { get; set; }
 }

@@ -21,7 +21,7 @@
                 Text="Рабочее пространство"
                 VerticalAlignment="Top" />
         </Border>
-        <Grid Margin="15" ColumnDefinitions="*, 2*, 2*">
+        <Grid Margin="15" ColumnDefinitions="*, Auto, 2*, Auto, 2*">
             <StackPanel Spacing="5" Grid.Column="0">
                 <Border Background="{StaticResource Header2Color}" CornerRadius="5">
                     <StackPanel Orientation="Vertical">
@@ -60,8 +60,13 @@
                         FontSize="{StaticResource TextSize}"
                         Content="Из 'живой очереди'" />
             </StackPanel>
-            <defaultViews:ClientData HorizontalAlignment="Stretch" Grid.Column="1" DataContext="{Binding}" />
-            <Border Grid.Column="2" Background="{StaticResource CardColor}" CornerRadius="5">
+            <Border Grid.Column="1" Width="5" Background="{StaticResource BackGroundColor}"></Border>
+
+            <defaultViews:ClientData HorizontalAlignment="Stretch" Grid.Column="2" DataContext="{Binding}" />
+            
+            <Border Grid.Column="3" Width="5" Background="{StaticResource BackGroundColor}"></Border>
+
+            <Border Grid.Column="4" Background="{StaticResource CardColor}" CornerRadius="5">
                 <StackPanel Spacing="5">
                     <TextBlock
                         FontSize="{StaticResource SubTitleTextSize}"

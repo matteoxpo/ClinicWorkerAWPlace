@@ -15,11 +15,10 @@ public partial class DefaultWorkPlaceView : ReactiveUserControl<DefaultWorkPlace
     public DefaultWorkPlaceView()
     {
         this.WhenActivated(d =>
-        {
             ViewModel!.ShowAdditionPatient
                 .RegisterHandler(DoShowAdditionPatient)
-                .DisposeWith(d);
-        });
+                .DisposeWith(d)
+        );
         InitializeComponent();
     }
 
