@@ -25,11 +25,6 @@ public class AppointmentStorageModel : IConverter<Appointment, AppointmentStorag
     public DateTime MeetTime { get; set; }
     public string ClientComplaints { get; set; }
 
-    public override string ToString()
-    {
-        return string.Join(" ", DoctorLogin, MeetTime.ToString("HH:mm dd.MM.yyyy"));
-    }
-
     public Appointment ConvertToEntity(AppointmentStorageModel entity)
     {
         return new Appointment(entity.DoctorLogin, entity.ClientId, entity.MeetTime, entity.ClientComplaints);
@@ -39,5 +34,10 @@ public class AppointmentStorageModel : IConverter<Appointment, AppointmentStorag
     {
         return new AppointmentStorageModel(entity.DoctorLogin, entity.ClientId, entity.MeetTime,
             entity.ClientComplaints);
+    }
+
+    public override string ToString()
+    {
+        return string.Join(" ", DoctorLogin, MeetTime.ToString("HH:mm dd.MM.yyyy"));
     }
 }

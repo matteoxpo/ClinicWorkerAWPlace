@@ -10,8 +10,8 @@
     </Design.DataContext>
 
     <StackPanel HorizontalAlignment="Stretch"
-        Spacing="5"
-        Background="White">
+                Spacing="5"
+                Background="White">
         <Border
             Background="{StaticResource Header2Color}"
             CornerRadius="3">

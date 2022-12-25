@@ -60,11 +60,11 @@
                         FontSize="{StaticResource TextSize}"
                         Content="Из 'живой очереди'" />
             </StackPanel>
-            <Border Grid.Column="1" Width="5" Background="{StaticResource BackGroundColor}"></Border>
+            <Border Grid.Column="1" Width="5" Background="{StaticResource BackGroundColor}" />
 
             <defaultViews:ClientData HorizontalAlignment="Stretch" Grid.Column="2" DataContext="{Binding}" />
-            
-            <Border Grid.Column="3" Width="5" Background="{StaticResource BackGroundColor}"></Border>
+
+            <Border Grid.Column="3" Width="5" Background="{StaticResource BackGroundColor}" />
 
             <Border Grid.Column="4" Background="{StaticResource CardColor}" CornerRadius="5">
                 <StackPanel Spacing="5">

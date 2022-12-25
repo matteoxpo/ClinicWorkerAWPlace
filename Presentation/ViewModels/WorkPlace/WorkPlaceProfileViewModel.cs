@@ -14,7 +14,6 @@ public class WorkPlaceProfileViewModel : ReactiveObject, IRoutableViewModel, IAc
 {
     private readonly UserEmployeeInteractor _userEmployeeInteractor;
 
-    private string Login { get; }
     public WorkPlaceProfileViewModel(IScreen hostScreen, string login)
     {
         Login = login;
@@ -32,6 +31,8 @@ public class WorkPlaceProfileViewModel : ReactiveObject, IRoutableViewModel, IAc
 
         IsDataInvalid = false;
     }
+
+    private string Login { get; }
 
     [Reactive] public UserEmployee UserEmployee { get; set; }
 

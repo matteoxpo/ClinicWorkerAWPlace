@@ -25,15 +25,6 @@ public class AnalysisStorageModel : IConverter<Analysis, AnalysisStorageModel>
     public TimeSpan TimeForTaking { get; set; }
     public string Id { get; set; }
 
-    public override string ToString()
-    {
-        return new string(Title) +
-               "\nВремя взятия анализа: " +
-               (TimeForTaking.Minutes > 60 ? TimeForTaking.Hours.ToString() : TimeForTaking.Minutes.ToString()) +
-               "\nВремя подготовки: " +
-               (TimeForPrepearing.Minutes > 60 ? TimeForPrepearing.Hours.ToString() : TimeForTaking.Minutes.ToString());
-    }
-
     public Analysis ConvertToEntity(AnalysisStorageModel entity)
     {
         return new Analysis(entity.Title, entity.TimeForPrepearing, entity.TimeForTaking, entity.Id);
@@ -42,5 +33,14 @@ public class AnalysisStorageModel : IConverter<Analysis, AnalysisStorageModel>
     public AnalysisStorageModel ConvertToStorageEntity(Analysis entity)
     {
         return new AnalysisStorageModel(entity.Title, entity.TimeForPrepearing, entity.TimeForTaking, entity.Id);
+    }
+
+    public override string ToString()
+    {
+        return new string(Title) +
+               "\nВремя взятия анализа: " +
+               (TimeForTaking.Minutes > 60 ? TimeForTaking.Hours.ToString() : TimeForTaking.Minutes.ToString()) +
+               "\nВремя подготовки: " +
+               (TimeForPrepearing.Minutes > 60 ? TimeForPrepearing.Hours.ToString() : TimeForTaking.Minutes.ToString());
     }
 }

@@ -35,10 +35,10 @@ public class DoctorRepository : BaseRepository<Doctor, DoctorStorageModel>, IDoc
     {
         return DeserializationJson()
             .Select(doctor => new Doctor(
-                    doctor.Category, 
-                    doctor.Speciality, 
-                    _appointmentRepository.ReadByDoctor(doctor),
-                    doctor.Login)
+                doctor.Category,
+                doctor.Speciality,
+                _appointmentRepository.ReadByDoctor(doctor),
+                doctor.Login)
             );
     }
 

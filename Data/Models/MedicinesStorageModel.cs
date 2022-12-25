@@ -5,7 +5,8 @@ namespace Domain.Entities;
 [Serializable]
 public class MedicinesStorageModel : IConverter<Medicines, MedicinesStorageModel>
 {
-    public MedicinesStorageModel(string title, string indicationsForUse, string manufacturer, bool canBeSoldWithoutPrescription)
+    public MedicinesStorageModel(string title, string indicationsForUse, string manufacturer,
+        bool canBeSoldWithoutPrescription)
     {
         Title = title;
         IndicationsForUse = indicationsForUse;
@@ -25,6 +26,18 @@ public class MedicinesStorageModel : IConverter<Medicines, MedicinesStorageModel
     public string Manufacturer { get; set; }
     public bool CanBeSoldWithoutPrescription { get; set; }
 
+    public Medicines ConvertToEntity(MedicinesStorageModel entity)
+    {
+        return new Medicines(entity.Title, entity.IndicationsForUse, entity.Manufacturer,
+            entity.CanBeSoldWithoutPrescription);
+    }
+
+    public MedicinesStorageModel ConvertToStorageEntity(Medicines entity)
+    {
+        return new MedicinesStorageModel(entity.Title, entity.IndicationsForUse, entity.Manufacturer,
+            entity.CanBeSoldWithoutPrescription);
+    }
+
     public override string ToString()
     {
         return string.Join("\n",
@@ -32,16 +45,5 @@ public class MedicinesStorageModel : IConverter<Medicines, MedicinesStorageModel
             "Применятеся при:\n" + IndicationsForUse,
             CanBeSoldWithoutPrescription ? "Продается без рецепта" : "Без рецепта не продается",
             "Производитель " + Manufacturer);
-    }
-
-    public Medicines ConvertToEntity(MedicinesStorageModel entity)
-    {
-        return new Medicines(entity.Title, entity.IndicationsForUse, entity.Manufacturer, entity.CanBeSoldWithoutPrescription);
-    }
-
-    public MedicinesStorageModel ConvertToStorageEntity(Medicines entity)
-    {
-        return new MedicinesStorageModel(entity.Title, entity.IndicationsForUse, entity.Manufacturer, entity.CanBeSoldWithoutPrescription);
-
     }
 }

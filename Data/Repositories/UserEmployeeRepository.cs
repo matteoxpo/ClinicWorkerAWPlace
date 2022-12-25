@@ -1,7 +1,5 @@
 using System.Reactive.Linq;
-using System.Reflection.Metadata;
 using Data.Models.People;
-using Data.Models.Roles;
 using Domain.Entities.People;
 using Domain.Entities.Roles;
 using Domain.Repositories;

@@ -7,7 +7,8 @@ namespace Data.Models.People;
 [Serializable]
 public class UserEmployeeStorageModel : IConverter<UserEmployee, UserEmployeeStorageModel>
 {
-    public UserEmployeeStorageModel(string name, string surname, string login, string password, IEnumerable<JobTitleSotrageModel> jobTitles,
+    public UserEmployeeStorageModel(string name, string surname, string login, string password,
+        IEnumerable<JobTitleSotrageModel> jobTitles,
         DateTime dateOfBirth)
     {
         Name = new string(name);
@@ -57,11 +58,6 @@ public class UserEmployeeStorageModel : IConverter<UserEmployee, UserEmployeeSto
 
     [JsonIgnore] public IEnumerable<JobTitleSotrageModel> JobTitles { get; set; }
 
-    public override string ToString()
-    {
-        return string.Join("\n", Name, Surname, Login);
-    }
-
     public UserEmployee ConvertToEntity(UserEmployeeStorageModel entity)
     {
         return new UserEmployee(entity.Name, entity.Surname, entity.Login, entity.Password, entity.DateOfBirth);
@@ -69,6 +65,12 @@ public class UserEmployeeStorageModel : IConverter<UserEmployee, UserEmployeeSto
 
     public UserEmployeeStorageModel ConvertToStorageEntity(UserEmployee entity)
     {
-        return new UserEmployeeStorageModel(entity.Name, entity.Surname, entity.Login, entity.Password, entity.DateOfBirth);
+        return new UserEmployeeStorageModel(entity.Name, entity.Surname, entity.Login, entity.Password,
+            entity.DateOfBirth);
+    }
+
+    public override string ToString()
+    {
+        return string.Join("\n", Name, Surname, Login);
     }
 }

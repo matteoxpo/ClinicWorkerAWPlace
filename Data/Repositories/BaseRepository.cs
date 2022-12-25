@@ -5,8 +5,11 @@ using Data.Models;
 
 namespace Data.Repositories;
 
-public abstract class BaseRepository<TEntity, TStorageEntity> where TStorageEntity : IConverter<TEntity, TStorageEntity>, new()
+public abstract class BaseRepository<TEntity, TStorageEntity>
+    where TStorageEntity : IConverter<TEntity, TStorageEntity>, new()
 {
+    private static TStorageEntity _storageEntity = new();
+
     private readonly JsonSerializerOptions _options = new()
     {
         WriteIndented = true
@@ -14,8 +17,6 @@ public abstract class BaseRepository<TEntity, TStorageEntity> where TStorageEnti
 
     private readonly string _path;
     private Stream? _fs;
-
-    private static TStorageEntity _storageEntity = new TStorageEntity();
 
 
     protected BaseRepository(string path)
@@ -92,6 +93,7 @@ public abstract class BaseRepository<TEntity, TStorageEntity> where TStorageEnti
             _fs?.Close();
             deserialized ??= new List<TStorageEntity>();
         }
+
         EntitiesSubject.OnNext(new List<TEntity>(_storageEntity.ConvertToEntity(deserialized)));
         return _storageEntity.ConvertToEntity(deserialized);
     }

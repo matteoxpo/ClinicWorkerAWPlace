@@ -14,11 +14,12 @@ public class ViewModelBase : ReactiveObject
             new MessageBoxStandardParams
             {
                 ContentTitle = "Ошибка",
-                ContentMessage = "Не обработанная ошибка, обратитесь, пожалуйста в поддержку" + "\ndoc.crm.help@awp.com" + $"\n{ex.Message}"
+                ContentMessage = "Не обработанная ошибка, обратитесь, пожалуйста в поддержку" +
+                                 "\ndoc.crm.help@awp.com" + $"\n{ex.Message}"
             });
         await messageBoxStandardWindow.Show();
     }
-    
+
     public async Task ShowExceptionMessageBox(string contet)
     {
         var messageBoxStandardWindow = MessageBoxManager.GetMessageBoxStandardWindow(
@@ -29,7 +30,7 @@ public class ViewModelBase : ReactiveObject
             });
         await messageBoxStandardWindow.Show();
     }
-    
+
     public async Task ShowExceptionMessageBox(Exception ex)
     {
         var messageBoxStandardWindow = MessageBoxManager.GetMessageBoxStandardWindow(
@@ -40,6 +41,4 @@ public class ViewModelBase : ReactiveObject
             });
         await messageBoxStandardWindow.Show();
     }
-    
-    
 }

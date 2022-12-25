@@ -42,8 +42,8 @@ public class LoginViewModel : ReactiveObject, IRoutableViewModel
         {
             if (UserLogin is null) throw new LoginViewModelException("Не введен логин");
             if (UserPassword is null) throw new LoginViewModelException("Не пароль");
-            
-            
+
+
             if (_userEmployeeInteractor.Authorization(UserLogin!, UserPassword!))
                 await HostScreen.Router.Navigate.Execute(new WorkPlaceViewModel(HostScreen, UserLogin!));
         }
@@ -62,5 +62,7 @@ public class LoginViewModel : ReactiveObject, IRoutableViewModel
 
 public class LoginViewModelException : Exception
 {
-    public LoginViewModelException(string message) : base(message) { }
+    public LoginViewModelException(string message) : base(message)
+    {
+    }
 }

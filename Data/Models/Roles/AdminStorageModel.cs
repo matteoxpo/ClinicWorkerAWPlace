@@ -4,7 +4,6 @@ namespace Domain.Entities.Roles;
 
 public class AdminStorageModel : JobTitleSotrageModel, IConverter<Admin, AdminStorageModel>
 {
-
     public AdminStorageModel(string login) : base(login)
     {
     }

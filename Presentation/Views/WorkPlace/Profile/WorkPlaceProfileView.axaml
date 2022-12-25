@@ -32,10 +32,10 @@
                             Width="170" />
                     </Border>
                     <Border Background="{StaticResource Header2Color}" CornerRadius="5">
-                            <TextBlock
-                                FontSize="{StaticResource SubTitleTextSize}"
-                                Foreground="{StaticResource Header2TextColor}"
-                                Text="{Binding UserEmployee}" />
+                        <TextBlock
+                            FontSize="{StaticResource SubTitleTextSize}"
+                            Foreground="{StaticResource Header2TextColor}"
+                            Text="{Binding UserEmployee}" />
                     </Border>
                 </StackPanel>
                 <StackPanel Grid.Column="1" Spacing="20" VerticalAlignment="Center">

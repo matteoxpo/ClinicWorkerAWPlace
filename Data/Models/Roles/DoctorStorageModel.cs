@@ -7,7 +7,8 @@ namespace Data.Models.Roles;
 [Serializable]
 public class DoctorStorageModel : JobTitleSotrageModel, IConverter<Doctor, DoctorStorageModel>
 {
-    public DoctorStorageModel(Qualifications category, IEnumerable<string> speciality, IEnumerable<Appointment> appointments,
+    public DoctorStorageModel(Qualifications category, IEnumerable<string> speciality,
+        IEnumerable<Appointment> appointments,
         string userLogin) : base(userLogin)
     {
         Category = category;
@@ -25,7 +26,7 @@ public class DoctorStorageModel : JobTitleSotrageModel, IConverter<Doctor, Docto
     public Qualifications Category { get; set; }
     public IEnumerable<string> Speciality { get; set; }
     [JsonIgnore] public IEnumerable<Appointment> Appointments { get; set; }
-   
+
     public Doctor ConvertToEntity(DoctorStorageModel entity)
     {
         return new Doctor(entity.Category, entity.Speciality, entity.Appointments, entity.Login);

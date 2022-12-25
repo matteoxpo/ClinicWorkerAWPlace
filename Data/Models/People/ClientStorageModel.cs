@@ -20,7 +20,8 @@ public class ClientStorageModel : IConverter<Client, ClientStorageModel>
         MeetTime = new DateTime(0);
     }
 
-    public ClientStorageModel(string name, string surname, DateTime birthTime, IEnumerable<ReferenceForAnalysisStorageModel> analyses,
+    public ClientStorageModel(string name, string surname, DateTime birthTime,
+        IEnumerable<ReferenceForAnalysisStorageModel> analyses,
         IEnumerable<AppointmentStorageModel> appointments, string id, string complaints, DateTime meetTime)
     {
         MeetTime = meetTime;
@@ -33,7 +34,8 @@ public class ClientStorageModel : IConverter<Client, ClientStorageModel>
         Complaints = complaints;
     }
 
-    public ClientStorageModel(string name, string surname, DateTime birthTime, IEnumerable<ReferenceForAnalysisStorageModel> analyses,
+    public ClientStorageModel(string name, string surname, DateTime birthTime,
+        IEnumerable<ReferenceForAnalysisStorageModel> analyses,
         string id)
     {
         Name = new string(name);
@@ -55,19 +57,10 @@ public class ClientStorageModel : IConverter<Client, ClientStorageModel>
 
     [field: NonSerialized] [JsonIgnore] public IEnumerable<AppointmentStorageModel> Appointments { get; set; }
 
-    public override string ToString()
-    {
-        return string.Join(" ",
-            Name,
-            Surname,
-            MeetTime.Equals(new DateTime(0))
-                ? "\nДата рождения: " + DateOfBirth.ToString("MM/dd/yyyy")
-                : "\nВремя записи: " + MeetTime);
-    }
-
     public Client ConvertToEntity(ClientStorageModel entity)
     {
-        return new Client(entity.Name, entity.Surname, entity.DateOfBirth, entity.Analyzes.Select(d => d.ConvertToEntity(d)),
+        return new Client(entity.Name, entity.Surname, entity.DateOfBirth,
+            entity.Analyzes.Select(d => d.ConvertToEntity(d)),
             entity.Appointments.Select(a => a.ConvertToEntity(a)), entity.Id, entity.Complaints, entity.MeetTime);
     }
 
@@ -76,21 +69,30 @@ public class ClientStorageModel : IConverter<Client, ClientStorageModel>
         var appointments = entity.Appointments;
 
 
-        return new ClientStorageModel(entity.Name, entity.Surname, entity.DateOfBirth, 
-            from referenceForAnalysis 
-            in entity.Analyzes 
-            let a = referenceForAnalysis.Analysis 
+        return new ClientStorageModel(entity.Name, entity.Surname, entity.DateOfBirth,
+            from referenceForAnalysis
+                in entity.Analyzes
+            let a = referenceForAnalysis.Analysis
             select new ReferenceForAnalysisStorageModel(
                 new AnalysisStorageModel(a.Title, a.TimeForPrepearing, a.TimeForTaking, a.Id),
                 referenceForAnalysis.AnalysisTime,
                 referenceForAnalysis.ClientId),
-            
-            appointments.Select(appointment => 
+            appointments.Select(appointment =>
                 new AppointmentStorageModel(
                     appointment.DoctorLogin,
                     appointment.ClientId,
                     appointment.MeetTime,
                     appointment.ClientComplaints))
             , entity.Id, entity.Complaints, entity.MeetTime);
+    }
+
+    public override string ToString()
+    {
+        return string.Join(" ",
+            Name,
+            Surname,
+            MeetTime.Equals(new DateTime(0))
+                ? "\nДата рождения: " + DateOfBirth.ToString("MM/dd/yyyy")
+                : "\nВремя записи: " + MeetTime);
     }
 }

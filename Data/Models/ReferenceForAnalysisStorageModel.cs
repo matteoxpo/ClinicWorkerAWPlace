@@ -23,22 +23,23 @@ public class ReferenceForAnalysisStorageModel : IConverter<ReferenceForAnalysis,
     public DateTime AnalysisTime { get; set; }
     public string ClientId { get; set; }
 
-    public override string ToString()
-    {
-        return "Анализ: " + Analysis + "\nНаправление на дату:" + AnalysisTime;
-    }
-
 
     public ReferenceForAnalysis ConvertToEntity(ReferenceForAnalysisStorageModel entity)
     {
-        return new ReferenceForAnalysis(entity.Analysis.ConvertToEntity(entity.Analysis), entity.AnalysisTime, entity.ClientId);
+        return new ReferenceForAnalysis(entity.Analysis.ConvertToEntity(entity.Analysis), entity.AnalysisTime,
+            entity.ClientId);
     }
 
     public ReferenceForAnalysisStorageModel ConvertToStorageEntity(ReferenceForAnalysis entity)
     {
         return new ReferenceForAnalysisStorageModel(
-            new AnalysisStorageModel(entity.Analysis.Title, entity.Analysis.TimeForPrepearing, entity.Analysis.TimeForTaking, entity.Analysis.Id),
+            new AnalysisStorageModel(entity.Analysis.Title, entity.Analysis.TimeForPrepearing,
+                entity.Analysis.TimeForTaking, entity.Analysis.Id),
             entity.AnalysisTime, entity.ClientId);
+    }
 
+    public override string ToString()
+    {
+        return "Анализ: " + Analysis + "\nНаправление на дату:" + AnalysisTime;
     }
 }

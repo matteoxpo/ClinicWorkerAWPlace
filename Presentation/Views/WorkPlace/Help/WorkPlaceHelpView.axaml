@@ -71,7 +71,7 @@
                     FontSize="{StaticResource SmallTextSize}"
                     HorizontalAlignment="Left"
                     Text="{StaticResource AboutProfileHelpText}" />
-                
+
             </StackPanel>
         </ScrollViewer>
     </StackPanel>

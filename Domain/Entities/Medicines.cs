@@ -18,7 +18,7 @@ public class Medicines
         Manufacturer = new string("manuf");
     }
 
-    public string Title { get;  }
+    public string Title { get; }
     public string IndicationsForUse { get; }
     public string Manufacturer { get; }
     public bool CanBeSoldWithoutPrescription { get; }

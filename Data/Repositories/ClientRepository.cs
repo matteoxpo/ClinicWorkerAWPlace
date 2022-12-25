@@ -1,5 +1,4 @@
 using Data.Models.People;
-using Domain.Entities;
 using Domain.Entities.People;
 using Domain.Repositories;
 

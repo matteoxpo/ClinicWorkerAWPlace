@@ -5,7 +5,6 @@ namespace Domain.Entities.People;
 [Serializable]
 public class Client
 {
-
     public Client()
     {
         Complaints = new string("complaints");

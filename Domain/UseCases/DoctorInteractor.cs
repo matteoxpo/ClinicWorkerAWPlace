@@ -25,9 +25,9 @@ public class DoctorInteractor
 
     public IEnumerable<Client> GetDoctorClients(Doctor doctor)
     {
-        return 
-            from appointment in doctor.Appointments 
-            let client = _clientInteractor.Get(appointment.ClientId) 
+        return
+            from appointment in doctor.Appointments
+            let client = _clientInteractor.Get(appointment.ClientId)
             select new Client(
                 client.Name,
                 client.Surname,
@@ -37,7 +37,7 @@ public class DoctorInteractor
                 client.Id,
                 appointment.ClientComplaints,
                 appointment.MeetTime
-                );
+            );
     }
 
     public IEnumerable<Client> GetDoctorClients(string login)

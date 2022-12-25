@@ -19,7 +19,7 @@ public class ListOfMedicinesViewModel : ReactiveObject, IRoutableViewModel
     }
 
     public IEnumerable<Medicines> Medicines { get; }
+    [Reactive] public Medicines SelectedDrug { get; set; }
     public string? UrlPathSegment { get; }
     public IScreen HostScreen { get; }
-    [Reactive] public Medicines SelectedDrug { get; set; }
 }

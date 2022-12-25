@@ -1,5 +1,3 @@
-using Data.Models.People;
-using Data.Models.Roles;
 using Domain.Entities;
 using Domain.Entities.People;
 using Domain.Entities.Roles;
