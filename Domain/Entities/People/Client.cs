@@ -2,7 +2,6 @@ using System.Text.Json.Serialization;
 
 namespace Domain.Entities.People;
 
-[Serializable]
 public class Client
 {
     public Client(string name, string surname, DateTime birthTime,  string id, IEnumerable<ReferenceForAnalysis>? analyses = null,

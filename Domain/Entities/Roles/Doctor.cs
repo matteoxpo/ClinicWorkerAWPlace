@@ -2,7 +2,6 @@ using System.Text.Json.Serialization;
 
 namespace Domain.Entities.Roles;
 
-[Serializable]
 public class Doctor : JobTitle
 {
     public Doctor(Qualifications category, IEnumerable<string> speciality, IEnumerable<Appointment> appointments,

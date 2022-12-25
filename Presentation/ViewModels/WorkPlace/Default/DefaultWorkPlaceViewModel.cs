@@ -256,6 +256,10 @@ public class DefaultWorkPlaceViewModel : ViewModelBase, IRoutableViewModel, IAct
         {
             await ShowExceptionMessageBox("Неверный формат ввода даты");
         }
+        catch (DefaultWorkPlaceViewModelException ex)
+        {
+            await ShowExceptionMessageBox(ex);
+        }
         catch (Exception ex)
         {
             await ShowUncatchedExceptionMessageBox(ex);

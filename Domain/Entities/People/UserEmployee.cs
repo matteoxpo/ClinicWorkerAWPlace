@@ -3,7 +3,6 @@ using Domain.Entities.Roles;
 
 namespace Domain.Entities.People;
 
-[Serializable]
 public class UserEmployee
 {
     public UserEmployee(string name, string surname, string login, string password, IEnumerable<JobTitle> jobTitles,

@@ -9,9 +9,6 @@ public class ReferenceForAnalysis
         ClientId = clientId;
         Result = result ?? new string("Результата анализа ещё нет");
     }
- 
-    
-
     public Analysis Analysis { get; }
     public DateTime AnalysisTime { get; }
     public string? Result { get; }
