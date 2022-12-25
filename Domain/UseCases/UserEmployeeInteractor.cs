@@ -63,7 +63,7 @@ public class UserEmployeeInteractor
                 userEmployee.Name,
                 userEmployee.Surname,
                 userEmployee.Login,
-                userEmployee.Password,
+                newPassword,
                 userEmployee.JobTitles,
                 userEmployee.DateOfBirth
             )
