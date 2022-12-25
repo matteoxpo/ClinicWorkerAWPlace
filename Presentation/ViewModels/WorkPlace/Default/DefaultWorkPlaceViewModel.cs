@@ -64,8 +64,13 @@ public class DefaultWorkPlaceViewModel : ViewModelBase, IRoutableViewModel, IAct
         UpdateDoctorClients(login);
 
         ShowAdditionPatient = new Interaction<AdditionPatientViewModel, Appointment?>();
+        
+        ShowAnalysisResult = new Interaction<AnalysisResultViewModel, Unit>();
+        
 
-        AddPatient = ReactiveCommand.CreateFromTask(OnAddExtraAppointment);
+        OpenAddingExtraAppointment = ReactiveCommand.CreateFromTask(OnAddExtraAppointment);
+
+        OpenShowAnalysisResult = ReactiveCommand.CreateFromTask(OnShowAnalysisResult);
 
         AddAppointment = ReactiveCommand.CreateFromTask(OnAddNextAppointment);
 
@@ -73,22 +78,28 @@ public class DefaultWorkPlaceViewModel : ViewModelBase, IRoutableViewModel, IAct
 
         ShowTodayClients = ReactiveCommand.Create(SetTodaysClientsToShow);
 
+   
+
         SetTodaysClientsToShow();
 
         AddAnalysis = ReactiveCommand.CreateFromTask(OnAddAnalysis);
 
-        SelectedClientNewAppointmentTime = new string($"ЧЧ:мм  ч.{DateTime.Today.Month}.{DateTime.Today.Year}");
+        SelectedClientNewAppointmentTime = new string($"ЧЧ:мм ч.{DateTime.Today.Month}.{DateTime.Today.Year}");
 
-        SelectedAnalysesTime = new string($"ЧЧ:мм  ч.{DateTime.Today.Month}.{DateTime.Today.Year}");
+        SelectedAnalysesTime = new string($"ЧЧ:мм ч.{DateTime.Today.Month}.{DateTime.Today.Year}");
     }
 
+  
     private string Login { get; }
     public ReactiveCommand<Unit, Unit> ShowAllClients { get; }
     public ReactiveCommand<Unit, Unit> ShowTodayClients { get; }
     public Interaction<AdditionPatientViewModel, Appointment?> ShowAdditionPatient { get; }
+    public Interaction<AnalysisResultViewModel, Unit> ShowAnalysisResult { get; }
     public ReactiveCommand<Unit, Unit> AddAppointment { get; }
-    public ReactiveCommand<Unit, Unit> AddPatient { get; }
+    public ReactiveCommand<Unit, Unit> OpenAddingExtraAppointment { get; }
     public ReactiveCommand<Unit, Unit> AddAnalysis { get; }
+    public ReactiveCommand<Unit, Unit> OpenShowAnalysisResult { get; }
+    
 
 
     public IEnumerable<Analysis> Analyses { get; }
@@ -96,7 +107,7 @@ public class DefaultWorkPlaceViewModel : ViewModelBase, IRoutableViewModel, IAct
 
     [Reactive] public ObservableCollection<Client>? ShowingClients { get; private set; }
 
-    [Reactive] public bool IsCheckedToday { get; private set; }
+    [Reactive] public bool IsCheckedAll { get; private set; }
 
     public Analysis SelectedAnalyses
     {
@@ -123,6 +134,19 @@ public class DefaultWorkPlaceViewModel : ViewModelBase, IRoutableViewModel, IAct
     public IScreen HostScreen { get; }
     public string? UrlPathSegment { get; }
 
+    private ReferenceForAnalysis _selectedClientAnalys;
+
+    public ReferenceForAnalysis SelectedClientAnalys
+    {
+        get => _selectedClientAnalys;
+        set
+        {
+            IsAnalyzisSelected = value is not null;
+            this.RaiseAndSetIfChanged(ref _selectedClientAnalys, value);
+        }
+    }
+    [Reactive] public bool IsAnalyzisSelected { get; set;}
+
     private async Task OnAddAnalysis()
     {
         try
@@ -138,7 +162,8 @@ public class DefaultWorkPlaceViewModel : ViewModelBase, IRoutableViewModel, IAct
                     DateTime.ParseExact(SelectedAnalysesTime, "HH:mm dd.MM.yyyy", CultureInfo.CurrentCulture),
                     SelectedClient.Id
                 ),
-                Login);
+                Login
+            );
         }
         catch (FormatException ex)
         {
@@ -157,16 +182,35 @@ public class DefaultWorkPlaceViewModel : ViewModelBase, IRoutableViewModel, IAct
     private void SetAllClientsToShow()
     {
         ShowingClients = _allClients;
-        IsCheckedToday = false;
+        IsCheckedAll = true;
     }
 
 
     private void SetTodaysClientsToShow()
     {
         ShowingClients = _todaysClients;
-        IsCheckedToday = true;
+        IsCheckedAll = false;
     }
 
+    private async Task OnShowAnalysisResult()
+    {
+        try
+        {
+            if (SelectedAnalyses is null)
+                throw new DefaultWorkPlaceViewModelException("Не выбран анализ, который будет просматриваться");
+            await ShowAnalysisResult.Handle(new AnalysisResultViewModel(SelectedClientAnalys));
+        }
+        catch (DefaultWorkPlaceViewModelException ex)
+        {
+            await ShowExceptionMessageBox(ex);
+        }
+        catch (Exception ex)
+        {
+            await ShowUncatchedExceptionMessageBox(ex);
+        }
+    }
+
+    
     private async Task OnAddExtraAppointment()
     {
         try
@@ -185,6 +229,12 @@ public class DefaultWorkPlaceViewModel : ViewModelBase, IRoutableViewModel, IAct
         try
         {
             if (SelectedClient is null) throw new DefaultWorkPlaceViewModelException("Не выбран клиент");
+
+            if (SelectedClient.MeetTime.Year != DateTime.Today.Year &&
+                SelectedClient.MeetTime.Month != DateTime.Today.Month &&
+                SelectedClient.MeetTime.Day != DateTime.Today.Day &&
+                SelectedClient.MeetTime.Hour != DateTime.Today.Hour)
+                throw new DefaultWorkPlaceViewModelException("Еще не подошло время прием клиента");
 
             if (SelectedClientNewAppointmentTime is null)
                 throw new DefaultWorkPlaceViewModelException("Не введено время следующей записи");
@@ -227,7 +277,7 @@ public class DefaultWorkPlaceViewModel : ViewModelBase, IRoutableViewModel, IAct
                 client.MeetTime.Day == DateTime.Today.Day)
                 _todaysClients.Add(client);
 
-        ShowingClients = _todaysClients;
+        SetAllClientsToShow();
     }
 }
 

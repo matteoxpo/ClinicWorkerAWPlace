@@ -10,14 +10,6 @@ public class Appointment
         ClientComplaints = new string(clientComplaints);
     }
 
-    public Appointment()
-    {
-        DoctorLogin = new string("doctorLogin");
-        ClientId = new string("clientPassport");
-        MeetTime = new DateTime(0);
-        ClientComplaints = new string("ClientComplaints");
-    }
-
     public string ClientId { get; }
     public string DoctorLogin { get; }
     public DateTime MeetTime { get; }

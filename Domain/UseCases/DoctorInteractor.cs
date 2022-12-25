@@ -28,13 +28,14 @@ public class DoctorInteractor
         return
             from appointment in doctor.Appointments
             let client = _clientInteractor.Get(appointment.ClientId)
+            // where client.MeetTime.Day >= DateTime.Today.Day
             select new Client(
                 client.Name,
                 client.Surname,
                 client.DateOfBirth,
+                client.Id,
                 client.Analyzes,
                 client.Appointments,
-                client.Id,
                 appointment.ClientComplaints,
                 appointment.MeetTime
             );

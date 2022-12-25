@@ -6,11 +6,5 @@ public abstract class JobTitle
     {
         Login = new string(login);
     }
-
-    public JobTitle()
-    {
-        Login = new string("Login");
-    }
-
-    public string Login { get; set; }
+    public string Login { get;}
 }

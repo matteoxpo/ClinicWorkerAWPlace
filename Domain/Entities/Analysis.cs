@@ -1,6 +1,5 @@
 namespace Domain.Entities;
 
-[Serializable]
 public class Analysis
 {
     public Analysis(string title, TimeSpan timeForPrepearing, TimeSpan timeForTaking, string id)
@@ -9,13 +8,6 @@ public class Analysis
         TimeForTaking = timeForTaking;
         TimeForPrepearing = timeForPrepearing;
         Id = new string(id);
-    }
-
-    public Analysis()
-    {
-        Id = new string("0");
-        Title = new string("Title");
-        TimeForPrepearing = new TimeSpan(0);
     }
 
     public string Title { get; }

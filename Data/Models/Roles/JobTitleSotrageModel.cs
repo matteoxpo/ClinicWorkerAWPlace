@@ -1,6 +1,8 @@
+using Data.Models;
+
 namespace Domain.Entities.Roles;
 
-public abstract class JobTitleSotrageModel
+public abstract class JobTitleSotrageModel 
 {
     public JobTitleSotrageModel(string login)
     {
@@ -10,6 +12,7 @@ public abstract class JobTitleSotrageModel
     public JobTitleSotrageModel()
     {
         Login = new string("Login");
+        
     }
 
     public string Login { get; set; }

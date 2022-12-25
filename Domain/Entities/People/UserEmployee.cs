@@ -16,8 +16,8 @@ public class UserEmployee
         Password = new string(password);
         JobTitles = new List<JobTitle>(jobTitles);
     }
-
-    public UserEmployee(string name, string surname, string login, string password, DateTime dateOfBirth)
+    public UserEmployee(string name, string surname, string login, string password,
+        DateTime dateOfBirth)
     {
         Name = new string(name);
         Surname = new string(surname);
@@ -26,7 +26,7 @@ public class UserEmployee
         Password = new string(password);
         JobTitles = new List<JobTitle>();
     }
-
+    
 
     public UserEmployee(UserEmployee employee)
     {
@@ -38,15 +38,6 @@ public class UserEmployee
         JobTitles = new List<JobTitle>(employee.JobTitles);
     }
 
-    public UserEmployee()
-    {
-        Name = new string("name");
-        Surname = new string("surname");
-        DateOfBirth = new DateTime(0);
-        Login = new string("login");
-        Password = new string("password");
-        JobTitles = new List<JobTitle>();
-    }
 
     public string Name { get; }
     public string Surname { get; }

@@ -20,18 +20,17 @@ public class ClientStorageModel : IConverter<Client, ClientStorageModel>
         MeetTime = new DateTime(0);
     }
 
-    public ClientStorageModel(string name, string surname, DateTime birthTime,
-        IEnumerable<ReferenceForAnalysisStorageModel> analyses,
-        IEnumerable<AppointmentStorageModel> appointments, string id, string complaints, DateTime meetTime)
+    public ClientStorageModel(string name, string surname, DateTime birthTime,  string id, IEnumerable<ReferenceForAnalysisStorageModel>? analyses = null,
+        IEnumerable<AppointmentStorageModel>? appointments = null, string? complaints = null, DateTime? meetTime = null)
     {
-        MeetTime = meetTime;
+        MeetTime = meetTime ?? new DateTime();
         Name = new string(name);
         Surname = new string(surname);
         DateOfBirth = birthTime;
-        Analyzes = new List<ReferenceForAnalysisStorageModel>(analyses);
-        Appointments = new List<AppointmentStorageModel>(appointments);
+        Analyzes = analyses is not null ? new List<ReferenceForAnalysisStorageModel>(analyses) : new List<ReferenceForAnalysisStorageModel>();
+        Appointments = appointments is not null ? new List<AppointmentStorageModel>(appointments) : new List<AppointmentStorageModel>();
         Id = id;
-        Complaints = complaints;
+        Complaints = complaints ?? "complaints";
     }
 
     public ClientStorageModel(string name, string surname, DateTime birthTime,
@@ -59,31 +58,46 @@ public class ClientStorageModel : IConverter<Client, ClientStorageModel>
 
     public Client ConvertToEntity(ClientStorageModel entity)
     {
-        return new Client(entity.Name, entity.Surname, entity.DateOfBirth,
+        return new Client(
+            entity.Name,
+            entity.Surname,
+            entity.DateOfBirth,
+            entity.Id, 
             entity.Analyzes.Select(d => d.ConvertToEntity(d)),
-            entity.Appointments.Select(a => a.ConvertToEntity(a)), entity.Id, entity.Complaints, entity.MeetTime);
+            entity.Appointments.Select(a => a.ConvertToEntity(a)), 
+            entity.Complaints, 
+            entity.MeetTime);
     }
 
     public ClientStorageModel ConvertToStorageEntity(Client entity)
     {
-        var appointments = entity.Appointments;
-
-
-        return new ClientStorageModel(entity.Name, entity.Surname, entity.DateOfBirth,
-            from referenceForAnalysis
-                in entity.Analyzes
+        return new ClientStorageModel(
+            entity.Name,
+            entity.Surname,
+            entity.DateOfBirth,
+            entity.Id,
+            from referenceForAnalysis in entity.Analyzes
             let a = referenceForAnalysis.Analysis
             select new ReferenceForAnalysisStorageModel(
-                new AnalysisStorageModel(a.Title, a.TimeForPrepearing, a.TimeForTaking, a.Id),
+                new AnalysisStorageModel(
+                    a.Title,
+                    a.TimeForPrepearing,
+                    a.TimeForTaking,
+                    a.Id
+                    ),
                 referenceForAnalysis.AnalysisTime,
-                referenceForAnalysis.ClientId),
-            appointments.Select(appointment =>
+                referenceForAnalysis.ClientId,
+                referenceForAnalysis.Result
+                ),
+            entity.Appointments.Select(appointment =>
                 new AppointmentStorageModel(
                     appointment.DoctorLogin,
                     appointment.ClientId,
                     appointment.MeetTime,
-                    appointment.ClientComplaints))
-            , entity.Id, entity.Complaints, entity.MeetTime);
+                    appointment.ClientComplaints)),
+            entity.Complaints,
+            entity.MeetTime
+            );
     }
 
     public override string ToString()

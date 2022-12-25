@@ -45,11 +45,12 @@ public class ClientRepository : BaseRepository<Client, ClientStorageModel>, ICli
                 client.Name,
                 client.Surname,
                 client.DateOfBirth,
+                client.Id,
                 _referenceForAnalysisRepository.Read().Where(refForAnalys => refForAnalys.ClientId.Equals(client.Id)),
                 _appointmentRepository.ReadByClient(client),
-                client.Id,
                 client.Complaints,
-                client.MeetTime));
+                client.MeetTime)
+            );
     }
 
     public static ClientRepository GetInstance()

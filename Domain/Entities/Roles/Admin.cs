@@ -7,8 +7,4 @@ public class Admin : JobTitle
     public Admin(string login) : base(login)
     {
     }
-
-    public Admin() : base("Login")
-    {
-    }
 }

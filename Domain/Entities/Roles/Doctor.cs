@@ -13,12 +13,6 @@ public class Doctor : JobTitle
         Appointments = new List<Appointment>(appointments);
     }
 
-    public Doctor() : base("Login")
-    {
-        Category = Qualifications.FirstCategory;
-        Speciality = new List<string>();
-        Appointments = new List<Appointment>();
-    }
 
     public Qualifications Category { get; }
     public IEnumerable<string> Speciality { get; }

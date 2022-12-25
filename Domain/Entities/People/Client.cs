@@ -5,42 +5,19 @@ namespace Domain.Entities.People;
 [Serializable]
 public class Client
 {
-    public Client()
+    public Client(string name, string surname, DateTime birthTime,  string id, IEnumerable<ReferenceForAnalysis>? analyses = null,
+        IEnumerable<Appointment>? appointments = null, string? complaints = null, DateTime? meetTime = null)
     {
-        Complaints = new string("complaints");
-        Name = new string("name");
-        Surname = new string("surname");
-        Analyzes = new List<ReferenceForAnalysis>();
-        Appointments = new List<Appointment>();
-        Id = new string("0");
-        MeetTime = new DateTime(0);
-    }
-
-    public Client(string name, string surname, DateTime birthTime, IEnumerable<ReferenceForAnalysis> analyses,
-        IEnumerable<Appointment> appointments, string id, string complaints, DateTime meetTime)
-    {
-        MeetTime = meetTime;
+        MeetTime = meetTime ?? new DateTime();
         Name = new string(name);
         Surname = new string(surname);
         DateOfBirth = birthTime;
-        Analyzes = new List<ReferenceForAnalysis>(analyses);
-        Appointments = new List<Appointment>(appointments);
+        Analyzes = analyses is not null ? new List<ReferenceForAnalysis>(analyses) : new List<ReferenceForAnalysis>();
+        Appointments = appointments is not null ? new List<Appointment>(appointments) : new List<Appointment>();
         Id = id;
-        Complaints = new string(complaints);
+        Complaints = new string(complaints ?? "complaints");
     }
 
-    public Client(string name, string surname, DateTime birthTime, IEnumerable<ReferenceForAnalysis> analyses,
-        string id)
-    {
-        Name = new string(name);
-        Surname = new string(surname);
-        DateOfBirth = birthTime;
-        Analyzes = new List<ReferenceForAnalysis>(analyses);
-        Appointments = new List<Appointment>();
-        Complaints = new string("complaints");
-        MeetTime = new DateTime(0);
-        Id = new string(id);
-    }
 
     public string Name { get; }
     public string Surname { get; }

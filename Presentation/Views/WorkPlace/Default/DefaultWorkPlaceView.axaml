@@ -33,11 +33,11 @@
                             <RadioButton
                                 Command="{Binding ShowTodayClients}"
                                 FontWeight="Heavy"
-                                IsChecked="{Binding IsCheckedToday}"
                                 Foreground="{StaticResource CardColor}"
                                 Content="Сегодня" />
                             <RadioButton
                                 Foreground="{StaticResource CardColor}"
+                                IsChecked="{Binding IsCheckedAll}"
                                 Command="{Binding ShowAllClients}"
                                 FontWeight="Heavy"
                                 Content="Все" />
@@ -56,7 +56,7 @@
                     SelectedItem="{Binding SelectedClient}"
                     Items="{Binding ShowingClients}" />
 
-                <Button Command="{Binding AddPatient}" HorizontalAlignment="Center"
+                <Button Command="{Binding OpenAddingExtraAppointment}" HorizontalAlignment="Center"
                         FontSize="{StaticResource TextSize}"
                         Content="Из 'живой очереди'" />
             </StackPanel>

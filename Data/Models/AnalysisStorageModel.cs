@@ -5,7 +5,7 @@ namespace Data.Models;
 [Serializable]
 public class AnalysisStorageModel : IConverter<Analysis, AnalysisStorageModel>
 {
-    public AnalysisStorageModel(string title, TimeSpan timeForPrepearing, TimeSpan timeForTaking, string id)
+    public AnalysisStorageModel(string title, TimeSpan timeForPrepearing, TimeSpan timeForTaking ,string id)
     {
         Title = new string(title);
         TimeForTaking = timeForTaking;

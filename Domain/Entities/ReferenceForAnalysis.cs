@@ -1,24 +1,20 @@
 namespace Domain.Entities;
 
-[Serializable]
 public class ReferenceForAnalysis
 {
-    public ReferenceForAnalysis(Analysis analysis, DateTime analysisTime, string clientId)
+    public ReferenceForAnalysis(Analysis analysis, DateTime analysisTime, string clientId, string? result = null)
     {
         Analysis = analysis;
         AnalysisTime = analysisTime;
         ClientId = clientId;
+        Result = result ?? new string("Результата анализа ещё нет");
     }
-
-    public ReferenceForAnalysis()
-    {
-        Analysis = new Analysis();
-        AnalysisTime = new DateTime(0);
-        ClientId = new string("0");
-    }
+ 
+    
 
     public Analysis Analysis { get; }
     public DateTime AnalysisTime { get; }
+    public string? Result { get; }
     public string ClientId { get; }
 
     public override string ToString()

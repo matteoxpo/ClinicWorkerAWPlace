@@ -1,6 +1,5 @@
 namespace Domain.Entities;
 
-[Serializable]
 public class Medicines
 {
     public Medicines(string title, string indicationsForUse, string manufacturer, bool canBeSoldWithoutPrescription)
@@ -9,13 +8,6 @@ public class Medicines
         IndicationsForUse = indicationsForUse;
         Manufacturer = manufacturer;
         CanBeSoldWithoutPrescription = canBeSoldWithoutPrescription;
-    }
-
-    public Medicines()
-    {
-        Title = new string("title");
-        IndicationsForUse = new string("indications");
-        Manufacturer = new string("manuf");
     }
 
     public string Title { get; }

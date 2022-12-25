@@ -1,3 +1,4 @@
+using System.Reactive;
 using System.Reactive.Disposables;
 using System.Threading.Tasks;
 using Avalonia;
@@ -14,12 +15,18 @@ public partial class DefaultWorkPlaceView : ReactiveUserControl<DefaultWorkPlace
 {
     public DefaultWorkPlaceView()
     {
+        InitializeComponent();
+
         this.WhenActivated(d =>
             ViewModel!.ShowAdditionPatient
                 .RegisterHandler(DoShowAdditionPatient)
                 .DisposeWith(d)
         );
-        InitializeComponent();
+        this.WhenActivated(d =>
+            ViewModel!.ShowAnalysisResult
+                .RegisterHandler(DoShowAnalyResult)
+                .DisposeWith(d)
+        );
     }
 
     private async Task DoShowAdditionPatient(
@@ -42,6 +49,24 @@ public partial class DefaultWorkPlaceView : ReactiveUserControl<DefaultWorkPlace
         {
             interactionContext.SetOutput(null);
         }
+    }
+
+    private async Task DoShowAnalyResult(
+        InteractionContext<AnalysisResultViewModel, Unit> interactionContext)
+    {
+        var dialog = new AnalysisResultWindow()
+        {
+            ViewModel = interactionContext.Input
+        };
+
+        if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+        {
+            if (desktop.MainWindow != null)
+            {
+                await dialog.ShowDialog<Unit>(desktop.MainWindow);
+            }
+        }
+        interactionContext.SetOutput(Unit.Default);
     }
 
     public void InitializeComponent()
