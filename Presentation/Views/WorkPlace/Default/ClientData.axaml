@@ -43,7 +43,6 @@
             <TextBlock
                 FontSize="{StaticResource SubTitleTextSize}"
                 Foreground="{StaticResource Header2TextColor}"
-
                 Text="Дата рождения" />
         </Border>
         <TextBlock
@@ -58,11 +57,11 @@
                 Foreground="{StaticResource Header2TextColor}"
                 Text="Жалобы" />
         </Border>
-        <TextBlock
-            Height="200"
-            FontSize="{StaticResource TextSize}"
-            Text="{Binding SelectedClient.Complaints}" />
-
+        <ScrollViewer Height="200">
+            <TextBlock
+                FontSize="{StaticResource TextSize}"
+                Text="{Binding SelectedClient.Complaints}" />
+        </ScrollViewer>
         <Border Background="{StaticResource Header2Color}" CornerRadius="5">
             <TextBlock FontSize="{StaticResource SubTitleTextSize}"
                        Foreground="{StaticResource Header2TextColor}"

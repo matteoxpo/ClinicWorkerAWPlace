@@ -104,7 +104,7 @@
                             Content="Записать пациента" />
 
 
-                    <Grid ColumnDefinitions="2*,3*">
+                    <Grid ColumnDefinitions="2*, Auto,3*">
                         <StackPanel Grid.Column="0" Spacing="3">
                             <Border Background="{StaticResource Header2Color}" CornerRadius="5">
                                 <TextBlock
@@ -123,7 +123,11 @@
                                 SelectedItem="{Binding SelectedAnalyses}"
                                 Items="{Binding Analyses}" />
                         </StackPanel>
-                        <StackPanel Grid.Column="1" Orientation="Vertical" Spacing="10">
+
+                        <Border Grid.Column="1" Width="3" Background="{StaticResource CardColor}" />
+
+                        
+                        <StackPanel Grid.Column="2" Orientation="Vertical" Spacing="10">
                             <Border Background="{StaticResource Header2Color}" CornerRadius="5">
                                 <TextBlock
                                     FontSize="{StaticResource SubTitleTextSize}"
