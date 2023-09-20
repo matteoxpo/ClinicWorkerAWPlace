@@ -1,5 +1,7 @@
+using System;
 using Domain.Entities.People;
 using Domain.Entities.Roles;
+using Domain.Entities.Roles.Doctor;
 using Domain.Repositories;
 
 namespace Domain.UseCases;
@@ -81,8 +83,12 @@ public class UserEmployeeInteractor
     {
         var user = Get(login);
         foreach (var job in user.JobTitles)
-            if (job.GetType() == typeof(Doctor))
+        {
+            if (job is Doctor)
+            {
                 return true;
+            }
+        }
 
         return false;
     }

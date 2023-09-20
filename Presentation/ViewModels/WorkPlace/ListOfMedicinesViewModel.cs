@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Data.Repositories;
 using Domain.Entities;
+using Domain.Entities.Roles.Doctor;
 using Domain.UseCases;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;

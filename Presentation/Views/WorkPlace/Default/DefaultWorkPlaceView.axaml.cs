@@ -6,6 +6,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using Avalonia.ReactiveUI;
 using Domain.Entities;
+using Domain.Entities.Roles.Doctor;
 using Presentation.ViewModels.WorkPlace.Default;
 using ReactiveUI;
 

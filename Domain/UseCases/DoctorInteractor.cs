@@ -1,6 +1,7 @@
 ﻿using Domain.Entities;
 using Domain.Entities.People;
 using Domain.Entities.Roles;
+using Domain.Entities.Roles.Doctor;
 using Domain.Repositories;
 
 namespace Domain.UseCases;
@@ -52,7 +53,7 @@ public class DoctorInteractor
         {
             if (!doc.Login.Equals(login)) continue;
             return new Doctor(doc.Category, doc.Speciality, _appointmentInteractor.GetDoctorsAppointments(doc),
-                doc.Login);
+                doc.Login, doc.ID);
         }
 
         throw new DoctorEmployeeException(DoctorEmployeeException.NotFound);

@@ -1,6 +1,7 @@
 using System.Reactive.Linq;
 using Data.Models.Roles;
 using Domain.Entities.Roles;
+using Domain.Entities.Roles.Doctor;
 using Domain.Repositories;
 
 namespace Data.Repositories;
@@ -38,7 +39,8 @@ public class DoctorRepository : BaseRepository<Doctor, DoctorStorageModel>, IDoc
                 doctor.Category,
                 doctor.Speciality,
                 _appointmentRepository.ReadByDoctor(doctor),
-                doctor.Login)
+                doctor.Login,
+                doctor.ID)
             );
     }
 

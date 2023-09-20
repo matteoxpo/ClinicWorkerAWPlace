@@ -3,41 +3,41 @@ using Domain.Entities.Roles;
 
 namespace Domain.Entities.People;
 
-public class UserEmployee
+public class UserEmployee : Human
 {
-    public UserEmployee(string name, string surname, string login, string password, IEnumerable<JobTitle> jobTitles,
-        DateTime dateOfBirth)
+    public UserEmployee(
+        string name, 
+        string surname,
+        string patronymicName,
+        DateTime dateOfBirth, 
+        Sex sex,
+        string login,
+        string password,
+        IEnumerable<JobTitle> jobTitles ) : base(name, surname, patronymicName, dateOfBirth, sex)
     {
-        Name = new string(name);
-        Surname = new string(surname);
-        DateOfBirth = dateOfBirth;
         Login = new string(login);
         Password = new string(password);
         JobTitles = new List<JobTitle>(jobTitles);
     }
-    public UserEmployee(string name, string surname, string login, string password,
-        DateTime dateOfBirth)
+
+    // public UserEmployee(string name, string surname,string patronymicName, string login, string password)
+    // {
+    //     Login = new string(login);
+    //     Password = new string(password);
+    //     JobTitles = new List<JobTitle>();
+    // }
+    public UserEmployee(UserEmployee employee) 
+        : base(employee.Name, 
+            employee.Surname, 
+            employee.PatronymicName, 
+            employee.DateOfBirth, 
+            employee.Sex)
     {
-        Name = new string(name);
-        Surname = new string(surname);
-        DateOfBirth = dateOfBirth;
-        Login = new string(login);
-        Password = new string(password);
-        JobTitles = new List<JobTitle>();
-    }
-    public UserEmployee(UserEmployee employee)
-    {
-        Name = new string(employee.Name);
-        Surname = new string(employee.Surname);
-        DateOfBirth = employee.DateOfBirth;
         Login = new string(employee.Login);
         Password = new string(employee.Password);
         JobTitles = new List<JobTitle>(employee.JobTitles);
     }
     
-    public string Name { get; }
-    public string Surname { get; }
-    public DateTime DateOfBirth { get; }
     public string Login { get; }
     public string Password { get; }
 

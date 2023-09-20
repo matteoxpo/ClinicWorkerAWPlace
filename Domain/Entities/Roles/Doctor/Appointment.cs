@@ -1,4 +1,4 @@
-namespace Domain.Entities;
+namespace Domain.Entities.Roles.Doctor;
 
 public class Appointment
 {

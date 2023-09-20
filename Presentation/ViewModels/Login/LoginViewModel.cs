@@ -12,7 +12,7 @@ using ReactiveUI.Fody.Helpers;
 
 namespace Presentation.ViewModels.Login;
 
-public class LoginViewModel : ReactiveObject, IRoutableViewModel
+public class LoginViewModel : ViewModelBase, IRoutableViewModel
 {
     private readonly UserEmployeeInteractor _userEmployeeInteractor;
 
@@ -40,22 +40,30 @@ public class LoginViewModel : ReactiveObject, IRoutableViewModel
     {
         try
         {
-            if (UserLogin is null) throw new LoginViewModelException("Не введен логин");
-            if (UserPassword is null) throw new LoginViewModelException("Не пароль");
-
-
+            if (UserLogin is null)
+            {
+                throw new LoginViewModelException("Не введен логин");
+            }
+            if (UserPassword is null)
+            {
+                throw new LoginViewModelException("Не пароль");
+            }
             if (_userEmployeeInteractor.Authorization(UserLogin!, UserPassword!))
+            {
                 await HostScreen.Router.Navigate.Execute(new WorkPlaceViewModel(HostScreen, UserLogin!));
+            }
+        }
+        catch (LoginViewModelException e)
+        {
+            await ShowExceptionMessageBox(e);
+        }
+        catch (UserEmployeeException e)
+        {
+            await ShowExceptionMessageBox(e);
         }
         catch (Exception e)
         {
-            var messageBoxStandardWindow = MessageBoxManager.GetMessageBoxStandardWindow(
-                new MessageBoxStandardParams
-                {
-                    ContentTitle = "Ошибка авторизации",
-                    ContentMessage = e.Message
-                });
-            await messageBoxStandardWindow.Show();
+            await ShowUncatchedExceptionMessageBox(e);
         }
     }
 }

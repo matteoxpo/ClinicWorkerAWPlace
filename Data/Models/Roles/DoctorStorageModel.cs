@@ -1,6 +1,7 @@
 using System.Text.Json.Serialization;
 using Domain.Entities;
 using Domain.Entities.Roles;
+using Domain.Entities.Roles.Doctor;
 
 namespace Data.Models.Roles;
 
@@ -9,14 +10,14 @@ public class DoctorStorageModel : JobTitleSotrageModel, IConverter<Doctor, Docto
 {
     public DoctorStorageModel(Qualifications category, IEnumerable<string> speciality,
         IEnumerable<Appointment> appointments,
-        string userLogin) : base(userLogin)
+        string userLogin, uint id) : base(userLogin, id)
     {
         Category = category;
         Speciality = new List<string>(speciality);
         Appointments = new List<Appointment>(appointments);
     }
 
-    public DoctorStorageModel() : base("Login")
+    public DoctorStorageModel() : base("Login", 0)
     {
         Category = Qualifications.FirstCategory;
         Speciality = new List<string>();
@@ -29,11 +30,11 @@ public class DoctorStorageModel : JobTitleSotrageModel, IConverter<Doctor, Docto
 
     public Doctor ConvertToEntity(DoctorStorageModel entity)
     {
-        return new Doctor(entity.Category, entity.Speciality, entity.Appointments, entity.Login);
+        return new Doctor(entity.Category, entity.Speciality, entity.Appointments, entity.Login, entity.ID);
     }
 
     public DoctorStorageModel ConvertToStorageEntity(Doctor entity)
     {
-        return new DoctorStorageModel(entity.Category, entity.Speciality, entity.Appointments, entity.Login);
+        return new DoctorStorageModel(entity.Category, entity.Speciality, entity.Appointments, entity.Login, entity.ID);
     }
 }

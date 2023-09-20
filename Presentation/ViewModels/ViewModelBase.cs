@@ -14,8 +14,7 @@ public class ViewModelBase : ReactiveObject
             new MessageBoxStandardParams
             {
                 ContentTitle = "Ошибка",
-                ContentMessage = "Не обработанная ошибка, обратитесь, пожалуйста в поддержку" +
-                                 "\ndoc.crm.help@awp.com" + $"\n{ex.Message}"
+                ContentMessage = "Не обработанная ошибка, обратитесь, пожалуйста в поддержку doc.crm.help@awp.com" + $"{ex.Message}"
             });
         await messageBoxStandardWindow.Show();
     }

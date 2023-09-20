@@ -1,11 +1,22 @@
 using System.Text.Json.Serialization;
+using Domain.Entities.Roles.Doctor;
 
 namespace Domain.Entities.People;
 
-public class Client
+public class Client : Human
 {
-    public Client(string name, string surname, DateTime birthTime,  string id, IEnumerable<ReferenceForAnalysis>? analyses = null,
-        IEnumerable<Appointment>? appointments = null, string? complaints = null, DateTime? meetTime = null)
+    public Client(
+        string name, 
+        string surname,
+        string patronymicName, 
+        DateTime birthTime,
+        Sex sex,
+        string id, 
+        IEnumerable<ReferenceForAnalysis>? analyses = null,
+        IEnumerable<Appointment>? appointments = null,
+        string? complaints = null,
+        DateTime? meetTime = null)
+        : base(name, surname, patronymicName, birthTime, sex)
     {
         MeetTime = meetTime ?? new DateTime();
         Name = new string(name);

@@ -1,5 +1,6 @@
 ﻿using Domain.Entities.People;
 using Domain.Entities.Roles;
+using Domain.Entities.Roles.Doctor;
 using Domain.Repositories;
 
 namespace Domain.UseCases;

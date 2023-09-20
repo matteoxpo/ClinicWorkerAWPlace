@@ -1,6 +1,7 @@
 using System.Globalization;
 using System.Reactive;
 using Domain.Entities;
+using Domain.Entities.Roles.Doctor;
 using ReactiveUI;
 
 namespace Presentation.ViewModels.WorkPlace.Default;
