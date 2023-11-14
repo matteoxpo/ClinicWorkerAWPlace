@@ -5,7 +5,7 @@ using Avalonia.ReactiveUI;
 using Data.Repositories;
 using Domain.Entities;
 using Domain.Entities.People;
-using Domain.Entities.Roles;
+using Domain.Entities.Role;
 
 namespace Presentation;
 
@@ -61,7 +61,7 @@ internal class Program
         //     );
         // }
 
-     
+
     }
 
     // Avalonia configuration, don't remove; also used by visual designer.

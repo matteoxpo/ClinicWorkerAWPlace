@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 using Domain.Entities.People;
-using Domain.Entities.Roles;
+using Domain.Entities.Role;
 
 namespace Data.Models.People;
 

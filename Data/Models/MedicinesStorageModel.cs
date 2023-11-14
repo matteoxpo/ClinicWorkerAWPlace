@@ -1,5 +1,5 @@
 using Data.Models;
-using Domain.Entities.Roles.Doctor;
+using Domain.Entities.Role.Doctor;
 
 namespace Domain.Entities;
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Data.Repositories;
 using Domain.Entities;
 using Domain.Entities.People;
-using Domain.Entities.Roles.Doctor;
+using Domain.Entities.Role.Doctor;
 using Domain.UseCases;
 using DynamicData;
 using ReactiveUI;

@@ -1,7 +1,7 @@
 using System.Reactive.Linq;
 using Data.Models.People;
 using Domain.Entities.People;
-using Domain.Entities.Roles;
+using Domain.Entities.Role;
 using Domain.Repositories;
 
 namespace Data.Repositories;
@@ -53,7 +53,7 @@ public class UserEmployeeRepository : BaseRepository<UserEmployee, UserEmployeeS
 
         foreach (var employee in employees)
         {
-            var jobs = new List<JobTitle>();
+            var jobs = new List<UserRole>();
             jobs.AddRange(_doctorRepository.Read().Where(d => d.Login.Equals(employee.Login)));
             jobs.AddRange(_adminRepository.Read().Where(d => d.Login.Equals(employee.Login)));
             userEmployees.Add(new UserEmployee(

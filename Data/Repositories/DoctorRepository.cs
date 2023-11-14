@@ -1,7 +1,7 @@
 using System.Reactive.Linq;
 using Data.Models.Roles;
-using Domain.Entities.Roles;
-using Domain.Entities.Roles.Doctor;
+using Domain.Entities.Role;
+using Domain.Entities.Role.Doctor;
 using Domain.Repositories;
 
 namespace Data.Repositories;

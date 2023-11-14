@@ -1,5 +1,5 @@
-using Domain.Entities.Roles;
-using Domain.Entities.Roles.Admin;
+using Domain.Entities.Role;
+using Domain.Entities.Role.Admin;
 using Domain.Repositories;
 
 namespace Data.Repositories;

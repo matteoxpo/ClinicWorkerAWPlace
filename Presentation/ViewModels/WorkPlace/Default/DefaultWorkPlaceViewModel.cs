@@ -9,8 +9,8 @@ using System.Threading.Tasks;
 using Data.Repositories;
 using Domain.Entities;
 using Domain.Entities.People;
-using Domain.Entities.Roles;
-using Domain.Entities.Roles.Doctor;
+using Domain.Entities.Role;
+using Domain.Entities.Role.Doctor;
 using Domain.UseCases;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
@@ -65,9 +65,9 @@ public class DefaultWorkPlaceViewModel : ViewModelBase, IRoutableViewModel, IAct
         UpdateDoctorClients(login);
 
         ShowAdditionPatient = new Interaction<AdditionPatientViewModel, Appointment?>();
-        
+
         ShowAnalysisResult = new Interaction<AnalysisResultViewModel, Unit>();
-        
+
 
         OpenAddingExtraAppointment = ReactiveCommand.CreateFromTask(OnAddExtraAppointment);
 
@@ -79,7 +79,7 @@ public class DefaultWorkPlaceViewModel : ViewModelBase, IRoutableViewModel, IAct
 
         ShowTodayClients = ReactiveCommand.Create(SetTodaysClientsToShow);
 
-   
+
 
         SetTodaysClientsToShow();
 
@@ -90,7 +90,7 @@ public class DefaultWorkPlaceViewModel : ViewModelBase, IRoutableViewModel, IAct
         SelectedAnalysesTime = new string($"ЧЧ:мм ч.{DateTime.Today.Month}.{DateTime.Today.Year}");
     }
 
-  
+
     private string Login { get; }
     public ReactiveCommand<Unit, Unit> ShowAllClients { get; }
     public ReactiveCommand<Unit, Unit> ShowTodayClients { get; }
@@ -100,7 +100,7 @@ public class DefaultWorkPlaceViewModel : ViewModelBase, IRoutableViewModel, IAct
     public ReactiveCommand<Unit, Unit> OpenAddingExtraAppointment { get; }
     public ReactiveCommand<Unit, Unit> AddAnalysis { get; }
     public ReactiveCommand<Unit, Unit> OpenShowAnalysisResult { get; }
-    
+
 
 
     public IEnumerable<Analysis> Analyses { get; }
@@ -146,7 +146,7 @@ public class DefaultWorkPlaceViewModel : ViewModelBase, IRoutableViewModel, IAct
             this.RaiseAndSetIfChanged(ref _selectedClientAnalys, value);
         }
     }
-    [Reactive] public bool IsAnalyzisSelected { get; set;}
+    [Reactive] public bool IsAnalyzisSelected { get; set; }
 
     private async Task OnAddAnalysis()
     {
@@ -211,7 +211,7 @@ public class DefaultWorkPlaceViewModel : ViewModelBase, IRoutableViewModel, IAct
         }
     }
 
-    
+
     private async Task OnAddExtraAppointment()
     {
         try

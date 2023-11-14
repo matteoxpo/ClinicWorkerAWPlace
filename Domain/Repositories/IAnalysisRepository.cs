@@ -1,5 +1,5 @@
 using Domain.Entities;
-using Domain.Entities.Roles.Doctor;
+using Domain.Entities.Role.Doctor;
 
 namespace Domain.Repositories;
 

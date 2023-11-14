@@ -1,6 +1,6 @@
 using Data.Models;
 
-namespace Domain.Entities.Roles;
+namespace Domain.Entities.Role;
 
 public class AdminStorageModel : JobTitleSotrageModel, IConverter<Admin.Admin, AdminStorageModel>
 {

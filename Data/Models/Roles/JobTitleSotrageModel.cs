@@ -1,8 +1,8 @@
 using Data.Models;
 
-namespace Domain.Entities.Roles;
+namespace Domain.Entities.Role;
 
-public abstract class JobTitleSotrageModel 
+public abstract class JobTitleSotrageModel
 {
     public JobTitleSotrageModel(string login, uint id)
     {
