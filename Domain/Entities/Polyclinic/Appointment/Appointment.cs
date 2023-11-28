@@ -2,7 +2,7 @@ using Domain.Entities.Polyclinic.Building;
 
 namespace Domain.Entities.Polyclinic.Appointment;
 
-public class Appointment
+public sealed class Appointment
 {
     public uint? FromDoctorID { get; } = null;
     public uint DoctorID { get; }

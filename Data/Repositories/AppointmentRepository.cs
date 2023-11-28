@@ -24,7 +24,7 @@ public class AppointmentRepository : BaseRepository<Appointment, AppointmentStor
         Remove(oldAppointment);
     }
 
-    public void Add(Appointment newAppointment)
+    public void Create(Appointment newAppointment)
     {
         Append(newAppointment);
     }

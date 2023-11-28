@@ -1,6 +1,6 @@
 namespace Domain.Entities.Polyclinic.Analysis;
 
-public class Analysis
+public sealed class Analysis
 {
     public string Type { get; }
 

@@ -32,6 +32,27 @@ public class Human
         Benefits = benefits ?? new List<Benefit>();
     }
 
+    public void AddContact(ICollection<Contact> contacts)
+    {
+        foreach (var contact in contacts)
+        {
+            if (Contact.Contains(contact))
+            {
+                throw new ContactException("This contact is already in contacts");
+            }
+        }
+        Contact.Concat(contacts);
+    }
+
+    public void AddContact(Contact contact)
+    {
+        if (Contact.Contains(contact))
+        {
+            throw new ContactException("This contact is already in contacts");
+        }
+        Contact.Add(contact);
+    }
+
     public uint ID { get; }
     public ICollection<Contact> Contact { get; set; }
     public ICollection<Education> Education { get; set; }

@@ -23,7 +23,7 @@ public class ReferenceForAnalysisRepository : BaseRepository<ReferenceForAnalysi
         Remove(oldEntity);
     }
 
-    public void Add(ReferenceForAnalysis newEntity)
+    public void Create(ReferenceForAnalysis newEntity)
     {
         Append(newEntity);
     }

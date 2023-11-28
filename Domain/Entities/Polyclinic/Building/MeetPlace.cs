@@ -3,7 +3,7 @@ using System.Security.Cryptography.X509Certificates;
 namespace Domain.Entities.Polyclinic.Building;
 
 
-public class MeetPlace
+public sealed class MeetPlace
 {
     public Cabinet Cabinet { get; }
     public Polyclinic Polyclinic { get; }
@@ -34,12 +34,13 @@ public class MeetPlace
         Polyclinic = polyclinic;
         foreach (var cabinet in polyclinic.Cabinets)
         {
-            if (cabinet.ID == cabinetID))
+            if (cabinet.ID == cabinetID)
             {
                 Cabinet = cabinet;
+                return;
             }
-            return;
         }
+
         throw new MeetPlaceException($"Cant find cabinet with ID {cabinetID} in polyclininc:[Address{polyclinic.Address} ID:{polyclinic.ID}]");
     }
 

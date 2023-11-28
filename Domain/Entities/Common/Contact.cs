@@ -1,7 +1,7 @@
 
 namespace Domain.Common;
 
-public class Contact
+public sealed class Contact
 {
     public string? Email { get; set; }
     public string? PhoneNumber { get; set; }
@@ -13,4 +13,9 @@ public class Contact
         Email = email;
         ID = id;
     }
+}
+
+public class ContactException : Exception
+{
+    public ContactException(string message) : base(message) { }
 }

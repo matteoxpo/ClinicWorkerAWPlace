@@ -2,12 +2,16 @@ namespace Domain.Entities.App.Role.Employees;
 
 public class Employee : UserRole
 {
-    public Employee(string login, uint id, decimal salaryPerHour, DateTime dateOfEmployment) : base(login, id)
+    public Employee(string login, uint id, decimal salaryPerHour, DateTime dateOfEmployment, string[]? workExperiencePlaces, int workExpirienceYearsOtherPlaces) : base(login, id)
     {
         SalaryPerHour = salaryPerHour;
         DateOfEmployment = dateOfEmployment;
+        WorkExperiencePlaces = workExperiencePlaces;
+        WorkExpirienceYearsOtherPlaces = workExpirienceYearsOtherPlaces;
     }
     public DateTime DateOfEmployment { get; }
+    public string[]? WorkExperiencePlaces { get; }
+    public int WorkExpirienceYearsOtherPlaces { get; }
     public int GetWorkExpirienceYears()
     {
         var currentDate = DateTime.Now;
@@ -24,5 +28,4 @@ public class Employee : UserRole
     public int WorkedHoursThisMonth { get; private set; }
 
     public void IncrementWorkedHours() { WorkedHoursThisMonth++; }
-
 }

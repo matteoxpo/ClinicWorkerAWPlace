@@ -2,7 +2,7 @@ using Domain.Common;
 
 namespace Domain.Entities.Polyclinic.Building;
 
-public class Polyclinic
+public sealed class Polyclinic
 {
     public Address Address { get; }
 

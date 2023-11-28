@@ -22,7 +22,7 @@ public class AdminRepository : BaseRepository<Admin, AdminStorageModel>, IAdminR
         Remove(oldEntity);
     }
 
-    public void Add(Admin newEntity)
+    public void Create(Admin newEntity)
     {
         Append(newEntity);
     }

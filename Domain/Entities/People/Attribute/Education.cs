@@ -1,6 +1,6 @@
 namespace Domain.Entities.People.Attribute;
 
-public class Education
+public sealed class Education
 {
     public string Serial { get; set; }
     public string Number { get; set; }

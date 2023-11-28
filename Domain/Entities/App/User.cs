@@ -31,7 +31,7 @@ public class User : Human
     {
         Login = login ?? throw new NullReferenceException("Login is null");
         _password = password ?? throw new NullReferenceException("Password is null");
-        UserRoles = roles ?? throw new NullReferenceException("User roles is null");
+        Roles = roles ?? throw new NullReferenceException("User roles is null");
     }
 
     public void SetPassword(string newPassword, IPasswordValidator validator)
@@ -52,5 +52,5 @@ public class User : Human
 
     public string Login { get; }
 
-    public ICollection<UserRole> UserRoles { get; }
+    public ICollection<UserRole> Roles { get; }
 }

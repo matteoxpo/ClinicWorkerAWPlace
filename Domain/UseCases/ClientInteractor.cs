@@ -25,7 +25,7 @@ public class ClientInteractor
             if (_clientRepository.CompareEntities(client, newClient))
                 throw new ClientException(ClientException.ClientIsAlreadyInBase);
 
-        _clientRepository.Add(newClient);
+        _clientRepository.Create(newClient);
     }
 
     public IEnumerable<Client> Get(string name, string surname)

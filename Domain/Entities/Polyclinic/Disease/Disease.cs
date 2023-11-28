@@ -1,7 +1,7 @@
 namespace Domain.Entities.Polyclinic.Disease;
 
 
-public class Disease
+public sealed class Disease
 {
     public string Name { get; }
 

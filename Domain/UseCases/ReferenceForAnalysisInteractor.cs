@@ -29,7 +29,7 @@ public class ReferenceForAnalysisInteractor
         if (Read().Any(analysis => analysis.Analysis.Equals(referenceForAnalysis.Analysis) &&
                                    analysis.AnalysisTime.Equals(referenceForAnalysis.AnalysisTime)))
             throw new ReferenceForAnalysisInteractorException("В это время уже сдают анализы");
-        _referenceForAnalysisRepository.Add(referenceForAnalysis);
+        _referenceForAnalysisRepository.Create(referenceForAnalysis);
     }
 }
 

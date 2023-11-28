@@ -1,7 +1,7 @@
 
 namespace Domain.Entities.People.Attribute;
 
-public class MedicalPolicy
+public sealed class MedicalPolicy
 {
     public string Serial { get; }
 

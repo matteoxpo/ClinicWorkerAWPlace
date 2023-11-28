@@ -1,6 +1,6 @@
 namespace Domain.Entities.Polyclinic.Building;
 
-public class Cabinet
+public sealed class Cabinet
 {
     public Cabinet(string number, string description, uint id)
     {

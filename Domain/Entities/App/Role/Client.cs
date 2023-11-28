@@ -2,9 +2,9 @@ using Domain.Entities.Polyclinic.Appointment;
 using Domain.Entities.Polyclinic.Disease;
 using Domain.Entities.Polyclinic.Treatment;
 
-namespace Domain.Entities.App.Role.Employees;
+namespace Domain.Entities.App.Role;
 
-public class Client : UserRole
+public sealed class Client : UserRole
 {
     public Client(string login, uint id, ICollection<TreatmentCourse> treatmentCourses, ICollection<Appointment> appointments) : base(login, id)
     {
@@ -25,7 +25,6 @@ public class Client : UserRole
 
     public void AddTreatmentCourse(TreatmentCourse course)
     {
-        // ?????
         if (course.ClientID != ID)
         {
             throw new ArgumentException($"New yreatment course client ID:{course.ClientID} is not equal current CLient ID:{ID}");
@@ -35,9 +34,7 @@ public class Client : UserRole
 
     public ICollection<(ICollection<Disease>, DateTime)> GetDiseasesHistory()
     {
-        var diseases = new List<
-        (ICollection<Disease>, DateTime)
-        >();
+        var diseases = new List<(ICollection<Disease>, DateTime)>();
         foreach (var course in TreatmentCourses)
         {
             diseases.Add(course.LastDiagnoses());

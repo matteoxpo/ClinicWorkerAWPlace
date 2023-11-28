@@ -23,7 +23,7 @@ public class AnalysisRepository : BaseRepository<Analysis, AnalysisStorageModel>
         Remove(oldEntity);
     }
 
-    public void Add(Analysis newEntity)
+    public void Create(Analysis newEntity)
     {
         Append(newEntity);
     }

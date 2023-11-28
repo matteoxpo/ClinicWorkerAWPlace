@@ -33,7 +33,7 @@ public class ClientRepository : BaseRepository<Client, ClientStorageModel>, ICli
         Remove(newClient);
     }
 
-    public void Add(Client newClient)
+    public void Create(Client newClient)
     {
         Append(newClient);
     }

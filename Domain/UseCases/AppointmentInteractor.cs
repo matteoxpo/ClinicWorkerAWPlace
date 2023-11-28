@@ -44,7 +44,7 @@ internal class AppointmentInteractor
                 throw new AppointmentException(AppointmentException.BusyClientTime);
         }
 
-        _appointmentRepository.Add(appointment);
+        _appointmentRepository.Create(appointment);
     }
 
 

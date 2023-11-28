@@ -36,7 +36,7 @@ public class UserEmployeeRepository : BaseRepository<UserEmployee, UserEmployeeS
         Remove(oldUserEmployee);
     }
 
-    public void Add(UserEmployee newUserEmployee)
+    public void Create(UserEmployee newUserEmployee)
     {
         Append(newUserEmployee);
     }

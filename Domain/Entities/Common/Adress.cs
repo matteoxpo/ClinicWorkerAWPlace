@@ -1,6 +1,6 @@
 ﻿namespace Domain.Common;
 
-public class Address
+public sealed class Address
 {
     public string Street { get; set; }
     public string City { get; set; }

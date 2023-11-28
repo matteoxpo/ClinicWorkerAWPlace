@@ -1,6 +1,6 @@
 namespace Domain.Entities.Polyclinic.Analysis;
 
-public class ReferralForAnalysis
+public sealed class ReferralForAnalysis
 {
 
     public ReferralForAnalysis(Analysis analysis, uint clientID, uint doctorID, DateTime date, uint iD, string? description = null)

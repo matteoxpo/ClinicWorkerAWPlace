@@ -27,7 +27,7 @@ public class DoctorRepository : BaseRepository<Doctor, DoctorStorageModel>, IDoc
         Remove(oldEntity);
     }
 
-    public void Add(Doctor newEntity)
+    public void Create(Doctor newEntity)
     {
         Append(newEntity);
     }

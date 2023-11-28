@@ -22,7 +22,7 @@ public class MedicinesRepository : BaseRepository<Medicines, MedicinesStorageMod
         Remove(oldEntity);
     }
 
-    public void Add(Medicines newEntity)
+    public void Create(Medicines newEntity)
     {
         Append(newEntity);
     }
