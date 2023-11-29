@@ -4,6 +4,7 @@ public interface IBaseRepository<T, ID> : IReadale<T, ID>, IUpdatable<T>, IDelet
 
 public interface IReadale<T, Key>
 {
+    ICollection<T> Read(ICollection<Key> key);
     ICollection<T> Read(Key key);
 }
 
