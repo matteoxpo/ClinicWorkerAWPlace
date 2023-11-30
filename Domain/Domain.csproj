@@ -6,8 +6,10 @@
         <RootNamespace>Domain</RootNamespace>
     </PropertyGroup>
     <ItemGroup>
-        <Reference Include="System.Reactive">
+        <PackageReference Include="System.Reactive" Version="5.0.0" />
+
+        <!-- <Reference Include="System.Reactive">
             <HintPath>..\..\..\.nuget\packages\system.reactive\5.0.0\lib\net5.0\System.Reactive.dll</HintPath>
-        </Reference>
+        </Reference> -->
     </ItemGroup>
 </Project>

@@ -14,9 +14,9 @@ public class Human
                  Sex sex,
                  uint id,
                  MedicalPolicy policy,
-                 ICollection<Contact>? contact = null,
-                 ICollection<Education>? education = null,
-                 ICollection<Benefit>? benefits = null)
+                 ICollection<Contact> contacts,
+                 ICollection<Education>? education,
+                 ICollection<Benefit>? benefits)
     {
         DateOfBirth = dateOfBirth;
         PatronymicName = new string(patronymicName) ?? throw new NullReferenceException("PatronymicName is null");
@@ -27,7 +27,7 @@ public class Human
         ID = id;
         Policy = policy ?? throw new NullReferenceException("MedPolicy is null");
 
-        Contact = contact ?? new List<Contact>();
+        Contact = contacts ?? new List<Contact>();
         Education = education ?? new List<Education>();
         Benefits = benefits ?? new List<Benefit>();
     }

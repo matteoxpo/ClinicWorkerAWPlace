@@ -1,16 +1,33 @@
+using Domain.Common;
+using Domain.Entities.People.Attribute;
 using Domain.Entities.Polyclinic.Appointment;
 using Domain.Entities.Polyclinic.Disease;
 using Domain.Entities.Polyclinic.Treatment;
 
 namespace Domain.Entities.App.Role;
 
-public sealed class Client : UserRole
+public sealed class Client : User
 {
-    public Client(string login, uint id, ICollection<TreatmentCourse> treatmentCourses, ICollection<Appointment> appointments) : base(login, id)
+    public Client(string login,
+                  string password,
+                  string name,
+                  string surname,
+                  string patronymicName,
+                  Address address,
+                  DateTime dateOfBirth,
+                  Sex sex,
+                  uint id,
+                  MedicalPolicy policy,
+                  ICollection<Contact> contacts,
+                  ICollection<Education>? education,
+                  ICollection<Benefit>? benefits,
+                  ICollection<Appointment> appointments,
+                  ICollection<TreatmentCourse> treatmentCourses) : base(login, password, name, surname, patronymicName, address, dateOfBirth, sex, id, policy, contacts, education, benefits)
     {
-        TreatmentCourses = treatmentCourses;
         Appointments = appointments;
+        TreatmentCourses = treatmentCourses;
     }
+
     public ICollection<Appointment> Appointments { get; }
     public ICollection<TreatmentCourse> TreatmentCourses { get; private set; }
 

@@ -1,6 +1,12 @@
 
 namespace Domain.Common;
 
+public enum ContactType
+{
+    Email,
+    PhoneNumber,
+}
+
 public sealed class Contact
 {
     public string? Email { get; set; }

@@ -1,10 +1,13 @@
 using Domain.Entities.App.Role;
-using Domain.Repositories.Polyclinic;
+using Domain.Entities.Polyclinic.Analysis;
+using Domain.Entities.Polyclinic.Appointment;
 
 namespace Domain.Repositories.App.Role;
 
-public interface IClientRepostory<ID> : IBaseRepository<Client, ID>
+public interface IClientRepository<ID> : IUserRepository<Client, ID>
 {
-    IAppoinmentRepository<ID> _appoinmentRepository { get; }
-    ITreatmentCourseRepositrory<ID> _treatmentCourseRepositrory { get; }
+    public ICollection<Appointment> GetAppointments(ID id);
+    public ICollection<Appointment> GetAppointments(string login);
+    public ICollection<ReferralForAnalysis> GetReferralForAnalyses(string login);
+    public ICollection<ReferralForAnalysis> GetReferralForAnalyses(ID id);
 }

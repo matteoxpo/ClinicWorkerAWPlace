@@ -1,13 +1,19 @@
 using Domain.Entities.App;
-using Domain.Entities.App.Role;
-using Domain.Repositories.App.Role;
-using Domain.Repositories.App.Role.Employees;
 
 namespace Domain.Repositories.App;
 
-public interface IUserRepository<ID> : IBaseRepository<User, ID>
+
+public interface IUserRepository<UserType, ID> : IUpdatable<UserType>, IDeletable<UserType>, IComparable<UserType> where UserType : User
 {
-    IObservable<User> ObserveByLogin(string loging);
-    IClientRepostory<ID> _clientRepostory { get; }
-    IEmployeeRepository<ID> _employeeRepository { get; }
+    UserType Read(string login, string password);
+    public void Delete(string login, string password);
+    public void Delete(ID id, string password);
+    public void ResetPassword(string loging, string password, string newPassword);
+    public void ResetPassword(ID id, string password, string newPassword);
+    public Type GetUserSessionType() => typeof(UserType);
+}
+
+public class UserRepositoryException : Exception
+{
+    public UserRepositoryException(string message) : base(message) { }
 }
