@@ -3,12 +3,32 @@ using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Data.Repositories;
+using Domain.Entities.App.Role;
 using Domain.Entities.People;
 using Domain.UseCases;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
 namespace Presentation.ViewModels.WorkPlace;
+
+
+public class ClientObserver : IObserver<Client>
+{
+    public void OnCompleted()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void OnError(Exception error)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void OnNext(Client value)
+    {
+        throw new NotImplementedException();
+    }
+}
 
 public class WorkPlaceProfileViewModel : ReactiveObject, IRoutableViewModel, IActivatableViewModel
 {

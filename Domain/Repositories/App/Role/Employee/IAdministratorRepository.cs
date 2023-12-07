@@ -1,6 +1,6 @@
 using Domain.Entities.App.Role;
 using Domain.Entities.App.Role.Employees;
 
-namespace Domain.Repositories.App.Role;
+namespace Domain.Repositories.App.Role.Employee;
 
 public interface IAdministratorRepository<ID> : IUserRepository<Administrator, ID> { }

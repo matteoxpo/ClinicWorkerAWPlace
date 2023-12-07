@@ -21,12 +21,14 @@ public class Employee : User
                     DateTime dateOfEmployment,
                     string[]? workExperiencePlaces,
                     int workExpirienceYearsOtherPlaces,
-                    ICollection<Benefit>? benefits) : base(login, password, name, surname, patronymicName, address, dateOfBirth, sex, id, policy, contacts, education, benefits)
+                    ICollection<Benefit>? benefits,
+                    string description) : base(login, password, name, surname, patronymicName, address, dateOfBirth, sex, id, policy, contacts, education, benefits)
     {
         SalaryPerHour = salaryPerHour;
         DateOfEmployment = dateOfEmployment;
         WorkExperiencePlaces = workExperiencePlaces;
         WorkExpirienceYearsOtherPlaces = workExpirienceYearsOtherPlaces;
+        Description = description;
     }
     public DateTime DateOfEmployment { get; }
     public string[]? WorkExperiencePlaces { get; }
@@ -45,6 +47,7 @@ public class Employee : User
     public decimal SalaryPerHour { get; set; }
 
     public int WorkedHoursThisMonth { get; private set; }
+    public string Description { get; }
 
     public void IncrementWorkedHours() { WorkedHoursThisMonth++; }
 }

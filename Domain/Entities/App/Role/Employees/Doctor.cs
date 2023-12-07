@@ -24,14 +24,10 @@ public sealed class Doctor : Employee
                   string[]? workExperiencePlaces,
                   int workExpirienceYearsOtherPlaces,
                   ICollection<Benefit>? benefits,
-                  ICollection<Appointment> appointments) : base(login, password, name, surname, patronymicName, address, dateOfBirth, sex, id, policy, contacts, education, salaryPerHour, dateOfEmployment, workExperiencePlaces, workExpirienceYearsOtherPlaces, benefits)
+                  string description,
+                  ICollection<Appointment> appointments) : base(login, password, name, surname, patronymicName, address, dateOfBirth, sex, id, policy, contacts, education, salaryPerHour, dateOfEmployment, workExperiencePlaces, workExpirienceYearsOtherPlaces, benefits, description)
     {
         Appointments = appointments;
     }
-
-    // public Doctor(string login, uint id, decimal salaryPerHour, DateTime dateOfEmployment, string[]? workExperiencePlaces, int workExpirienceYearsOtherPlaces, ICollection<Appointment> appointments) : base(login, id, salaryPerHour, dateOfEmployment, workExperiencePlaces, workExpirienceYearsOtherPlaces)
-    // {
-    //     Appointments = appointments;
-    // }
     public ICollection<Appointment> Appointments { get; set; }
 }

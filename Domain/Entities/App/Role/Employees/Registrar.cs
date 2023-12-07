@@ -23,7 +23,8 @@ public sealed class Registrar : Employee
                      DateTime dateOfEmployment,
                      string[]? workExperiencePlaces,
                      int workExpirienceYearsOtherPlaces,
-                     ICollection<Benefit>? benefits) : base(login, password, name, surname, patronymicName, address, dateOfBirth, sex, id, policy, contacts, education, salaryPerHour, dateOfEmployment, workExperiencePlaces, workExpirienceYearsOtherPlaces, benefits)
+                     string description,
+                     ICollection<Benefit>? benefits) : base(login, password, name, surname, patronymicName, address, dateOfBirth, sex, id, policy, contacts, education, salaryPerHour, dateOfEmployment, workExperiencePlaces, workExpirienceYearsOtherPlaces, benefits, description)
     {
     }
 }
