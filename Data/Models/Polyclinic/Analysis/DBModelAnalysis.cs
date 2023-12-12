@@ -1,10 +1,10 @@
-namespace Domain.Entities.Polyclinic.Analysis;
+namespace Data.Models.Polyclinic.Analysis;
 
-public sealed class Analysis
+public sealed class DBModelAnalysis
 {
     public string Type { get; }
 
-    public Analysis(string type, string description, string peculiarities, TimeSpan timeToTake, TimeSpan timeToPrepeare, int iD)
+    public DBModelAnalysis(string type, string description, string peculiarities, TimeSpan timeToTake, TimeSpan timeToPrepeare, int iD)
     {
         Type = type;
         Description = description;

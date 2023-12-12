@@ -1,17 +1,27 @@
 namespace Data.Models;
 
-public interface IConverter<TEntity, TStorageEntity> where TStorageEntity : new()
+public interface IDBConverter<TEntity, TStorageEntity> where TStorageEntity : new()
 {
-    public TEntity ConvertToEntity(TStorageEntity entity);
-    public TStorageEntity ConvertToStorageEntity(TEntity entity);
-
-    public IEnumerable<TStorageEntity> ConvertToStorageEntity(IEnumerable<TEntity> entities)
+    TEntity ConvertFromStorageEntity(TStorageEntity entity);
+    ICollection<TEntity> ConvertFromStorageEntity(IEnumerable<TStorageEntity> entities)
     {
-        return entities.Select(ConvertToStorageEntity);
+        var TEntities = new TEntity[entities.Count()];
+        foreach (var entity in entities)
+        {
+            TEntities.Append(ConvertFromStorageEntity(entity));
+        }
+        return TEntities;
     }
 
-    public IEnumerable<TEntity> ConvertToEntity(IEnumerable<TStorageEntity> entities)
+    TEntity ConvertFromEntity();
+    TStorageEntity ConvertFromEntity(TEntity entity);
+    ICollection<TStorageEntity> ConvertFromEntity(IEnumerable<TEntity> entities)
     {
-        return entities.Select(ConvertToEntity);
+        var TStorageEntities = new TStorageEntity[entities.Count()];
+        foreach (var entity in entities)
+        {
+            TStorageEntities.Append(ConvertFromEntity(entity));
+        }
+        return TStorageEntities;
     }
 }

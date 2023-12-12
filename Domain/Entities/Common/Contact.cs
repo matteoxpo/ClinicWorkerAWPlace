@@ -1,5 +1,5 @@
 
-namespace Domain.Common;
+namespace Domain.Entities.Common;
 
 public enum ContactType
 {
@@ -11,7 +11,7 @@ public sealed class Contact
 {
     public string? Email { get; set; }
     public string? PhoneNumber { get; set; }
-    private uint ID { get; set; }
+    public uint ID { get; }
 
     public Contact(string? phoneNumber, string? email, uint id)
     {

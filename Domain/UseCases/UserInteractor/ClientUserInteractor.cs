@@ -23,38 +23,38 @@ public sealed class ClientUserInteractor<ID>
         _clientsSubject = new BehaviorSubject<IEnumerable<Client>>(new List<Client>());
         ClientsObservable = _clientsSubject.AsObservable();
     }
-    public void AddAppointment(string login, Appointment newAppointment)
-    {
-        //TODO: validate time
-        // observers.First().OnNext();
-        var t = _clientsSubject.TryGetValue(out var clients);
-        foreach (var client in clients)
-        {
-            if (client.Login == login)
-            {
-                client.AddAppointment(newAppointment);
-                // update in repo
-                _clientsSubject.OnNext(_clientRepository.Read());
-            }
-        }
+    // public void AddAppointment(string login, Appointment newAppointment)
+    // {
+    //     //TODO: validate time
+    //     // observers.First().OnNext();
+    //     var t = _clientsSubject.TryGetValue(out var clients);
+    //     foreach (var client in clients)
+    //     {
+    //         if (client.Login == login)
+    //         {
+    //             client.AddAppointment(newAppointment);
+    //             // update in repo
+    //             _clientsSubject.OnNext(_clientRepository.Read());
+    //         }
+    //     }
 
-        // foreach (var sub in _clientSubjects)
-        // {
-        //     try
-        //     {
-        //         var t = sub.TryGetValue(out var client);
-        //         if (client is not null && string.Equals(client.Login, login))
-        //         {
-        //             client.AddAppointment(newAppointment);
-        //         }
-        //     }
-        //     catch
-        //     {
-        //         // ignored
-        //     }
-        // }
+    //     // foreach (var sub in _clientSubjects)
+    //     // {
+    //     //     try
+    //     //     {
+    //     //         var t = sub.TryGetValue(out var client);
+    //     //         if (client is not null && string.Equals(client.Login, login))
+    //     //         {
+    //     //             client.AddAppointment(newAppointment);
+    //     //         }
+    //     //     }
+    //     //     catch
+    //     //     {
+    //     //         // ignored
+    //     //     }
+    //     // }
 
-    }
+    // }
     public Client GetClient(string login, string password)
     {
         return _clientRepository.Read(login, password);
