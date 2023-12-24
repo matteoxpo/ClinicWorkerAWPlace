@@ -1,5 +1,5 @@
-namespace Domain.UseCases;
+// namespace Domain.UseCases;
 
-public sealed class AdminstratorInteractor<ID>
-{
-}
+// public sealed class AdminstratorInteractor
+// {
+// }

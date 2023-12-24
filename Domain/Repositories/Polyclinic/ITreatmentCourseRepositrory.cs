@@ -1,8 +1,14 @@
 using Domain.Entities.Polyclinic.Treatment;
 
 namespace Domain.Repositories.Polyclinic;
-
-public interface ITreatmentCourseRepositrory<ID> : IBaseRepository<TreatmentCourse, ID>
+public interface ITreatmentStageRepository : IUpdatable<TreatmentStage>, IAddable<TreatmentStage>, IReadale<TreatmentStage>
 {
-    IReferralForAnalysisRepository<ID> _referralForAnalysisRepository { get; }
+    IDrugRepository DrugRepository { get; }
+    IReferralForAnalysisRepository ReferralForAnalysisRepository { get; }
+}
+
+public interface ITreatmentCourseRepositrory : IBaseRepository<TreatmentCourse>
+{
+    IReferralForAnalysisRepository ReferralForAnalysisRepository { get; }
+    ITreatmentStageRepository TreatmentStageRepository { get; }
 }

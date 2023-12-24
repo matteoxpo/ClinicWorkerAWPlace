@@ -9,16 +9,16 @@ public class TreatmentCourse
         return (TreatmentStages.Last().Diagnosis, TreatmentStages.Last().Date);
     }
 
-    public uint ID { get; }
-    public TreatmentCourse(ICollection<TreatmentStage> treatmentStages, uint iD)
+    public int ID { get; }
+    public TreatmentCourse(ICollection<TreatmentStage> treatmentStages, int iD)
     {
         foreach (var stage_1 in treatmentStages)
         {
             foreach (var stage_2 in treatmentStages)
             {
-                if (stage_1.ClientID != stage_2.ClientID)
+                if (stage_1.ClientId != stage_2.ClientId)
                 {
-                    throw new ArgumentException($"Different clients treatment stages: stages with id's: {stage_1.ClientID}, {stage_2.ClientID}");
+                    throw new ArgumentException($"Different clients treatment stages: stages with id's: {stage_1.ClientId}, {stage_2.ClientId}");
                 }
             }
         }
@@ -26,7 +26,7 @@ public class TreatmentCourse
         ID = iD;
     }
 
-    public uint ClientID { get => TreatmentStages.First().ClientID; }
+    public int ClientID { get => TreatmentStages.First().ClientId; }
 
     public ICollection<Disease.Disease> GetDiseases()
     {

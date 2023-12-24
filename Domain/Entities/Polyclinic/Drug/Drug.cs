@@ -7,8 +7,8 @@ public class Drug
     public string Description { get; }
     public bool Recipe { get; }
 
-    public uint ID { get; }
-    public Drug(string name, string description, bool recipe, uint id)
+    public int ID { get; }
+    public Drug(string name, string description, bool recipe, int id)
     {
         Name = name;
         Description = description;

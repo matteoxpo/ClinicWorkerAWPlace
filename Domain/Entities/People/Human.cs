@@ -1,6 +1,6 @@
 ﻿using Domain.Entities.People.Attribute;
 
-using Domain.Common;
+using Domain.Entities.Common;
 
 namespace Domain.Entities.People;
 
@@ -12,7 +12,7 @@ public class Human
                  Address address,
                  DateTime dateOfBirth,
                  Sex sex,
-                 uint id,
+                 int id,
                  MedicalPolicy policy,
                  ICollection<Contact> contacts,
                  ICollection<Education>? education,
@@ -27,7 +27,7 @@ public class Human
         ID = id;
         Policy = policy ?? throw new NullReferenceException("MedPolicy is null");
 
-        Contact = contacts ?? new List<Contact>();
+        Contacts = contacts ?? new List<Contact>();
         Education = education ?? new List<Education>();
         Benefits = benefits ?? new List<Benefit>();
     }
@@ -36,27 +36,44 @@ public class Human
     {
         foreach (var contact in contacts)
         {
-            if (Contact.Contains(contact))
+            if (Contacts.Contains(contact))
             {
-                throw new ContactException("This contact is already in contacts");
+                throw new HumanException("This contact is already in contacts");
             }
         }
-        Contact.Concat(contacts);
+        Contacts.Concat(contacts);
     }
 
     public void AddContact(Contact contact)
     {
-        if (Contact.Contains(contact))
+        if (Contacts.Contains(contact))
         {
-            throw new ContactException("This contact is already in contacts");
+            throw new HumanException("This contact is already in contacts");
         }
-        Contact.Add(contact);
+        Contacts.Add(contact);
     }
 
-    public uint ID { get; }
-    public ICollection<Contact> Contact { get; set; }
+    public void AddEducation(Education education)
+    {
+        if (Education.Contains(education))
+        {
+            throw new HumanException("This education is already in contacts");
+        }
+        Education.Add(education);
+    }
+    public void AddBenefit(Benefit benefit)
+    {
+        if (Benefits.Contains(benefit))
+        {
+            throw new HumanException("This education is already in contacts");
+        }
+        Benefits.Add(benefit);
+    }
+
+    public int ID { get; }
+    public ICollection<Contact> Contacts { get; set; }
     public ICollection<Education> Education { get; set; }
-    public ICollection<Benefit>? Benefits { get; set; }
+    public ICollection<Benefit> Benefits { get; set; }
 
     public MedicalPolicy Policy { get; set; }
     public Sex Sex { get; set; }
@@ -68,5 +85,10 @@ public class Human
     public DateTime DateOfBirth { get; }
 
     public Address Address { get; set; }
+
+    public class HumanException : Exception
+    {
+        public HumanException(string message) : base(message) { }
+    }
 
 }

@@ -7,7 +7,7 @@ public sealed class Disease
 
     public string Description { get; }
 
-    public Disease(string name, string description, Transmission transmission, uint iD)
+    public Disease(string name, string description, Transmission transmission, int iD)
     {
         Name = name;
         Description = description;
@@ -17,5 +17,5 @@ public sealed class Disease
 
     public Transmission Transmission { get; }
 
-    public uint ID { get; }
+    public int ID { get; }
 }

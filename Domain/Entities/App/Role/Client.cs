@@ -1,4 +1,4 @@
-using Domain.Common;
+using Domain.Entities.Common;
 using Domain.Entities.People.Attribute;
 using Domain.Entities.Polyclinic.Appointment;
 using Domain.Entities.Polyclinic.Disease;
@@ -16,7 +16,7 @@ public sealed class Client : User
                   Address address,
                   DateTime dateOfBirth,
                   Sex sex,
-                  uint id,
+                  int id,
                   MedicalPolicy policy,
                   ICollection<Contact> contacts,
                   ICollection<Education>? education,

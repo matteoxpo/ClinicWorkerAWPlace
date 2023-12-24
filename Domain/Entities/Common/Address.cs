@@ -8,9 +8,9 @@ public sealed class Address
     public string ZipCode { get; set; }
     public string Country { get; set; }
 
-    public uint ID { get; }
+    public int ID { get; }
 
-    public Address(string street, string city, string state, string zipCode, string country, uint id)
+    public Address(string street, string city, string state, string zipCode, string country, int id)
     {
         Street = street;
         City = city;

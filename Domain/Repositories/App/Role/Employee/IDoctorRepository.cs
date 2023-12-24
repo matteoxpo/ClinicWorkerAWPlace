@@ -1,6 +1,10 @@
 using Domain.Entities.App.Role;
 using Domain.Entities.App.Role.Employees;
+using Domain.Repositories.Polyclinic;
 
 namespace Domain.Repositories.App.Role.Employee;
 
-public interface IDoctorRepository<ID> : IUserRepository<Doctor, ID> { }
+public interface IDoctorRepository : IUserRepository<Doctor>
+{
+    IAppoinmentRepository AppoinmentRepository { get; }
+}

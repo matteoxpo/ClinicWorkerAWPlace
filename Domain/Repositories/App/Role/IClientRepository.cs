@@ -4,10 +4,10 @@ using Domain.Entities.Polyclinic.Appointment;
 
 namespace Domain.Repositories.App.Role;
 
-public interface IClientRepository<ID> : IUserRepository<Client, ID>
+public interface IClientRepository : IUserRepository<Client>
 {
-    public ICollection<Appointment> GetAppointments(ID id);
+    public ICollection<Appointment> GetAppointments(int id);
     public ICollection<Appointment> GetAppointments(string login);
     public ICollection<ReferralForAnalysis> GetReferralForAnalyses(string login);
-    public ICollection<ReferralForAnalysis> GetReferralForAnalyses(ID id);
+    public ICollection<ReferralForAnalysis> GetReferralForAnalyses(int id);
 }

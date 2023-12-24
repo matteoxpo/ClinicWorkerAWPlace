@@ -6,8 +6,8 @@ namespace Domain.Entities.Polyclinic.Building;
 public sealed class MeetPlace
 {
     public Cabinet Cabinet { get; }
-    public Polyclinic Polyclinic { get; }
-    public MeetPlace(Polyclinic polyclinic, Cabinet cabinet)
+    public MedicineClinic Polyclinic { get; }
+    public MeetPlace(MedicineClinic polyclinic, Cabinet cabinet)
     {
         if (!polyclinic.Cabinets.Contains(cabinet))
         {
@@ -16,7 +16,7 @@ public sealed class MeetPlace
         Cabinet = cabinet;
         Polyclinic = polyclinic;
     }
-    public MeetPlace(Polyclinic polyclinic, string cabinetNumber)
+    public MeetPlace(MedicineClinic polyclinic, string cabinetNumber)
     {
         Polyclinic = polyclinic;
         foreach (var cabinet in polyclinic.Cabinets)
@@ -29,7 +29,7 @@ public sealed class MeetPlace
         }
         throw new MeetPlaceException($"Cant find cabinet with number {cabinetNumber} in polyclininc:[Address{polyclinic.Address} ID:{polyclinic.ID}]");
     }
-    public MeetPlace(Polyclinic polyclinic, uint cabinetID)
+    public MeetPlace(MedicineClinic polyclinic, uint cabinetID)
     {
         Polyclinic = polyclinic;
         foreach (var cabinet in polyclinic.Cabinets)

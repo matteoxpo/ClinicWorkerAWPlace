@@ -1,9 +1,21 @@
 namespace Domain.Repositories.Polyclinic;
 
 using Domain.Entities.Polyclinic.Building;
-public interface ICabinetRepository<ID> : IReadaleAll<Polyclinic, ID> { }
+using Domain.Repositories.Common;
 
-public interface IPolyclinicRepository<ID> : IReadaleAll<Polyclinic, ID>
+public interface ICabinetRepository : IReadaleAll<Cabinet>
 {
-    ICabinetRepository<ID> _cabinetRepository { get; }
+    Task<IEnumerable<Cabinet>> ReadCabinetByClinicIdAsync(int id);
+    IEnumerable<Cabinet> ReadCabinetByClinicId(int id)
+    {
+        return ReadCabinetByClinicIdAsync(id).GetAwaiter().GetResult();
+    }
+
+}
+
+public interface IMedicineClinicRepository : IReadaleAll<MedicineClinic>
+{
+    ICabinetRepository CabinetRepository { get; }
+    IContactRepository ContactRepository { get; }
+    IAddressRepository AddressRepository { get; }
 }

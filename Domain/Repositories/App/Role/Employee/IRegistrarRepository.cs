@@ -3,4 +3,4 @@ using Domain.Entities.App.Role.Employees;
 
 namespace Domain.Repositories.App.Role.Employee;
 
-public interface IRegistrarRepository<ID> : IUserRepository<Registrar, ID> { }
+public interface IRegistrarRepository : IUserRepository<Registrar> { }

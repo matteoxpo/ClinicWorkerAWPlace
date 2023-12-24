@@ -1,5 +1,5 @@
 
-using Domain.Common;
+using Domain.Entities.Common;
 using Domain.Entities.People.Attribute;
 using Domain.Entities.Polyclinic.Appointment;
 
@@ -15,17 +15,30 @@ public sealed class Doctor : Employee
                   Address address,
                   DateTime dateOfBirth,
                   Sex sex,
-                  uint id,
+                  int id,
                   MedicalPolicy policy,
                   ICollection<Contact> contacts,
                   ICollection<Education>? education,
                   decimal salaryPerHour,
                   DateTime dateOfEmployment,
-                  string[]? workExperiencePlaces,
-                  int workExpirienceYearsOtherPlaces,
                   ICollection<Benefit>? benefits,
                   string description,
-                  ICollection<Appointment> appointments) : base(login, password, name, surname, patronymicName, address, dateOfBirth, sex, id, policy, contacts, education, salaryPerHour, dateOfEmployment, workExperiencePlaces, workExpirienceYearsOtherPlaces, benefits, description)
+                  ICollection<Appointment> appointments) : base(login,
+                                                                password,
+                                                                name,
+                                                                surname,
+                                                                patronymicName,
+                                                                address,
+                                                                dateOfBirth,
+                                                                sex,
+                                                                id,
+                                                                policy,
+                                                                contacts,
+                                                                education,
+                                                                salaryPerHour,
+                                                                dateOfEmployment,
+                                                                benefits,
+                                                                description)
     {
         Appointments = appointments;
     }

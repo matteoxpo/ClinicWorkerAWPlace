@@ -1,4 +1,4 @@
-using Domain.Common;
+using Domain.Entities.Common;
 using Domain.Entities.People.Attribute;
 
 namespace Domain.Entities.App.Role.Employees;
@@ -13,25 +13,35 @@ public class Employee : User
                     Address address,
                     DateTime dateOfBirth,
                     Sex sex,
-                    uint id,
+                    int id,
                     MedicalPolicy policy,
                     ICollection<Contact> contacts,
                     ICollection<Education>? education,
                     decimal salaryPerHour,
                     DateTime dateOfEmployment,
-                    string[]? workExperiencePlaces,
-                    int workExpirienceYearsOtherPlaces,
                     ICollection<Benefit>? benefits,
-                    string description) : base(login, password, name, surname, patronymicName, address, dateOfBirth, sex, id, policy, contacts, education, benefits)
+                    string description) : base(login,
+                                               password,
+                                               name,
+                                               surname,
+                                               patronymicName,
+                                               address,
+                                               dateOfBirth,
+                                               sex,
+                                               id,
+                                               policy,
+                                               contacts,
+                                               education,
+                                               benefits)
     {
         SalaryPerHour = salaryPerHour;
+        _description = description;
         DateOfEmployment = dateOfEmployment;
-        WorkExperiencePlaces = workExperiencePlaces;
-        WorkExpirienceYearsOtherPlaces = workExpirienceYearsOtherPlaces;
-        Description = description;
     }
+    public string _description;
+    public string Description { get => new string(_description); }
     public DateTime DateOfEmployment { get; }
-    public string[]? WorkExperiencePlaces { get; }
+    public IEnumerable<string> WorkExperiencePlaces { get; }
     public int WorkExpirienceYearsOtherPlaces { get; }
     public int GetWorkExpirienceYears()
     {
@@ -47,7 +57,6 @@ public class Employee : User
     public decimal SalaryPerHour { get; set; }
 
     public int WorkedHoursThisMonth { get; private set; }
-    public string Description { get; }
 
     public void IncrementWorkedHours() { WorkedHoursThisMonth++; }
 }

@@ -1,4 +1,5 @@
 using System.Transactions;
+using Domain.Entities.App.Role.Employees;
 using Domain.Entities.Polyclinic.Analysis;
 using Domain.Entities.Polyclinic.Appointment;
 
@@ -7,32 +8,30 @@ namespace Domain.Entities.Polyclinic.Treatment;
 public class TreatmentStage
 {
 
-    public Appointment.Appointment CurrentAppointment { get; set; }
-
-
-
-    public TreatmentStage(Appointment.Appointment currentAppointment,
-                          ICollection<Drug.Drug> drugs,
+    public TreatmentStage(ICollection<Drug.Drug> drugs,
                           string description,
                           ICollection<Disease.Disease> diagnosis,
                           DateTime date,
                           ICollection<ReferralForAnalysis> analyses,
-                          Appointment.Appointment? nextAppointment = null
+                          int doctorId,
+                          int clientId,
+                          int id
                           )
     {
-        CurrentAppointment = currentAppointment;
         Drug = drugs;
         Description = description;
         Diagnosis = diagnosis;
-        NextAppointment = nextAppointment;
         Date = date;
         Analyses = analyses;
+        DoctorId = doctorId;
+        ClientId = clientId;
+        ID = id;
     }
 
-    public uint ID { get; }
+    public int ID { get; }
 
-    public uint DoctorID { get => CurrentAppointment.DoctorID; }
-    public uint ClientID { get => CurrentAppointment.ClientID; }
+    public int DoctorId { get; }
+    public int ClientId { get; }
 
     public DateTime Date { get; set; }
     public ICollection<Disease.Disease> Diagnosis { get; }
@@ -42,7 +41,7 @@ public class TreatmentStage
     public ICollection<Drug.Drug> Drug { get; }
     public void AddDrug(Drug.Drug drug)
     {
-        this.Drug.Add(drug);
+        Drug.Add(drug);
     }
 
     public string Description { get; set; }

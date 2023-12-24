@@ -11,9 +11,9 @@ public sealed class Contact
 {
     public string? Email { get; set; }
     public string? PhoneNumber { get; set; }
-    public uint ID { get; }
+    public int ID { get; }
 
-    public Contact(string? phoneNumber, string? email, uint id)
+    public Contact(string? phoneNumber, string? email, int id)
     {
         PhoneNumber = phoneNumber;
         Email = email;

@@ -2,4 +2,8 @@ using Domain.Entities.Polyclinic.Appointment;
 
 namespace Domain.Repositories.Polyclinic;
 
-public interface IAppoinmentRepository<ID> : IBaseRepository<Appointment, ID> { }
+public interface IAppoinmentRepository : IBaseRepository<Appointment>
+{
+    IMedicineClinicRepository MedicineClinicRepository { get; }
+    ICabinetRepository CabinetRepository { get; }
+}

@@ -1,6 +1,6 @@
 
 
-using Domain.Common;
+using Domain.Entities.Common;
 using Domain.Entities.People;
 using Domain.Entities.People.Attribute;
 
@@ -10,10 +10,7 @@ namespace Domain.Entities.App;
 
 public class User : Human
 {
-    public byte[]? Photo { get; set; }
-
-    private string _password;
-
+    public string Password { get; set; }
     public User(string login,
                 string password,
                 string name,
@@ -22,16 +19,39 @@ public class User : Human
                 Address address,
                 DateTime dateOfBirth,
                 Sex sex,
-                uint id,
+                int id,
                 MedicalPolicy policy,
                 ICollection<Contact> contacts,
                 ICollection<Education>? education,
-                ICollection<Benefit>? benefits) : base(name, surname, patronymicName, address, dateOfBirth, sex, id, policy, contacts, education, benefits)
+                ICollection<Benefit>? benefits) : base(name,
+                                                       surname,
+                                                       patronymicName,
+                                                       address,
+                                                       dateOfBirth,
+                                                       sex,
+                                                       id,
+                                                       policy,
+                                                       contacts,
+                                                       education,
+                                                       benefits)
     {
         Login = login ?? throw new NullReferenceException("Login is null");
-        _password = password ?? throw new NullReferenceException("Password is null");
+        Password = password ?? throw new NullReferenceException("Password is null");
     }
 
     public string Login { get; set; }
+}
+
+public class Auth
+{
+
+    public Auth(string login, string password)
+    {
+        Password = password;
+        Login = login;
+    }
+
+    string Password { get; }
+    string Login { get; }
 
 }

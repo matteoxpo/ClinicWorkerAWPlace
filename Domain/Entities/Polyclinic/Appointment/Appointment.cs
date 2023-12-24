@@ -4,17 +4,17 @@ namespace Domain.Entities.Polyclinic.Appointment;
 
 public sealed class Appointment
 {
-    public uint? FromDoctorID { get; } = null;
-    public uint DoctorID { get; }
-    public uint ClientID { get; }
+    public int? FromDoctorID { get; } = null;
+    public int DoctorID { get; }
+    public int ClientID { get; }
     public DateTime Date { get; set; }
 
     public string? Description { get; set; }
     public MeetPlace MeetPlace { get; set; }
-    public uint ID { get; }
+    public int ID { get; }
 
 
-    public Appointment(uint doctorID, uint clientID, DateTime date, uint appointmentID, MeetPlace meetPlace, uint? fromDoctorID = null)
+    public Appointment(int doctorID, int clientID, DateTime date, int appointmentID, MeetPlace meetPlace, int? fromDoctorID = null)
     {
         DoctorID = doctorID;
         ClientID = clientID;

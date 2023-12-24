@@ -1,0 +1,258 @@
+-- *********** CLINIC CABINETS *********** --
+-- CLINIC WITH CABS AND ADDRESS
+-- DONE
+CREATE TABLE IF NOT EXISTS "Clinic" (
+	"AddressId"	INTEGER NOT NULL,
+	"ContactId"	INTEGER NOT NULL,
+	"Id"	INTEGER NOT NULL,
+	-- CABINETS
+	PRIMARY KEY("Id" AUTOINCREMENT),
+	FOREIGN KEY ("ContactId") REFERENCES "Contact" ("Id"),
+	FOREIGN KEY ("AddressId") REFERENCES "Address" ("Id")
+);
+
+-- DONE
+CREATE TABLE IF NOT EXISTS "Cabinet" (
+	"Number"	TEXT NOT NULL,
+	"Type"	TEXT NOT NULL,
+	"ClinicId" INTEGER NOT NULL,
+	"Id"	INTEGER NOT NULL,
+	PRIMARY KEY("Id" AUTOINCREMENT),
+	FOREIGN KEY ("ClinicId") REFERENCES "Clinic" ("Id")
+);
+
+
+
+
+
+-- *********** HUMAN USER AND ATTRIBUTES *********** --
+-- Human with a lot of attributes
+-- NOT OK
+CREATE TABLE IF NOT EXISTS "HumanUser" (
+	"Login"	TEXT NOT NULL,
+	"Password"	TEXT NOT NULL,
+	"Name"	TEXT NOT NULL,
+	"Surname"	TEXT NOT NULL,
+	"PatronymicName"	TEXT,
+	"AddressId"	INTEGER,
+	"DateOfBirth"	DATETIME,
+	"Sex"	TEXT NOT NULL,
+	"MedicalPolicyId"	INTEGER NOT NULL,
+	"Id"	INTEGER NOT NULL,
+	-- CONTACTS
+	-- EDUCATION
+	-- BENEFITS
+	PRIMARY KEY("Id" AUTOINCREMENT),
+	FOREIGN KEY ("AddressId") REFERENCES "Address" ("Id"),
+	FOREIGN KEY ("MedicalPolicyId") REFERENCES "MedicalPolicy" ("Id")
+);
+
+-- ADDRESS
+-- DONE
+CREATE TABLE IF NOT EXISTS "Address" (
+	"Street"	TEXT NOT NULL,
+	"City"	TEXT NOT NULL,
+	"State"	TEXT NOT NULL,
+	"ZipCode"	TEXT NOT NULL,
+	"Country"	TEXT NOT NULL,
+	"Id"	INTEGER NOT NULL,
+	PRIMARY KEY("Id" AUTOINCREMENT)
+);
+
+-- POLICY
+
+-- DONE
+CREATE TABLE IF NOT EXISTS "MedicalPolicy" (
+	"Serial"	TEXT NOT NULL,
+	"Number"	TEXT NOT NULL,
+	"Id"	INTEGER NOT NULL,
+	PRIMARY KEY("Id" AUTOINCREMENT)
+);
+
+-- CONTACT
+CREATE TABLE IF NOT EXISTS "HumanUserContact" (
+	"ContactId" INTEGER NOT NULL,
+	"HumanUserId" INTEGER NOT NULL,
+	"Id" INTEGER NOT NULL,
+	PRIMARY KEY("Id" AUTOINCREMENT),
+	FOREIGN KEY ("HumanUserId") REFERENCES "HumanUser" ("Id"),
+	FOREIGN KEY ("ContactId") REFERENCES "Contact" ("Id")
+);
+-- DONE
+CREATE TABLE IF NOT EXISTS "Contact" (
+	"PhoneNumber"	TEXT,
+	"Email"	TEXT,
+	"Id"	INTEGER NOT NULL,
+	PRIMARY KEY("Id" AUTOINCREMENT)
+);
+
+--EDUCATION
+-- DONE
+CREATE TABLE IF NOT EXISTS "Education" (
+	"Serial"	TEXT NOT NULL,
+	"Number"	TEXT NOT NULL,
+	"Description"	TEXT NOT NULL,
+	"Date"	DATETIME NOT NULL,
+	"HumanUserId" INTEGER NOT NULL, 
+	"Id"	INTEGER NOT NULL,
+	PRIMARY KEY("Id" AUTOINCREMENT),
+	FOREIGN KEY ("HumanUserId") REFERENCES "HumanUser" ("Id")
+);
+
+-- BENEFITS
+
+CREATE TABLE IF NOT EXISTS "HumanUserBenefit" (
+	"BenefitId" INTEGER NOT NULL,
+	"HumanUserId" INTEGER NOT NULL,
+	"Id" INTEGER NOT NULL,
+	PRIMARY KEY("Id" AUTOINCREMENT),
+	FOREIGN KEY ("HumanUserId") REFERENCES "HumanUser" ("Id"),
+	FOREIGN KEY ("BenefitId") REFERENCES "Benefit" ("Id")
+);
+-- DONE
+CREATE TABLE IF NOT EXISTS "Benefit" (
+	"Type"	TEXT NOT NULL,
+	"Description"	TEXT NOT NULL,
+	"Discount"	REAL NOT NULL,
+	"RetirementAge"	INTEGER NOT NULL,
+	"Id"	INTEGER NOT NULL,
+	PRIMARY KEY("Id" AUTOINCREMENT)
+);
+
+
+
+
+
+-- *********** EMPLOYEE AND ROLE ~ JOB *********** --
+--DIFF JOB LIST
+
+CREATE TABLE IF NOT EXISTS "EmployeeUser" (
+	"SalaryPerHour"	REAL NOT NULL,
+	"JobTittleId"	INTEGER NOT NULL,
+	"HumanUserId"	INTEGER NOT NULL,
+	"Id"	INTEGER NOT NULL,
+	PRIMARY KEY("Id" AUTOINCREMENT),
+	FOREIGN KEY ("JobTittleId") REFERENCES "JobTittle" ("Id"),
+	FOREIGN KEY ("HumanUserId") REFERENCES "HumanUser" ("Id")
+);
+--JOB IDENTIFICATION
+-- NOT OK
+CREATE TABLE IF NOT EXISTS "JobTitle" (
+	"Name"	TEXT NOT NULL,
+	"Description"	TEXT NOT NULL,
+	"Id"	INTEGER NOT NULL,
+	PRIMARY KEY("Id" AUTOINCREMENT)
+);
+
+
+
+
+
+-- *********** APPOINTMENT *********** --
+-- APPOINTMENT ONLY
+-- DONE
+CREATE TABLE IF NOT EXISTS "Appointment" (
+	"ClinicId"	INTEGER NOT NULL,
+	"EmployeeUserId"	INTEGER NOT NULL,
+	"HumanUserId"	INTEGER NOT NULL,
+	"Date"	DATETIME,
+	"Id"	INTEGER NOT NULL,
+	PRIMARY KEY("Id" AUTOINCREMENT)
+	FOREIGN KEY ("ClinicId") REFERENCES "Clinic" ("Id"),
+	FOREIGN KEY ("EmployeeUserId") REFERENCES "EmployeeUser" ("Id"),
+	FOREIGN KEY ("HumanUserId") REFERENCES "HumanUser" ("Id")
+);
+
+
+-- *********** TREATMENT ANALYSIS DISEASE DRUGS *********** --
+-- TREATMENTCOURSE+STAGE
+-- NOT OK
+CREATE TABLE IF NOT EXISTS "TreatmentCourse" (
+	"HumanUserId"	INTEGER,
+	"Description"	TEXT,
+	"Id"	INTEGER,
+	PRIMARY KEY("Id" AUTOINCREMENT),
+	FOREIGN KEY ("HumanUserId") REFERENCES "HumanUser" ("Id")
+);
+-- NOT OK
+CREATE TABLE IF NOT EXISTS "TreatmentStage" (
+	"EmployeeUserId"	INTEGER NOT NULL,
+	"Description"	TEXT,
+	"DiseaseId"	INTEGER NOT NULL,
+	"TreatmentCourseId" INTEGER NOT NULL,
+	"Id"	INTEGER NOT NULL,
+	-- REFERRALFORANALYSIS
+	-- DRUGS
+	PRIMARY KEY("Id" AUTOINCREMENT),
+	FOREIGN KEY ("DiseaseId") REFERENCES "Disease" ("Id"),
+	FOREIGN KEY ("TreatmentCourseId") REFERENCES "TreatmentCourse" ("Id")
+);
+
+-- DISEASE
+-- DONE
+CREATE TABLE IF NOT EXISTS "Disease" (
+	"Name"	TEXT NOT NULL,
+	"Description"	TEXT NOT NULL,
+	"TransmissionId"	int,
+	"Id"	INTEGER NOT NULL,
+	PRIMARY KEY("Id" AUTOINCREMENT),
+	FOREIGN KEY ("TransmissionId") REFERENCES "Transmission" ("Id")
+);
+-- NOT OK
+CREATE TABLE IF NOT EXISTS "DiseaseTransmission" (
+	"TransmissionType"	TEXT NOT NULL,
+	"Id" INTEGER NOT NULL,
+	PRIMARY KEY("Id" AUTOINCREMENT)
+);
+
+-- ANALYSIS
+-- NOT OK
+CREATE TABLE IF NOT EXISTS "TreatmentStageReferralForAnalysis"(
+	"TreatmentStageId" INTEGER NOT NULL,
+    "ReferralForAnalysisId" INTEGER NOT NULL,
+	"Id" INTEGER NOT NULL,
+	PRIMARY KEY("Id" AUTOINCREMENT),
+	FOREIGN KEY ("ReferralForAnalysisId") REFERENCES "ReferralForAnalysis" ("Id"),
+	FOREIGN KEY ("TreatmentStageId") REFERENCES "TreatmentStage" ("Id")
+);
+
+-- DONE
+CREATE TABLE IF NOT EXISTS "ReferralForAnalysis" (
+	"HumanUserId"	INTEGER NOT NULL,
+	"EmployeeUserId"	INTEGER,
+	"Date"	DATE NOT NULL,
+	"AnalysisId"	INTEGER NOT NULL,
+	"Description"	TEXT ,
+	"Result"	TEXT ,
+	"Id"	INTEGER NOT NULL,
+	PRIMARY KEY("Id" AUTOINCREMENT),
+	FOREIGN KEY ("HumanUserId") REFERENCES "HumanUser" ("Id"),
+	FOREIGN KEY ("AnalysisId") REFERENCES "Analysis" ("Id"),
+	FOREIGN KEY ("EmployeeUserId") REFERENCES "EmployeeUser" ("Id")
+);
+-- DONE
+CREATE TABLE IF NOT EXISTS "Analysis" (
+	"Type"	TEXT NOT NULL,
+	"Description"	TEXT NOT NULL,
+	"Id"	INTEGER NOT NULL,
+	PRIMARY KEY("Id" AUTOINCREMENT)
+);
+
+-- DRUGS
+-- NOT OK
+CREATE TABLE IF NOT EXISTS "TreatmentStageDrug"(
+	"TreatmentStageId" INTEGER NOT NULL,
+    "DrugId" INTEGER NOT NULL,
+	"Id" INTEGER NOT NULL,
+	PRIMARY KEY("Id" AUTOINCREMENT),
+	FOREIGN KEY ("TreatmentStageId") REFERENCES "TreatmentStage" ("Id"),
+	FOREIGN KEY ("DrugId") REFERENCES "Drug" ("Id")
+);
+-- DONE
+CREATE TABLE IF NOT EXISTS "Drug" (
+	"Name"	TEXT NOT NULL,
+	"Description"	TEXT NOT NULL,
+	"Recipe"	BOOLEAN NOT NULL,
+	"Id"	INTEGER NOT NULL,
+	PRIMARY KEY("Id" AUTOINCREMENT)
+);
