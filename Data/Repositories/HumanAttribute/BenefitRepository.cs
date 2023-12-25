@@ -1,6 +1,6 @@
 using Domain.Entities.People.Attribute;
 using Domain.Repositories.HumanAttribute;
-
+//
 namespace Data.Repositories.HumanAttribute;
 
 public class BenefitRepository : BaseSQLiteRepository<Benefit>, IBenefitRepository
