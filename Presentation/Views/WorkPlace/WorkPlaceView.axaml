@@ -26,10 +26,6 @@
                 <MenuItem IsVisible="{Binding IsDoctor}" FontSize="{StaticResource MenuItemTextSize}" Foreground="White"
                           Command="{Binding GoListOfMedicines}"
                           Header="Список медикаментов и заболеваний" />
-                
-                <MenuItem IsVisible="{Binding IsRegistrar}" FontSize="{StaticResource MenuItemTextSize}" Foreground="White" Command="{Binding RegistrarView}"
-                          Header="Меню регистратора" />
-
                 <MenuItem FontSize="{StaticResource MenuItemTextSize}" Foreground="White"
                           Command="{Binding GoToProfile}"
                           Header="Профиль" />
