@@ -113,6 +113,14 @@ public class ClientRepository : BaseSQLiteRepository<Client>, IClientRepository
             }
         }
 
+        var treatmentCourses =
+            await TreatmentCourseRepositrory.ReadAsync(treatmentCourseIdList);
+
+        var contcts = await ContactRepository.ReadAsync(contactIdList);
+        var educations = await EducationRepository.ReadAsync(educationIdList);
+        var benefits = await BenefitRepository.ReadAsync(benefitIdList);
+        var appointments = await AppoinmentRepository.ReadAsync(appointmentIdList);
+        var courses = await TreatmentCourseRepositrory.ReadAsync(treatmentCourseIdList);
 
         return new Client(
             await ReadPremitiveAsync<string>("Login", id),
@@ -129,17 +137,17 @@ public class ClientRepository : BaseSQLiteRepository<Client>, IClientRepository
             ),
             id,
             await MedicalPolicyRepository.ReadAsync(
-                await ReadPremitiveAsync<int>("MeducalPolicyId", id)
+                await ReadPremitiveAsync<int>("MedicalPolicyId", id)
             ),
-            await ContactRepository.ReadAsync(contactIdList),
-            await EducationRepository.ReadAsync(educationIdList),
-            await BenefitRepository.ReadAsync(benefitIdList),
-            await AppoinmentRepository.ReadAsync(appointmentIdList),
-            await TreatmentCourseRepositrory.ReadAsync(treatmentCourseIdList)
+            contcts,
+            educations,
+            benefits,
+            appointments,
+            courses
         );
     }
 
-    public Task UpdateAsync(Client nextEntity)
+    public async Task UpdateAsync(Client nextEntity)
     {
         throw new NotImplementedException();
     }

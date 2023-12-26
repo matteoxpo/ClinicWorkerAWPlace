@@ -12,9 +12,11 @@ public class TreatmentStage
                           string description,
                           Disease.Disease diagnosis,
                           ICollection<ReferralForAnalysis> analyses,
+                          int employeeUserId,
                           int id
                           )
     {
+        EmployeeUserId = employeeUserId;
         Drug = drugs;
         Description = description;
         Diagnosis = diagnosis;
@@ -25,6 +27,7 @@ public class TreatmentStage
     public int ID { get; }
     public Disease.Disease Diagnosis { get; }
 
+    public int EmployeeUserId { get; }
     public ICollection<ReferralForAnalysis> Analyses { get; }
 
     public ICollection<Drug.Drug> Drug { get; }
@@ -34,5 +37,4 @@ public class TreatmentStage
     }
 
     public string Description { get; set; }
-    public Appointment.Appointment? NextAppointment { get; set; }
 }

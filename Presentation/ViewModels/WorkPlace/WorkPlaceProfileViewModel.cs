@@ -2,6 +2,7 @@ using System;
 using System.Reactive;
 using System.Reactive.Linq;
 using Domain.Repositories.App;
+using Domain.Repositories.App.Role.Employee;
 using Presentation.Configuration;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;

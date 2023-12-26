@@ -4,16 +4,14 @@ public sealed class Analysis
 {
     public string Type { get; }
 
-    public Analysis(string type, string description, string peculiarities, int id)
+    public Analysis(string type, string description, int id)
     {
         Type = type;
         Description = description;
-        Peculiarities = peculiarities;
         ID = id;
     }
 
     public string Description { get; }
-    public string Peculiarities { get; }
 
 
     public int ID { get; }

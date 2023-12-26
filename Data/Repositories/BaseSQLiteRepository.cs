@@ -13,11 +13,30 @@ public abstract class BaseSQLiteRepository<DomainType>
         TableName = new string(tableName) ?? throw new NullReferenceException("Name of table can't be null");
         _dbConnection = dbConnection;
     }
-
     protected readonly SQLiteConnection _dbConnection;
 
     public string TableName { get; set; }
     protected string _connectionString;
+    public async Task AddRowAsync(DateTime time, string name, Dictionary<string, object> columnValues, string? tableName = null)
+    {
+        tableName ??= TableName;
+
+        var columnNames = string.Join(", ", columnValues.Keys);
+        var paramNames = string.Join(", ", columnValues.Keys.Select(key => $"@{key}"));
+
+        using (var command = new SQLiteCommand($"INSERT INTO {tableName} ({columnNames}, {name}) VALUES ({paramNames}, @TimeValue)", _dbConnection))
+        {
+            foreach (var kvp in columnValues)
+            {
+                command.Parameters.AddWithValue($"@{kvp.Key}", kvp.Value);
+            }
+
+            command.Parameters.AddWithValue("@TimeValue", time);
+
+            await command.ExecuteNonQueryAsync();
+        }
+    }
+
     protected async Task AddRowAsync(Dictionary<string, object> columnValues, string? tableName = null)
     {
         var parsedDict = new Dictionary<string, string>();
@@ -106,31 +125,7 @@ public abstract class BaseSQLiteRepository<DomainType>
             }
         }
     }
-    protected async Task<ICollection<PrimitiveType>> ReadPremitiveArrayFromColumnAsync<PrimitiveType>(string columnName, int id, string? tableName = null, string? idVariableName = null)
-    {
-        tableName ??= TableName;
 
-        idVariableName ??= "Id";
-
-        var ids = new List<PrimitiveType>();
-
-        using (var command = new SQLiteCommand($"SELECT {columnName} FROM {tableName} WHERE {idVariableName} = @id", _dbConnection))
-        {
-            command.Parameters.AddWithValue("@id", id);
-            var result = command.ExecuteScalar() ?? throw new BaseSQLiteRepositoryException("");
-            var splited = result.ToString().Split(' ');
-            var converter = TypeDescriptor.GetConverter(typeof(PrimitiveType));
-
-            foreach (var split in splited)
-            {
-                ids.Add((PrimitiveType)converter.ConvertFromString(split));
-            }
-        }
-
-
-        return ids;
-
-    }
     protected async Task<ICollection<PrimitiveType>> ReadPremitivesAsync<PrimitiveType>(string columnName, string? tableName = null)
     {
 
@@ -189,6 +184,20 @@ public abstract class BaseSQLiteRepository<DomainType>
     {
         await UpdatePremitiveAsync(id, columnName, premitiveValue.ToString() ?? throw new BaseSQLiteRepositoryException("Value cannot be converted to string"), tableName);
     }
+
+
+    public async Task UpdatePremitiveAsync(int id, string columnName, DateTime dateTime, string? tableName = null)
+    {
+        tableName ??= TableName;
+
+        using (var command = new SQLiteCommand($"UPDATE {tableName} SET {columnName} = @newValue WHERE Id = @id", _dbConnection))
+        {
+            command.Parameters.AddWithValue("@id", id);
+            command.Parameters.AddWithValue("@newValue", dateTime);
+            await command.ExecuteNonQueryAsync();
+        }
+    }
+
     protected async Task UpdatePremitiveAsync(int id, string columnName, string newValue, string? tableName = null)
     {
         tableName ??= TableName;

@@ -34,7 +34,6 @@ public sealed class Administrator : Employee
                                                                 contacts,
                                                                 education,
                                                                 salaryPerHour,
-                                                                dateOfEmployment,
                                                                 benefits,
                                                                 description)
     {

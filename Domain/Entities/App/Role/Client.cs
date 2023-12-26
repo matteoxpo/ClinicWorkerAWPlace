@@ -42,22 +42,6 @@ public sealed class Client : User
 
     public void AddTreatmentCourse(TreatmentCourse course)
     {
-        if (course.ClientID != ID)
-        {
-            throw new ArgumentException($"New yreatment course client ID:{course.ClientID} is not equal current CLient ID:{ID}");
-        }
         TreatmentCourses.Add(course);
     }
-
-    public ICollection<(ICollection<Disease>, DateTime)> GetDiseasesHistory()
-    {
-        var diseases = new List<(ICollection<Disease>, DateTime)>();
-        foreach (var course in TreatmentCourses)
-        {
-            diseases.Add(course.LastDiagnoses());
-        }
-
-        return diseases;
-    }
-
 }

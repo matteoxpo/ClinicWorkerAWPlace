@@ -21,14 +21,16 @@ public class WorkPlaceViewModel : ReactiveObject, IRoutableViewModel, IScreen
 
         Router = new RoutingState();
         IsDoctor = RepositoriesConfigurer.GetRepositoriesConfigurer().GetAuthRepository().IsUser<Doctor>(userId);
-        IsRegistrar = RepositoriesConfigurer.GetRepositoriesConfigurer().GetAuthRepository().IsUser<Registrar>(userId);
+        if (!IsDoctor)
+        {
+            IsRegistrar = RepositoriesConfigurer.GetRepositoriesConfigurer().GetAuthRepository().IsUser<Registrar>(userId);
+        }
 
         HostScreen = hostScreen;
         ListOfMedicinesViewModel = new ListOfMedicinesViewModel(this);
         WorkPlaceProfileViewModel = new WorkPlaceProfileViewModel(this, userId);
         WorkPlaceHelpViewModel = new WorkPlaceHelpViewModel(this);
 
-        DefaultWorkPlaceViewModel = new DefaultWorkPlaceViewModel(this, userId);
         DefaultWorkPlaceViewModel = new DefaultWorkPlaceViewModel(this, userId);
 
         GoListOfMedicines = ReactiveCommand.CreateFromObservable(

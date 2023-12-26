@@ -20,7 +20,6 @@ public sealed class Registrar : Employee
                      ICollection<Contact> contacts,
                      ICollection<Education>? education,
                      decimal salaryPerHour,
-                     DateTime dateOfEmployment,
                      ICollection<Benefit> benefits,
                      string description) : base(login,
                                                 password,
@@ -35,7 +34,6 @@ public sealed class Registrar : Employee
                                                 contacts,
                                                 education,
                                                 salaryPerHour,
-                                                dateOfEmployment,
                                                 benefits,
                                                 description)
     {

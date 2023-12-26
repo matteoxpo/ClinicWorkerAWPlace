@@ -34,7 +34,7 @@ public class EducationRepository : BaseSQLiteRepository<Education>, IEducationRe
             await ReadPremitiveAsync<string>("Serial", id),
             await ReadPremitiveAsync<DateTime>("Date", id),
             await ReadPremitiveAsync<string>("Description", id),
-            await ReadPremitiveAsync<int>("Description", id),
+            await ReadPremitiveAsync<int>("HumanUserId", id),
             id
         );
     }

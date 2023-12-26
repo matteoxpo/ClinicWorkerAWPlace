@@ -78,7 +78,7 @@ public class Human
     public MedicalPolicy Policy { get; set; }
     public Sex Sex { get; set; }
 
-    public string Name { get; }
+    public string Name { get; set; }
     public string Surname { get; }
     public string PatronymicName { get; }
 

@@ -4,7 +4,7 @@ using Domain.Repositories.Polyclinic;
 
 namespace Domain.Repositories.App.Role.Employee;
 
-public interface IDoctorRepository : IUserRepository<Doctor>
+public interface IDoctorRepository : IUserRepository<Doctor>, IReadaleAll<Doctor>
 {
     IAppoinmentRepository AppoinmentRepository { get; }
 }

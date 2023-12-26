@@ -20,7 +20,6 @@ public sealed class Doctor : Employee
                   ICollection<Contact> contacts,
                   ICollection<Education>? education,
                   decimal salaryPerHour,
-                  DateTime dateOfEmployment,
                   ICollection<Benefit>? benefits,
                   string description,
                   ICollection<Appointment> appointments) : base(login,
@@ -36,7 +35,6 @@ public sealed class Doctor : Employee
                                                                 contacts,
                                                                 education,
                                                                 salaryPerHour,
-                                                                dateOfEmployment,
                                                                 benefits,
                                                                 description)
     {

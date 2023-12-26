@@ -24,7 +24,7 @@ public class TreatmentStageRepository : BaseSQLiteRepository<TreatmentStage>, IT
     {
         await AddRowAsync(
             new Dictionary<string, string>() {
-                {"EmployeeUserId",entity.DoctorId.ToString()},
+                {"EmployeeUserId",entity.EmployeeUserId.ToString()},
                 {"Description", entity.Description},
                 {"TreatmentCourseId", entity.ID.ToString()}
             }
@@ -57,7 +57,7 @@ public class TreatmentStageRepository : BaseSQLiteRepository<TreatmentStage>, IT
             {
                 while (await reader.ReadAsync())
                 {
-                    drugsIs.Add(int.Parse(reader["DrugId"].ToString() ?? throw new BaseSQLiteRepositoryException("ReadDrugsIdsAsync")));
+                    drugsIs.Add(int.Parse(reader[variable].ToString() ?? throw new BaseSQLiteRepositoryException("ReadDrugsIdsAsync")));
                 }
             }
         }
@@ -77,6 +77,7 @@ public class TreatmentStageRepository : BaseSQLiteRepository<TreatmentStage>, IT
                 await ReadPremitiveAsync<int>("DiseaseId", id)
             ),
             await ReferralForAnalysisRepository.ReadAsync(refsId),
+            await ReadPremitiveAsync<int>("EmployeeUserId", id),
             id);
     }
 

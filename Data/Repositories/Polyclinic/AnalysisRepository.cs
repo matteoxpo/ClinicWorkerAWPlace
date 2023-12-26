@@ -14,7 +14,6 @@ public class AnalysisRepository : BaseSQLiteRepository<Analysis>, IAnalysisRepos
         return new Analysis(
           await ReadPremitiveAsync<string>("Type", id),
           await ReadPremitiveAsync<string>("Description", id),
-          await ReadPremitiveAsync<string>("Peculiarities", id),
           id
        );
     }

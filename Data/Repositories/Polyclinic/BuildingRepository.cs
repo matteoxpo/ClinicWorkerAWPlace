@@ -57,9 +57,29 @@ public class MedicineClinicRepository : BaseSQLiteRepository<MedicineClinic>, IM
 
     public IAddressRepository AddressRepository { get; }
 
+
+    private async Task<ICollection<int>> GetCabinetsIds(int clinicId)
+    {
+        var ids = new List<int>();
+
+        using (var command = new SQLiteCommand($"SELECT Id FROM Cabinet WHERE ClinicId = @clinicid", _dbConnection))
+        {
+            command.Parameters.AddWithValue("@clinicid", clinicId);
+            using (var reader = command.ExecuteReader())
+            {
+                while (await reader.ReadAsync())
+                {
+                    ids.Add(reader.GetInt32(0));
+                }
+            }
+        }
+        return ids;
+    }
     public override async Task<MedicineClinic?> ReadAsync(int id)
     {
-        var cabinets = await CabinetRepository.ReadAsync(await ReadPremitiveArrayFromColumnAsync<int>("CabinetId", id));
+        var cabinets = await CabinetRepository.ReadAsync(
+                await GetCabinetsIds(id)
+            );
         return new MedicineClinic(
             await AddressRepository.ReadAsync(await ReadPremitiveAsync<int>("AddressId", id)),
             await CabinetRepository.ReadCabinetByClinicIdAsync(id),

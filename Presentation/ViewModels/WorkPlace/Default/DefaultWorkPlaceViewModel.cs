@@ -2,11 +2,19 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Reactive;
 using System.Text;
 using System.Threading.Tasks;
+using Data.Repositories.App.Role.Employee;
 using Domain.Entities.App.Role;
 using Domain.Entities.App.Role.Employees;
+using Domain.Entities.Polyclinic.Appointment;
+using Domain.Entities.Polyclinic.Building;
+using Domain.Repositories.App;
+using Domain.Repositories.App.Role;
+using Domain.Repositories.App.Role.Employee;
+using Domain.Repositories.Polyclinic;
 using Domain.UseCases.UserInteractor;
 using Presentation.Configuration;
 using ReactiveUI;
@@ -18,27 +26,80 @@ public class DefaultWorkPlaceViewModel : ViewModelBase, IRoutableViewModel, IAct
 {
     private ObservableCollection<Client>? _allClients;
     private ObservableCollection<Client>? _todaysClients;
-
     private DoctorInteractor _doctorInteractor;
-
-    public bool IsDoctor { get; }
-    public bool IsRegistrar { get; }
+    public bool IsDoctor
+    {
+        get;
+    }
+    public bool IsRegistrar
+    {
+        get;
+    }
     private int id;
 
+    private IRegistrarRepository? _registrarRepository;
+
+    private IAuthRepository _authRepository;
+    private IClientRepository _clientRepository;
+    private IAppoinmentRepository _appoinmentRepository;
+    private IMedicineClinicRepository _medicineClinicRepository;
+    private IDoctorRepository _doctorRepository;
+
+    private IEnumerable<ClientToShow> ReadDoctorClients(int id)
+    {
+        var clients = _clientRepository.ReadAll();
+        var parsedClients = new List<Client>();
+        foreach (var client in clients)
+        {
+            foreach (var appointment in client.Appointments)
+            {
+                if (appointment.DoctorID == id && appointment.Date >= DateTime.MinValue)
+                {
+                    parsedClients.Add(client);
+                }
+            }
+        }
+        return ClientToShow.FromArray(parsedClients);
+    }
     public DefaultWorkPlaceViewModel(IScreen hostScreen, int id)
     {
         HostScreen = hostScreen;
+
+        _appoinmentRepository = RepositoriesConfigurer.GetRepositoriesConfigurer().GetAppointmentRepository();
+
+        _medicineClinicRepository = RepositoriesConfigurer.GetRepositoriesConfigurer().GetClinicRepository();
+
+        _authRepository = RepositoriesConfigurer.GetRepositoriesConfigurer().GetAuthRepository();
+
+        _clientRepository = RepositoriesConfigurer.GetRepositoriesConfigurer().GetClientRepository();
+
+        _doctorRepository = RepositoriesConfigurer.GetRepositoriesConfigurer().GetDoctorRepository();
+
+        IsDoctor = _authRepository.IsUser<Doctor>(id);
+        IsRegistrar = _authRepository.IsUser<Registrar>(id);
+
+        if (IsRegistrar)
+        {
+            ShowingClients = ClientToShow.FromArray(_clientRepository.ReadAll());
+            ShowingDoctors = DoctorToShow.FromArray(_doctorRepository.ReadAll());
+        }
+        else if (IsDoctor)
+        {
+            ShowingClients = ReadDoctorClients(id);
+        }
+
+        _registrarRepository = RepositoriesConfigurer.GetRepositoriesConfigurer().GetRegistrarRepository();
+
+        var reg = _registrarRepository.Read(id);
 
         this.id = id;
 
         _doctorInteractor = new DoctorInteractor(
             RepositoriesConfigurer.GetRepositoriesConfigurer().GetDoctorRepository(),
-            RepositoriesConfigurer.GetRepositoriesConfigurer().GetClientRepository());
+            RepositoriesConfigurer.GetRepositoriesConfigurer().GetClientRepository()
+        );
 
         Activator = new ViewModelActivator();
-
-
-        // UpdateDoctorClients(login);
 
         AddAppointment = ReactiveCommand.CreateFromTask(OnAddNextAppointment);
 
@@ -46,62 +107,48 @@ public class DefaultWorkPlaceViewModel : ViewModelBase, IRoutableViewModel, IAct
     }
 
     private string Login { get; }
-    public ReactiveCommand<Unit, Unit> ShowAllClients { get; }
-    public ReactiveCommand<Unit, Unit> ShowTodayClients { get; }
     public ReactiveCommand<Unit, Unit> AddAppointment { get; }
 
     [Reactive] public IEnumerable<ClientToShow>? ShowingClients { get; private set; }
 
-    [Reactive] public bool IsCheckedAll { get; private set; }
-
     [Reactive] public ClientToShow? SelectedClient { get; set; }
+    [Reactive] public DoctorToShow? SelectedDoctor { get; set; }
 
+    [Reactive] public IEnumerable<DoctorToShow>? ShowingDoctors { get; set; }
     [Reactive] public string? SelectedClientNewAppointmentTime { get; set; }
 
     public ViewModelActivator Activator { get; }
     public IScreen HostScreen { get; }
     public string? UrlPathSegment { get; }
 
-    private async Task OnAddExtraAppointment()
-    {
-        // try
-        // {
-        //     var newAppointment = await ShowAdditionPatient.Handle(new AdditionPatientViewModel(Login));
-        //     if (newAppointment is not null) _doctorInteractor.AddAppointmnet(newAppointment, true);
-        // }
-        // catch (Exception ex)
-        // {
-        //     await ShowUncatchedExceptionMessageBox(ex);
-        // }
-    }
-
     private async Task OnAddNextAppointment()
     {
         try
         {
-            // if (SelectedClient is null) throw new DefaultWorkPlaceViewModelException("Не выбран клиент");
+            if (SelectedClient is null)
+            {
+                throw new DefaultWorkPlaceViewModelException("Не выбран клиент");
+            }
+            DateTime dateTime = DateTime.Parse(SelectedClientNewAppointmentTime!);
+            var Polyclinic = _medicineClinicRepository.Read(1);
 
-            // if (SelectedClient.MeetTime.Year != DateTime.Today.Year &&
-            //     SelectedClient.MeetTime.Month != DateTime.Today.Month &&
-            //     SelectedClient.MeetTime.Day != DateTime.Today.Day &&
-            //     SelectedClient.MeetTime.Hour != DateTime.Today.Hour)
-            //     throw new DefaultWorkPlaceViewModelException("Еще не подошло время прием клиента");
+            if (IsDoctor)
+            {
 
-            // if (SelectedClientNewAppointmentTime is null)
-            //     throw new DefaultWorkPlaceViewModelException("Не введено время следующей записи");
-
-            // if (SelectedClientNewComplaints is null)
-            //     throw new DefaultWorkPlaceViewModelException("Не введно состояние пациента");
-
-
-            // _doctorInteractor.AddAppointmnet(new Appointment(
-            //         Login,
-            //         SelectedClient.Id,
-            //         DateTime.ParseExact(SelectedClientNewAppointmentTime, "HH:mm dd.MM.yyyy",
-            //             CultureInfo.CurrentCulture),
-            //         SelectedClientNewComplaints
-            //     )
-            // );
+                var appointment = new Appointment(id, SelectedClient.Client.ID, dateTime, -1, new MeetPlace(Polyclinic, Polyclinic.Cabinets.First()));
+                SelectedClient.Client.AddAppointment(appointment);
+                _appoinmentRepository.Add(appointment);
+                ShowingClients = ReadDoctorClients(id);
+            }
+            if (IsRegistrar)
+            {
+                if (SelectedDoctor is null)
+                {
+                    throw new DefaultWorkPlaceViewModelException("Не выбран доктор");
+                }
+                var appointment = new Appointment(SelectedDoctor.Doctor.ID, SelectedClient.Client.ID, dateTime, -1, new MeetPlace(Polyclinic, Polyclinic.Cabinets.First()));
+                _appoinmentRepository.Add(appointment);
+            }
         }
         catch (FormatException ex)
         {
@@ -117,24 +164,7 @@ public class DefaultWorkPlaceViewModel : ViewModelBase, IRoutableViewModel, IAct
         }
     }
 
-    private void UpdateDoctorClients(Doctor doctor)
-    {
-        UpdateDoctorClients(doctor.Login);
-    }
 
-    private void UpdateDoctorClients(string doctorLogin)
-    {
-        //     _allClients = new ObservableCollection<Client>(_doctorInteractor.GetDoctorClients(doctorLogin));
-        //     _todaysClients = new ObservableCollection<Client>();
-        //     foreach (var client in _allClients)
-        //         if (client.MeetTime.Year == DateTime.Today.Year &&
-        //             client.MeetTime.Month == DateTime.Today.Month &&
-        //             client.MeetTime.Day == DateTime.Today.Day)
-        //             _todaysClients.Add(client);
-
-        //     SetAllClientsToShow();
-        // }
-    }
 
     public class DefaultWorkPlaceViewModelException : Exception
     {
@@ -143,9 +173,45 @@ public class DefaultWorkPlaceViewModel : ViewModelBase, IRoutableViewModel, IAct
         }
     }
 
+    public class DoctorToShow
+    {
+        public Doctor Doctor { get; }
+        public DoctorToShow(Doctor doctor)
+        {
+            Doctor = doctor;
+        }
+        public static IEnumerable<DoctorToShow> FromArray(IEnumerable<Doctor> doctors)
+        {
+            var clientsToShow = new List<DoctorToShow>();
+            foreach (var doctor in doctors)
+            {
+                clientsToShow.Add(new DoctorToShow(doctor));
+            }
+            return clientsToShow;
+        }
+        public override string ToString()
+        {
+            return new string(
+                "Имя: " + Doctor.Name +
+                "\n Фамилия:" + Doctor.Surname +
+                "\n Описание: " + Doctor.Description
+                );
+        }
+    }
+
     public class ClientToShow
     {
         public Client Client { get; }
+
+        public static IEnumerable<ClientToShow> FromArray(IEnumerable<Client> clients)
+        {
+            var clientsToShow = new List<ClientToShow>();
+            foreach (var client in clients)
+            {
+                clientsToShow.Add(new ClientToShow(client));
+            }
+            return clientsToShow;
+        }
         public ClientToShow(Client client)
         {
             Client = client;
@@ -167,14 +233,14 @@ public class DefaultWorkPlaceViewModel : ViewModelBase, IRoutableViewModel, IAct
                 benefits.Append(
                     "Номер документа: " + education.Number + " \n" +
                     "Серия документа: " + education.Serial + " \n" +
-                    "Дата получения: " + education.Date + " \n");
+                    "Дата получения образования: " + education.Date + " \n");
             }
 
             return new string(
                 "Имя: " + Client.Name + " \n" +
                 "Фамилия: " + Client.Surname + " \n" +
                 "Отчество: " + Client.PatronymicName + " \n" +
-                "Адрес: " + Client.Address + " \n" +
+                "Адрес: " + Client.Address.City + ", " + Client.Address.Street + ", " + Client.Address.ZipCode + " \n" +
                 "Дата рождения: " + Client.DateOfBirth + " \n" +
                 educs + benefits
             );

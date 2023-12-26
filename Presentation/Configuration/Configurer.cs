@@ -19,7 +19,7 @@ namespace Presentation.Configuration;
 
 public class RepositoriesConfigurer : IDisposable
 {
-    private static string PathToDatabase { get; set; } = @"F:\ProgramFiles\Programming\ClinicWorkerAWPlace\Data\data.db";
+    private static string PathToDatabase { get; set; } = @"C:\Users\s-hro\OneDrive\Документы\Prog\ClinicWorkerAWPlace\Data\data.db";
     private static string ConnectionString { get; } = $"Data Source={PathToDatabase};Version=3;";
 
     private static RepositoriesConfigurer? repositoriesConfigurer;
@@ -54,6 +54,16 @@ public class RepositoriesConfigurer : IDisposable
         }
     }
 
+    public IRegistrarRepository GetRegistrarRepository()
+    {
+        return registrarRepository ??= new RegistrarRepository(dbConnection,
+                                                               "HumanUser",
+                                                               GetBenefitRepository(),
+                                                               GetContactRepository(),
+                                                               GerEducationRepository(),
+                                                               GetMedicalPolicyRepository(),
+                                                               GetAddressRepository());
+    }
     public IDiseaseRepository GetDiseaseRepository()
     {
         CheckDbConnection();
@@ -90,14 +100,15 @@ public class RepositoriesConfigurer : IDisposable
                                                          GerEducationRepository(),
                                                          GetMedicalPolicyRepository(),
                                                          GetContactRepository(),
-                                                         GetAppointmentRepository());
+                                                         GetAppointmentRepository(),
+                                                         GetAddressRepository());
     }
 
 
     public IAppoinmentRepository GetAppointmentRepository()
     {
         CheckDbConnection();
-        return appoinmentRepository ??= new AppoinmentRepository(dbConnection, "", GetClinicRepository(), GetCabinetRepository());
+        return appoinmentRepository ??= new AppoinmentRepository(dbConnection, "Appointment", GetClinicRepository(), GetCabinetRepository());
     }
 
     public ICabinetRepository GetCabinetRepository()
@@ -151,7 +162,7 @@ public class RepositoriesConfigurer : IDisposable
 
     public ITreatmentStageRepository GetTreatmentStageRepository()
     {
-        return treatmentStageRepository ??= new TreatmentStageRepository(dbConnection, "TreatmentStage", GetDrugRepository(), GetReferralForAnalysisRepository());
+        return treatmentStageRepository ??= new TreatmentStageRepository(dbConnection, "TreatmentStage", GetDrugRepository(), GetReferralForAnalysisRepository(), GetDiseaseRepository());
     }
 
     public IReferralForAnalysisRepository GetReferralForAnalysisRepository()

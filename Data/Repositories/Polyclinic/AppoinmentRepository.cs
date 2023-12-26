@@ -19,13 +19,11 @@ public class AppoinmentRepository : BaseSQLiteRepository<Appointment>, IAppoinme
 
     public async Task AddAsync(Appointment entity)
     {
-        await AddRowAsync(new Dictionary<string, object>
+        await AddRowAsync(entity.Date, "Date", new Dictionary<string, object>
         {
-            {"CabinetId", entity.MeetPlace.Cabinet.ID},
             {"ClinicId", entity.MeetPlace.Polyclinic.ID},
             {"EmployeeUserId", entity.DoctorID},
-            {"ClientId", entity.ClientID},
-            {"Date", entity.Date},
+            {"HumanUserId", entity.ClientID},
         });
     }
 
@@ -36,30 +34,29 @@ public class AppoinmentRepository : BaseSQLiteRepository<Appointment>, IAppoinme
 
     public override async Task<Appointment> ReadAsync(int id)
     {
+        var Clinic = await MedicineClinicRepository.ReadAsync(
+                    await ReadPremitiveAsync<int>("ClinicId", id)
+                );
         return new Appointment(
             await ReadPremitiveAsync<int>("EmployeeUserId", id),
-            await ReadPremitiveAsync<int>("ClientId", id),
+            await ReadPremitiveAsync<int>("HumanUserId", id),
             await ReadPremitiveAsync<DateTime>("Date", id),
             id,
             new MeetPlace(
-                await MedicineClinicRepository.ReadAsync(
-                    await ReadPremitiveAsync<int>("ClinicId", id)
-                ),
-                await CabinetRepository.ReadAsync(
-                    await ReadPremitiveAsync<int>("CabinetId", id)
-                )
+                Clinic,
+                Clinic.Cabinets.First()
              )
         );
     }
 
     public async Task UpdateAsync(Appointment nextEntity)
     {
+        await UpdatePremitiveAsync(nextEntity.ID, "Date", nextEntity.Date);
         await UpdatePremitiveAsync(nextEntity.ID,
             new Dictionary<string, string>() {
                 {"Description", nextEntity.Description ?? string.Empty},
                 {"EmployeeUserId", nextEntity.DoctorID.ToString()},
-                {"ClientId", nextEntity.ClientID.ToString()},
-                {"Date", nextEntity.Date.ToString()}
+                {"ClientId", nextEntity.ClientID.ToString()}
             }
         );
     }

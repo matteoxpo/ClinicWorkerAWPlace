@@ -5,7 +5,7 @@ using Domain.Repositories.Polyclinic;
 
 namespace Domain.Repositories.App.Role;
 
-public interface IClientRepository : IUserRepository<Client>
+public interface IClientRepository : IUserRepository<Client>, IReadaleAll<Client>
 {
     public ICollection<Appointment> GetAppointments(int id);
     public ICollection<Appointment> GetAppointments(string login);
