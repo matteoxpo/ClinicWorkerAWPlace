@@ -1,3 +1,4 @@
+using System.Data.SQLite;
 using System.Linq.Expressions;
 using Domain.Entities.Polyclinic.Analysis;
 using Domain.Repositories.Polyclinic;
@@ -6,7 +7,7 @@ namespace Data.Repositories.Polyclinic;
 
 public class ReferralForAnalysisRepository : BaseSQLiteRepository<ReferralForAnalysis>, IReferralForAnalysisRepository
 {
-    public ReferralForAnalysisRepository(string connectionString, string tableName, IAnalysisRepository analysisRepository) : base(connectionString, tableName)
+    public ReferralForAnalysisRepository(SQLiteConnection dbConnection, string tableName, IAnalysisRepository analysisRepository) : base(dbConnection, tableName)
     {
         AnalysisRepository = analysisRepository;
     }

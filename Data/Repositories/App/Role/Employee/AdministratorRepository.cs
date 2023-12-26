@@ -1,3 +1,4 @@
+using System.Data.SQLite;
 using Domain.Entities.App.Role.Employees;
 using Domain.Entities.Common;
 using Domain.Entities.People.Attribute;
@@ -9,8 +10,13 @@ namespace Data.Repositories.App.Role.Employee;
 
 public class AdministratorRepository : BaseSQLiteRepository<Administrator>, IAdministratorRepository
 {
-    public AdministratorRepository(string connectionString, string tableName) : base(connectionString, tableName)
+    public AdministratorRepository(SQLiteConnection dbConnection, string tableName, IBenefitRepository benefitRepository, IContactRepository contactRepository, IEducationRepository educationRepository, IMedicalPolicyRepository medicalPolicyRepository, IAddressRepository addressRepository) : base(dbConnection, tableName)
     {
+        BenefitRepository = benefitRepository;
+        ContactRepository = contactRepository;
+        EducationRepository = educationRepository;
+        MedicalPolicyRepository = medicalPolicyRepository;
+        AddressRepository = addressRepository;
     }
 
     public IBenefitRepository BenefitRepository { get; }
@@ -20,6 +26,9 @@ public class AdministratorRepository : BaseSQLiteRepository<Administrator>, IAdm
     public IEducationRepository EducationRepository { get; }
 
     public IMedicalPolicyRepository MedicalPolicyRepository { get; }
+
+    public IAddressRepository AddressRepository { get; }
+
     public Task AddAsync(Administrator entity)
     {
         throw new NotImplementedException();

@@ -1,3 +1,4 @@
+using System.Data.SQLite;
 using Domain.Entities.People.Attribute;
 using Domain.Repositories.HumanAttribute;
 
@@ -5,7 +6,7 @@ namespace Data.Repositories.HumanAttribute;
 
 public class EducationRepository : BaseSQLiteRepository<Education>, IEducationRepository
 {
-    public EducationRepository(string connectionString, string tableName) : base(connectionString, tableName)
+    public EducationRepository(SQLiteConnection dbConnection, string tableName) : base(dbConnection, tableName)
     {
     }
 

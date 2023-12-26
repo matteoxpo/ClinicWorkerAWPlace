@@ -1,3 +1,4 @@
+using System.Data.SQLite;
 using System.Security.Authentication;
 using Domain.Entities.Common;
 using Domain.Repositories.Common;
@@ -6,7 +7,7 @@ namespace Data.Repositories.Common;
 
 public class ContactRepository : BaseSQLiteRepository<Contact>, IContactRepository
 {
-    public ContactRepository(string connectionString, string tableName) : base(connectionString, tableName)
+    public ContactRepository(SQLiteConnection dbConnection, string tableName) : base(dbConnection, tableName)
     {
     }
 

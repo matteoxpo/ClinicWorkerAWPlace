@@ -45,7 +45,7 @@
                     </StackPanel>
                 </Border>
 
-                <ListBox
+                <!-- <ListBox
                     HorizontalAlignment="Stretch"
                     Height="500"
                     CornerRadius="5"
@@ -54,19 +54,19 @@
                     ScrollViewer.VerticalScrollBarVisibility="Auto"
                     SelectionMode="AlwaysSelected"
                     SelectedItem="{Binding SelectedClient}"
-                    Items="{Binding ShowingClients}" />
+                    Items="{Binding ShowingClients}" /> -->
 
-                <Button Command="{Binding OpenAddingExtraAppointment}" HorizontalAlignment="Center"
+                <!-- <Button Command="{Binding OpenAddingExtraAppointment}" HorizontalAlignment="Center"
                         FontSize="{StaticResource TextSize}"
-                        Content="Из 'живой очереди'" />
+                        Content="Из 'живой очереди'" /> -->
             </StackPanel>
-            <Border Grid.Column="1" Width="5" Background="{StaticResource BackGroundColor}" />
+            <!-- <Border Grid.Column="1" Width="5" Background="{StaticResource BackGroundColor}" />
 
             <defaultViews:ClientData HorizontalAlignment="Stretch" Grid.Column="2" DataContext="{Binding}" />
 
-            <Border Grid.Column="3" Width="5" Background="{StaticResource BackGroundColor}" />
+            <Border Grid.Column="3" Width="5" Background="{StaticResource BackGroundColor}" /> -->
 
-            <Border Grid.Column="4" Background="{StaticResource CardColor}" CornerRadius="5">
+            <!-- <Border Grid.Column="4" Background="{StaticResource CardColor}" CornerRadius="5">
                 <StackPanel Spacing="5">
                     <TextBlock
                         FontSize="{StaticResource SubTitleTextSize}"
@@ -97,12 +97,6 @@
                         Text="{Binding SelectedClientNewAppointmentTime, Mode=TwoWay}"
                         Watermark="ЧЧ:мм дд.ММ.гггг"
                         FontSize="{StaticResource TextSize}" />
-
-                    <Button Command="{Binding AddAppointment}"
-                            HorizontalAlignment="Center"
-                            FontSize="{StaticResource TextSize}"
-                            Content="Записать пациента" />
-
 
                     <Grid ColumnDefinitions="2*, Auto,3*">
                         <StackPanel Grid.Column="0" Spacing="3">
@@ -155,16 +149,10 @@
                                 ScrollViewer.HorizontalScrollBarVisibility="Auto"
                                 ScrollViewer.VerticalScrollBarVisibility="Auto"
                                 Items="{Binding SelectedAnalysisTimetable}" />
-
-                            <Button
-                                HorizontalAlignment="Center"
-                                Command="{Binding AddAnalysis}"
-                                FontSize="{StaticResource TextSize}"
-                                Content="Направить на анализ" />
                         </StackPanel>
                     </Grid>
                 </StackPanel>
-            </Border>
+            </Border> -->
 
         </Grid>
     </StackPanel>

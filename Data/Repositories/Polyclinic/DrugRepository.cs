@@ -1,3 +1,4 @@
+using System.Data.SQLite;
 using Domain.Entities.Polyclinic.Drug;
 using Domain.Repositories.Polyclinic;
 
@@ -5,7 +6,7 @@ namespace Data.Repositories.Polyclinic;
 
 public class DrugRepository : BaseSQLiteRepository<Drug>, IDrugRepository
 {
-    public DrugRepository(string connectionString, string tableName) : base(connectionString, tableName)
+    public DrugRepository(SQLiteConnection dbConnection, string tableName) : base(dbConnection, tableName)
     {
     }
 

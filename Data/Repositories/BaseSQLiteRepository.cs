@@ -8,11 +8,10 @@ namespace Data.Repositories;
 
 public abstract class BaseSQLiteRepository<DomainType>
 {
-    public BaseSQLiteRepository(string connectionString, string tableName)
+    public BaseSQLiteRepository(SQLiteConnection dbConnection, string tableName)
     {
-        _connectionString = new string(connectionString ?? throw new NullReferenceException("Connection string can't be null"));
         TableName = new string(tableName) ?? throw new NullReferenceException("Name of table can't be null");
-        _dbConnection = new SQLiteConnection(_connectionString);
+        _dbConnection = dbConnection;
     }
 
     protected readonly SQLiteConnection _dbConnection;
@@ -31,9 +30,9 @@ public abstract class BaseSQLiteRepository<DomainType>
     protected async Task AddRowAsync(Dictionary<string, string> columnValues, string? tableName = null)
     {
         tableName ??= TableName;
-        await _dbConnection.OpenAsync();
-        string columns = string.Join(", ", columnValues.Keys);
-        string values = string.Join(", ", columnValues.Keys.Select(k => "@" + k));
+
+        string columns = string.Join(", ", columnValues.Keys.Where(k => columnValues[k] is not null));
+        string values = string.Join(", ", columnValues.Keys.Where(k => columnValues[k] is not null).Select(k => "@" + k));
 
         string query = $"INSERT INTO {tableName} ({columns}) VALUES ({values})";
 
@@ -41,29 +40,30 @@ public abstract class BaseSQLiteRepository<DomainType>
         {
             foreach (var kvp in columnValues)
             {
-                command.Parameters.AddWithValue("@" + kvp.Key, kvp.Value);
+                if (kvp.Value is not null)
+                {
+                    command.Parameters.AddWithValue("@" + kvp.Key, kvp.Value);
+                }
             }
-
             command.ExecuteNonQuery();
         }
-
-        await _dbConnection.CloseAsync();
     }
+
     protected async Task DeleteRowAsync(int id, string? tableName = null)
     {
         tableName ??= TableName;
-        await _dbConnection.OpenAsync();
+
         using (var command = new SQLiteCommand($"DELETE FROM {tableName} WHERE Id = @id", _dbConnection))
         {
             command.Parameters.AddWithValue("@id", id);
             command.ExecuteNonQuery();
         }
-        await _dbConnection.CloseAsync();
+
     }
     protected async Task<ICollection<int>> ReadAllIdAsync(string? tableName = null)
     {
         tableName ??= TableName;
-        await _dbConnection.OpenAsync();
+
         var ids = new List<int>();
 
         using (var command = new SQLiteCommand($"SELECT Id FROM {tableName}", _dbConnection))
@@ -76,13 +76,13 @@ public abstract class BaseSQLiteRepository<DomainType>
                 }
             }
         }
-        await _dbConnection.CloseAsync();
+
         return ids;
     }
 
     protected async Task<PrimitiveType> ReadPremitiveAsync<PrimitiveType>(string columnName, int id, string? tableName = null, string? idVariableName = null)
     {
-        await _dbConnection.OpenAsync();
+
         tableName ??= TableName;
         idVariableName ??= "Id";
 
@@ -93,14 +93,14 @@ public abstract class BaseSQLiteRepository<DomainType>
             {
                 if (!await reader.ReadAsync())
                 {
-                    await _dbConnection.CloseAsync();
+
                     throw new BaseSQLiteRepositoryException($"No data matches in table {tableName} with Id = {id}");
                 }
                 var converter = TypeDescriptor.GetConverter(typeof(PrimitiveType));
                 var result = (PrimitiveType)converter.ConvertFromString(
                                 reader[columnName].ToString() ?? throw new BaseSQLiteRepositoryException("Error reading")
                             );
-                await _dbConnection.CloseAsync();
+
 
                 return result;
             }
@@ -109,7 +109,7 @@ public abstract class BaseSQLiteRepository<DomainType>
     protected async Task<ICollection<PrimitiveType>> ReadPremitiveArrayFromColumnAsync<PrimitiveType>(string columnName, int id, string? tableName = null, string? idVariableName = null)
     {
         tableName ??= TableName;
-        await _dbConnection.OpenAsync();
+
         idVariableName ??= "Id";
 
         var ids = new List<PrimitiveType>();
@@ -127,13 +127,13 @@ public abstract class BaseSQLiteRepository<DomainType>
             }
         }
 
-        await _dbConnection.CloseAsync();
+
         return ids;
 
     }
     protected async Task<ICollection<PrimitiveType>> ReadPremitivesAsync<PrimitiveType>(string columnName, string? tableName = null)
     {
-        await _dbConnection.OpenAsync();
+
         tableName ??= TableName;
         var resultList = new List<PrimitiveType>();
         using (var command = new SQLiteCommand($"SELECT {columnName} FROM {tableName}", _dbConnection))
@@ -150,7 +150,7 @@ public abstract class BaseSQLiteRepository<DomainType>
 
             }
         }
-        await _dbConnection.CloseAsync();
+
         return resultList;
     }
     public virtual async Task<ICollection<DomainType>?> ReadAllAsync()
@@ -192,13 +192,12 @@ public abstract class BaseSQLiteRepository<DomainType>
     protected async Task UpdatePremitiveAsync(int id, string columnName, string newValue, string? tableName = null)
     {
         tableName ??= TableName;
+
         using (var command = new SQLiteCommand($"UPDATE {tableName} SET {columnName} = @newValue WHERE Id = @id", _dbConnection))
         {
-            await _dbConnection.OpenAsync();
             command.Parameters.AddWithValue("@id", id);
             command.Parameters.AddWithValue("@newValue", newValue);
             await command.ExecuteNonQueryAsync();
-            await _dbConnection.CloseAsync();
         }
     }
 

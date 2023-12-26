@@ -10,31 +10,20 @@ public class TreatmentStage
 
     public TreatmentStage(ICollection<Drug.Drug> drugs,
                           string description,
-                          ICollection<Disease.Disease> diagnosis,
-                          DateTime date,
+                          Disease.Disease diagnosis,
                           ICollection<ReferralForAnalysis> analyses,
-                          int doctorId,
-                          int clientId,
                           int id
                           )
     {
         Drug = drugs;
         Description = description;
         Diagnosis = diagnosis;
-        Date = date;
         Analyses = analyses;
-        DoctorId = doctorId;
-        ClientId = clientId;
         ID = id;
     }
 
     public int ID { get; }
-
-    public int DoctorId { get; }
-    public int ClientId { get; }
-
-    public DateTime Date { get; set; }
-    public ICollection<Disease.Disease> Diagnosis { get; }
+    public Disease.Disease Diagnosis { get; }
 
     public ICollection<ReferralForAnalysis> Analyses { get; }
 

@@ -1,3 +1,4 @@
+using System.Data.SQLite;
 using Domain.Entities.App.Role;
 using Domain.Entities.App.Role.Employees;
 using Domain.Entities.Common;
@@ -11,13 +12,13 @@ namespace Data.Repositories.App.Role.Employee;
 
 public class DoctorRepository : BaseSQLiteRepository<Doctor>, IDoctorRepository
 {
-    public DoctorRepository(string connectionString,
+    public DoctorRepository(SQLiteConnection dbConnection,
                             string tableName,
                             IBenefitRepository benefitRepository,
                             IEducationRepository educationRepository,
                             IMedicalPolicyRepository medicalPolicyRepository,
                             IContactRepository contactRepository,
-                            IAppoinmentRepository appoinmentRepository) : base(connectionString, tableName)
+                            IAppoinmentRepository appoinmentRepository) : base(dbConnection, tableName)
     {
         BenefitRepository = benefitRepository;
         EducationRepository = educationRepository;
@@ -36,7 +37,7 @@ public class DoctorRepository : BaseSQLiteRepository<Doctor>, IDoctorRepository
 
     public IAppoinmentRepository AppoinmentRepository { get; }
 
-    public IAddressRepository AddressRepository { get; };
+    public IAddressRepository AddressRepository { get; }
 
     public Task AddAsync(Doctor entity)
     {

@@ -7,7 +7,7 @@ using Domain.Repositories.Polyclinic;
 namespace Data.Repositories.Polyclinic;
 public class CabinetRepository : BaseSQLiteRepository<Cabinet>, ICabinetRepository
 {
-    public CabinetRepository(string connectionString, string tableName) : base(connectionString, tableName)
+    public CabinetRepository(SQLiteConnection dbConnection, string tableName) : base(dbConnection, tableName)
     {
     }
 
@@ -22,7 +22,6 @@ public class CabinetRepository : BaseSQLiteRepository<Cabinet>, ICabinetReposito
     public async Task<IEnumerable<Cabinet>> ReadCabinetByClinicIdAsync(int id)
     {
         var cabs = new List<Cabinet>();
-        await _dbConnection.OpenAsync();
         using (var command = new SQLiteCommand($"SELECT Number, Type, Id FROM Cabinet WHERE ClinicId = @id", _dbConnection))
         {
             command.Parameters.AddWithValue("@id", id);
@@ -38,7 +37,6 @@ public class CabinetRepository : BaseSQLiteRepository<Cabinet>, ICabinetReposito
                         )
                     );
                 }
-                await _dbConnection.CloseAsync();
             }
         }
         return cabs;
@@ -47,7 +45,7 @@ public class CabinetRepository : BaseSQLiteRepository<Cabinet>, ICabinetReposito
 
 public class MedicineClinicRepository : BaseSQLiteRepository<MedicineClinic>, IMedicineClinicRepository
 {
-    public MedicineClinicRepository(string connectionString, string tableName, ICabinetRepository cabinetRepository, IAddressRepository addressRepository, IContactRepository contactRepository) : base(connectionString, tableName)
+    public MedicineClinicRepository(SQLiteConnection dbConnection, string tableName, ICabinetRepository cabinetRepository, IAddressRepository addressRepository, IContactRepository contactRepository) : base(dbConnection, tableName)
     {
         CabinetRepository = cabinetRepository;
         AddressRepository = addressRepository;

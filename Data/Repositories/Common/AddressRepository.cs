@@ -1,3 +1,4 @@
+using System.Data.SQLite;
 using Domain.Entities.Common;
 using Domain.Repositories;
 using Domain.Repositories.Common;
@@ -6,7 +7,7 @@ namespace Data.Repositories.Common;
 
 public class AddressRepository : BaseSQLiteRepository<Address>, IAddressRepository
 {
-    public AddressRepository(string connectionString, string tableName) : base(connectionString, tableName)
+    public AddressRepository(SQLiteConnection dbConnection, string tableName) : base(dbConnection, tableName)
     {
     }
 

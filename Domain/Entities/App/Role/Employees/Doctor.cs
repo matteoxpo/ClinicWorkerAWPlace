@@ -42,5 +42,13 @@ public sealed class Doctor : Employee
     {
         Appointments = appointments;
     }
+    public void AddAppointment(Appointment appointment)
+    {
+        if (Appointments.Contains(appointment))
+        {
+            throw new Exception("");
+        }
+        Appointments.Add(appointment);
+    }
     public ICollection<Appointment> Appointments { get; set; }
 }

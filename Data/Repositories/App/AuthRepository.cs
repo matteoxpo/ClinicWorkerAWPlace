@@ -8,16 +8,12 @@ namespace Data.Repositories.App;
 
 public class AuthRepository : BaseSQLiteRepository<Auth>, IAuthRepository
 {
-    public AuthRepository(string connectionString, string tableName, IContactRepository contactRepository) : base(connectionString, tableName)
+    public AuthRepository(SQLiteConnection dbConnection, string tableName) : base(dbConnection, tableName)
     {
-        ContactRepository = contactRepository;
     }
-
-    public IContactRepository ContactRepository { get; }
 
     public async Task<bool> AuthAsync(string login, string password)
     {
-        await _dbConnection.OpenAsync();
 
         using (var command = new SQLiteCommand($"SELECT Login FROM {TableName} WHERE Password = @password AND Login = @login", _dbConnection))
         {
@@ -30,35 +26,88 @@ public class AuthRepository : BaseSQLiteRepository<Auth>, IAuthRepository
                 {
                     result = true;
                 }
-                await _dbConnection.CloseAsync();
 
                 return result;
             }
         }
     }
-    public async Task<IEnumerable<Contact>> GetContactsAsync(string login)
-    {
-        int[] ContactsIds;
 
-        await _dbConnection.OpenAsync();
-        using (var command = new SQLiteCommand($"SELECT Login FROM {TableName} WHERE Login = @login", _dbConnection))
+    public async Task<int> GetIdByLoginAsync(string login)
+    {
+
+        using (var command = new SQLiteCommand($"SELECT Id, Login FROM {TableName} WHERE Login = @login", _dbConnection))
         {
             command.Parameters.AddWithValue("@login", login);
-
-
             using (var reader = command.ExecuteReader())
             {
-                if (!await reader.ReadAsync())
+                if (await reader.ReadAsync())
                 {
-                    throw new BaseSQLiteRepositoryException($"No User with login = {login}");
+                    var result = int.Parse(reader["Id"].ToString());
+
+                    return result;
                 }
-                ContactsIds = (reader["Contact"].ToString() ?? throw new BaseSQLiteRepositoryException($"User {login} has no contacts")).Split(' ').Select(int.Parse).ToArray();
+
+                throw new BaseSQLiteRepositoryException($"Cant find user with login {login}");
             }
         }
-        await _dbConnection.CloseAsync();
+    }
 
+    private async Task<string> GetJobTittle(int id)
+    {
 
-        return await ContactRepository.ReadAsync(ContactsIds);
+        using (var command = new SQLiteCommand($"SELECT Login FROM EmployeeUser WHERE HumanUserId = @humanuserid", _dbConnection))
+        {
+            command.Parameters.AddWithValue("@humanuserid", id);
+            using (var reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    return reader["Name"].ToString();
+                }
+            }
+        }
+        return string.Empty;
+    }
+
+    private IEnumerable<string> GetJobNameByJobId(int id)
+    {
+        var res = new List<string>();
+        using (var command = new SQLiteCommand($"SELECT Name FROM JobTittle WHERE Id = @id", _dbConnection))
+        {
+            command.Parameters.AddWithValue("@id", id);
+            using (var reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    res.Add(
+                        reader["Name"].ToString()
+                    );
+                }
+            }
+        }
+        return res;
+    }
+
+    public async Task<bool> IsUserAsync<Type>(int id) where Type : User
+    {
+
+        using (var command = new SQLiteCommand($"SELECT JobTittleId FROM EmployeeUser WHERE HumanUserId = @humanuserid", _dbConnection))
+        {
+            command.Parameters.AddWithValue("@humanuserid", id);
+            using (var reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    var jobs = GetJobNameByJobId(int.Parse(reader["JobTittleId"].ToString()));
+                    if (jobs.Contains(typeof(Type).Name))
+                    {
+                        return true;
+                    }
+                    // if (reader[nameof(Type)].ToString())
+                }
+            }
+        }
+        return false;
     }
 
     public override async Task<Auth?> ReadAsync(int id)

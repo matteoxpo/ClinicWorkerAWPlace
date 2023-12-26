@@ -2,7 +2,7 @@ namespace Domain.Entities.Polyclinic.Treatment;
 
 public class TreatmentCourse
 {
-    ICollection<TreatmentStage> TreatmentStages { get; set; }
+    public ICollection<TreatmentStage> TreatmentStages { get; set; }
 
     public (ICollection<Disease.Disease>, DateTime) LastDiagnoses()
     {

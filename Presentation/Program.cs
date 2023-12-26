@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using Avalonia;
 using Avalonia.ReactiveUI;
 using Data.Repositories;
 using Domain.Entities;
 using Domain.Entities.People;
-using Domain.Entities.Role;
+using Presentation.Configuration;
 
 namespace Presentation;
 
@@ -17,7 +18,6 @@ internal class Program
     [STAThread]
     public static void Main(string[] args)
     {
-        // SetData();
         BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
     }
 

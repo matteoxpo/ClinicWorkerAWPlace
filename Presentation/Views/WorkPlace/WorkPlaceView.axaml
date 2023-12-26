@@ -17,16 +17,19 @@
     </Design.DataContext>
     <Grid>
 
-        <Grid RowDefinitions="Auto,*" IsVisible="{Binding IsUserDocotr}">
+        <Grid RowDefinitions="Auto,*">
             <Menu Grid.Row="0" Background="{StaticResource MenuBarColor}" CornerRadius="5" VerticalAlignment="Top">
+                
                 <MenuItem FontSize="{StaticResource MenuItemTextSize}" Foreground="White"
                           Command="{Binding GoToDefault}"
-                          Header="Рабочая зона" />
-                <MenuItem FontSize="{StaticResource MenuItemTextSize}" Foreground="White"
+                          Header="Рабочая среда" />
+                <MenuItem IsVisible="{Binding IsDoctor}" FontSize="{StaticResource MenuItemTextSize}" Foreground="White"
                           Command="{Binding GoListOfMedicines}"
-                          Header="Список медикаментов" />
-                <MenuItem FontSize="{StaticResource MenuItemTextSize}" Foreground="White" Command="{Binding GoToHelp}"
-                          Header="Помощь" />
+                          Header="Список медикаментов и заболеваний" />
+                
+                <MenuItem IsVisible="{Binding IsRegistrar}" FontSize="{StaticResource MenuItemTextSize}" Foreground="White" Command="{Binding RegistrarView}"
+                          Header="Меню регистратора" />
+
                 <MenuItem FontSize="{StaticResource MenuItemTextSize}" Foreground="White"
                           Command="{Binding GoToProfile}"
                           Header="Профиль" />

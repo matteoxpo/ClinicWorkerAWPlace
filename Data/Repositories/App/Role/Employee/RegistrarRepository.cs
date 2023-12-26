@@ -1,3 +1,4 @@
+using System.Data.SQLite;
 using Domain.Entities.App.Role;
 using Domain.Entities.App.Role.Employees;
 using Domain.Entities.Common;
@@ -10,8 +11,13 @@ namespace Data.Repositories.App.Role.Employee;
 
 public class RegistrarRepository : BaseSQLiteRepository<Registrar>, IUserRepository<Registrar>
 {
-    public RegistrarRepository(string connectionString, string tableName) : base(connectionString, tableName)
+    public RegistrarRepository(SQLiteConnection dbConnection, string tableName, IBenefitRepository benefitRepository, IContactRepository contactRepository, IEducationRepository educationRepository, IMedicalPolicyRepository medicalPolicyRepository, IAddressRepository addressRepository) : base(dbConnection, tableName)
     {
+        BenefitRepository = benefitRepository;
+        ContactRepository = contactRepository;
+        EducationRepository = educationRepository;
+        MedicalPolicyRepository = medicalPolicyRepository;
+        AddressRepository = addressRepository;
     }
 
     public IBenefitRepository BenefitRepository { get; }
@@ -91,6 +97,7 @@ public class RegistrarRepository : BaseSQLiteRepository<Registrar>, IUserReposit
             ),
             await ReadPremitiveAsync<string>("Description", id)
         );
+        throw new NotImplementedException();
     }
 
     public Task UpdateAsync(Registrar nextEntity)

@@ -5,6 +5,7 @@ public interface ITreatmentStageRepository : IUpdatable<TreatmentStage>, IAddabl
 {
     IDrugRepository DrugRepository { get; }
     IReferralForAnalysisRepository ReferralForAnalysisRepository { get; }
+    IDiseaseRepository DiseaseRepository { get; }
 }
 
 public interface ITreatmentCourseRepositrory : IBaseRepository<TreatmentCourse>

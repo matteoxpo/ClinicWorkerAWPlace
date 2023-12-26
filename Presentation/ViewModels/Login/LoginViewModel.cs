@@ -3,9 +3,9 @@ using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Data.Repositories;
-using Domain.UseCases;
-using MessageBox.Avalonia;
-using MessageBox.Avalonia.DTO;
+using Data.Repositories.App;
+using Domain.Repositories.App;
+using Presentation.Configuration;
 using Presentation.ViewModels.WorkPlace;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
@@ -14,16 +14,14 @@ namespace Presentation.ViewModels.Login;
 
 public class LoginViewModel : ViewModelBase, IRoutableViewModel
 {
-    private readonly UserEmployeeInteractor _userEmployeeInteractor;
+    private IAuthRepository _authRepository;
 
     public LoginViewModel(IScreen hostScreen)
     {
         HostScreen = hostScreen;
-
         GoToWorkPlace = ReactiveCommand.CreateFromTask(TryAuthorize);
 
-        _userEmployeeInteractor =
-            new UserEmployeeInteractor(UserEmployeeRepository.GetInstance());
+        _authRepository = RepositoriesConfigurer.GetRepositoriesConfigurer().GetAuthRepository();
     }
 
     public ReactiveCommand<Unit, Unit> GoToWorkPlace { get; }
@@ -48,16 +46,16 @@ public class LoginViewModel : ViewModelBase, IRoutableViewModel
             {
                 throw new LoginViewModelException("Не пароль");
             }
-            if (_userEmployeeInteractor.Authorization(UserLogin!, UserPassword!))
+            if (_authRepository.Auth(UserLogin!, UserPassword!))
             {
-                await HostScreen.Router.Navigate.Execute(new WorkPlaceViewModel(HostScreen, UserLogin!));
+
+                // TODO: add menu to choose role
+                await HostScreen.Router.Navigate.Execute(
+                    new WorkPlaceViewModel(HostScreen, await _authRepository.GetIdByLoginAsync(UserLogin))
+                );
             }
         }
         catch (LoginViewModelException e)
-        {
-            await ShowExceptionMessageBox(e);
-        }
-        catch (UserEmployeeException e)
         {
             await ShowExceptionMessageBox(e);
         }

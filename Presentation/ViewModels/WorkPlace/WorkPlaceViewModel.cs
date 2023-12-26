@@ -1,6 +1,7 @@
 using System.Reactive;
 using Data.Repositories;
-using Domain.UseCases;
+using Domain.Entities.App.Role.Employees;
+using Presentation.Configuration;
 using Presentation.ViewModels.Login;
 using Presentation.ViewModels.WorkPlace.Default;
 using ReactiveUI;
@@ -9,22 +10,26 @@ namespace Presentation.ViewModels.WorkPlace;
 
 public class WorkPlaceViewModel : ReactiveObject, IRoutableViewModel, IScreen
 {
-    private string _login;
+    private int _userId;
 
-    public WorkPlaceViewModel(IScreen hostScreen, string login)
+    public bool IsDoctor { get; }
+    public bool IsRegistrar { get; }
+
+    public WorkPlaceViewModel(IScreen hostScreen, int userId)
     {
-        _login = new string(login);
+        _userId = userId;
 
         Router = new RoutingState();
-
-        IsUserDocotr = new UserEmployeeInteractor(UserEmployeeRepository.GetInstance()).IsUserDoctor(login);
+        IsDoctor = RepositoriesConfigurer.GetRepositoriesConfigurer().GetAuthRepository().IsUser<Doctor>(userId);
+        IsRegistrar = RepositoriesConfigurer.GetRepositoriesConfigurer().GetAuthRepository().IsUser<Registrar>(userId);
 
         HostScreen = hostScreen;
         ListOfMedicinesViewModel = new ListOfMedicinesViewModel(this);
-        DefaultWorkPlaceViewModel = new DefaultWorkPlaceViewModel(this, login);
-        WorkPlaceProfileViewModel = new WorkPlaceProfileViewModel(this, login);
+        WorkPlaceProfileViewModel = new WorkPlaceProfileViewModel(this, userId);
         WorkPlaceHelpViewModel = new WorkPlaceHelpViewModel(this);
-        DefaultWorkPlaceViewModel = new DefaultWorkPlaceViewModel(this, login);
+
+        DefaultWorkPlaceViewModel = new DefaultWorkPlaceViewModel(this, userId);
+        DefaultWorkPlaceViewModel = new DefaultWorkPlaceViewModel(this, userId);
 
         GoListOfMedicines = ReactiveCommand.CreateFromObservable(
             () => Router.Navigate.Execute(ListOfMedicinesViewModel));

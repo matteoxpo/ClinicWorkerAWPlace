@@ -1,60 +1,33 @@
 using System;
 using System.Reactive;
-using System.Reactive.Disposables;
 using System.Reactive.Linq;
-using Data.Repositories;
-using Domain.Entities.App.Role;
-using Domain.Entities.People;
-using Domain.UseCases;
+using Domain.Repositories.App;
+using Presentation.Configuration;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
 namespace Presentation.ViewModels.WorkPlace;
 
-
-public class ClientObserver : IObserver<Client>
-{
-    public void OnCompleted()
-    {
-        throw new NotImplementedException();
-    }
-
-    public void OnError(Exception error)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void OnNext(Client value)
-    {
-        throw new NotImplementedException();
-    }
-}
-
 public class WorkPlaceProfileViewModel : ReactiveObject, IRoutableViewModel, IActivatableViewModel
 {
-    private readonly UserEmployeeInteractor _userEmployeeInteractor;
-
-    public WorkPlaceProfileViewModel(IScreen hostScreen, string login)
+    private IAuthRepository authRepository;
+    private int id;
+    public WorkPlaceProfileViewModel(IScreen hostScreen, int id)
     {
-        Login = login;
+        this.id = id;
+
+        authRepository = RepositoriesConfigurer.GetRepositoriesConfigurer().GetAuthRepository();
+
         Activator = new ViewModelActivator();
+
         HostScreen = hostScreen;
-        _userEmployeeInteractor = new UserEmployeeInteractor(UserEmployeeRepository.GetInstance());
-        UserEmployee = _userEmployeeInteractor.Get(login);
-        this.WhenActivated(compositeDisposable =>
-            _userEmployeeInteractor
-                .Observe(login)
-                .Subscribe(UpdateUser)
-                .DisposeWith(compositeDisposable)
-        );
+
         ChangePassword = ReactiveCommand.Create(OnChangePassword);
 
         IsDataInvalid = false;
     }
 
     private string Login { get; }
-
-    [Reactive] public UserEmployee UserEmployee { get; set; }
 
     [Reactive] public string OldPassword { get; set; }
 
@@ -74,11 +47,11 @@ public class WorkPlaceProfileViewModel : ReactiveObject, IRoutableViewModel, IAc
     public string? UrlPathSegment { get; }
     public IScreen HostScreen { get; }
 
-    private void OnChangePassword()
+    private async void OnChangePassword()
     {
         try
         {
-            _userEmployeeInteractor.ChangePassword(Login, OldPassword, NewPassword);
+            await authRepository.ResetPasswordAsync(NewPassword, id);
             IsDataInvalid = false;
             IsPasswordChanged = true;
             NewPassword = OldPassword = string.Empty;
@@ -96,10 +69,5 @@ public class WorkPlaceProfileViewModel : ReactiveObject, IRoutableViewModel, IAc
         }
 
         IsActionOn = true;
-    }
-
-    public void UpdateUser(UserEmployee userEmployee)
-    {
-        UserEmployee = userEmployee;
     }
 }

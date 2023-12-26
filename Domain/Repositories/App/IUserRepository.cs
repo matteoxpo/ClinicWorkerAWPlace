@@ -12,10 +12,11 @@ public interface IUserRepository<UserType> : IBaseRepository<UserType> where Use
     public void ResetPassword(int id, string oldPassword, string newPassword)
     {
         var user = Read(id);
-        if (!user.UpdatePassword(oldPassword, newPassword))
+        if (user.Password != oldPassword)
         {
             throw UserRepositoryException.PasswordError(oldPassword, id);
         }
+        user.Password = newPassword;
         Update(user);
     }
     public Type GetUserSessionType() => typeof(UserType);

@@ -1,3 +1,4 @@
+using System.Data.SQLite;
 using Domain.Entities.Polyclinic.Appointment;
 using Domain.Entities.Polyclinic.Building;
 using Domain.Repositories.Polyclinic;
@@ -6,7 +7,7 @@ namespace Data.Repositories.Polyclinic;
 
 public class AppoinmentRepository : BaseSQLiteRepository<Appointment>, IAppoinmentRepository
 {
-    public AppoinmentRepository(string connectionString, string tableName, IMedicineClinicRepository medicineClinicRepository, ICabinetRepository cabinetRepository) : base(connectionString, tableName)
+    public AppoinmentRepository(SQLiteConnection dbConnection, string tableName, IMedicineClinicRepository medicineClinicRepository, ICabinetRepository cabinetRepository) : base(dbConnection, tableName)
     {
         MedicineClinicRepository = medicineClinicRepository;
         CabinetRepository = cabinetRepository;

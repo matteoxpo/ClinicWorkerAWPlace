@@ -1,10 +1,11 @@
+using System.Data.SQLite;
 using Domain.Entities.Polyclinic.Analysis;
 using Domain.Repositories.Polyclinic;
 
 namespace Data.Repositories.Polyclinic;
 public class AnalysisRepository : BaseSQLiteRepository<Analysis>, IAnalysisRepository
 {
-    public AnalysisRepository(string connectionString, string tableName = "Analysis") : base(connectionString, tableName)
+    public AnalysisRepository(SQLiteConnection dbConnection, string tableName = "Analysis") : base(dbConnection, tableName)
     {
 
     }
